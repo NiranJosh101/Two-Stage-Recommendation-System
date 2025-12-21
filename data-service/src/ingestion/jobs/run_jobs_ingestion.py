@@ -2,7 +2,7 @@ import random
 from api_client import JSearchClient
 from writer import JobWriter
 
-RAPID_API_KEY = "YOUR_RAPIDAPI_KEY"
+RAPID_API_KEY = "3fd00bef0emshca77e9913642e16p182fejsn8449049325e8"
 
 QUERIES = ["developer", "designer", "marketing", "sales", "data", "engineer", "product"]
 LOCATIONS = [None, "remote", "USA", "UK", "Canada", "Germany"]

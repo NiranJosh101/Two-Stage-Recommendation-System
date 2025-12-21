@@ -7,8 +7,8 @@ class JSearchClient:
 
     def __init__(self, api_key: str):
         self.headers = {
-            "X-RapidAPI-Key": api_key,
-            "X-RapidAPI-Host": "jsearch.p.rapidapi.com"
+            'x-rapidapi-key': "3fd00bef0emshca77e9913642e16p182fefjsn8449049325e8",
+            'x-rapidapi-host': "jsearch.p.rapidapi.com"
         }
 
     def fetch_jobs(
