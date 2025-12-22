@@ -2,14 +2,14 @@ import random
 from api_client import JSearchClient
 from writer import JobWriter
 
-RAPID_API_KEY = "3fd00bef0emshca77e9913642e16p182fejsn8449049325e8"
+RAPID_API_KEY = "5f848a6a6cmshc2af13b6319a5bap183b14jsnac1dbb1a25b2"
 
 QUERIES = ["developer", "designer", "marketing", "sales", "data", "engineer", "product"]
 LOCATIONS = [None, "remote", "USA", "UK", "Canada", "Germany"]
 REMOTE_OPTIONS = [None, True, False]
 
-TOTAL_JOBS = 200
-JOBS_PER_PAGE = 25
+TOTAL_JOBS = 5
+JOBS_PER_PAGE = 1
 
 def run():
     client = JSearchClient(RAPID_API_KEY)
