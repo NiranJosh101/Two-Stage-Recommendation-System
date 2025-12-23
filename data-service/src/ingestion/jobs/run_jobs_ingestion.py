@@ -13,7 +13,14 @@ JOBS_PER_PAGE = 1
 
 def run():
     client = JSearchClient(RAPID_API_KEY)
-    writer = JobWriter()
+    writer = JobWriter(mode="local")
+
+    # writer = JobWriter(
+    #     mode="gcs",
+    #     bucket_name="your-bronze-bucket",
+    #     gcs_prefix="jobs/jsearch/ingest_date=2025-12-22"
+    # )
+
 
     all_jobs = []
     page = 1
