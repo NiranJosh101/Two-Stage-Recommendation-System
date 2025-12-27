@@ -1,7 +1,7 @@
 artifact_root: artifacts
 
-data_service_ingestion:
-  root_dir: artifacts/data_ingestio
+data_service_config:
+  root_dir: artifacts/data
   source_URL: https://github.com/krishnaik06/datasets/raw/main/winequality-data.zip
   local_data_file: artifacts/data_ingestion/data.zip
   unzip_dir: artifacts/data_ingestion
