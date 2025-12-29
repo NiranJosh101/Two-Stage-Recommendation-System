@@ -1,62 +1,31 @@
-artifacts_root: artifacts
-
-data_ingestion:
-
-  jobs:
-    root_dir: artifacts/data_ingestion/jobs
-
-    source:
-      type: api
-      provider: jsearch
-
-      queries:
-        - developer
-        - designer
-        - marketing
-        - sales
-        - data
-        - engineer
-        - product
-
-      locations:
-        - null
-        - remote
-        - USA
-        - UK
-        - Canada
-        - Germany
-
-    output:
-      mode: local
-      bronze_path: data/bronze/jobs
-
-  users:
-    root_dir: artifacts/data_ingestion/users
-
-    generation:
-      num_users: 500
-      seed: 42
-
-    output:
-      mode: local
-      bronze_path: data/bronze/users
-
-  interactions:
-    root_dir: artifacts/data_ingestion/interactions
-
-    input:
-      users_bronze_path: data/bronze/users
-      jobs_bronze_path: data/bronze/jobs
-
-    generation:
-      interactions_per_user: 10
-      seed: 42
-
-      event_distribution:
-        view: 0.7
-        click: 0.2
-        apply: 0.1
-
-    output:
-      mode: local
-      bronze_path: data/bronze/interactions
+job_ingestion_api:
+  base_url: "https://jsearch.p.rapidapi.com/search"
+  api_host: "jsearch.p.rapidapi.com"
+  rate_limit_per_sec: 1.0
+  last_request_time: 0.0
+  queries:
+    - developer
+    - designer
+    - marketing
+    - sales
+    - data
+    - engineer
+    - product
+  locations:
+    - null
+    - remote
+    - USA
+    - UK
+    - Canada
+    - Germany
+  remote_options:
+    - null
+    - true
+    - false
+  total_jobs: 5
+  jobs_per_page: 1
+  job_local_file_name: "jsearch_jobs_raw.json"
+  job_base_path: "data/raw_jobs"
+  gcs_prefix: "jobs/jsearch"
+  writer_mode: "local"  # options: "local" or "gcs"
+  gcs_bucket_name: "two-stage-recommendation-system-data"

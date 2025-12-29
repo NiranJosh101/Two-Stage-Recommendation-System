@@ -1,55 +1,73 @@
+import os
+import sys
 import random
-from api_client import JSearchClient
-from writer import JobWriter
+from dotenv import load_dotenv
 
-RAPID_API_KEY = "5f848a6a6cmshc2af13b6319a5bap183b14jsnac1dbb1a25b2"
+from src.ingestion.jobs.api_client import JSearchClient
+from src.ingestion.jobs.writer import JobWriter
+from src.config.config_manager import ConfigurationManager  
 
-QUERIES = ["developer", "designer", "marketing", "sales", "data", "engineer", "product"]
-LOCATIONS = [None, "remote", "USA", "UK", "Canada", "Germany"]
-REMOTE_OPTIONS = [None, True, False]
+from src.utils.exception import RecommendationsystemDataServie
+from src.utils.logging import logging 
 
-TOTAL_JOBS = 5
-JOBS_PER_PAGE = 1
+
+load_dotenv()
+
+RAPID_API_KEY = os.getenv("RAPID_API_KEY")
+
 
 def run():
-    client = JSearchClient(RAPID_API_KEY)
-    writer = JobWriter(mode="local")
+    try:
 
-    # writer = JobWriter(
-    #     mode="gcs",
-    #     bucket_name="your-bronze-bucket",
-    #     gcs_prefix="jobs/jsearch/ingest_date=2025-12-22"
-    # )
+        config_manager = ConfigurationManager()
+        job_ingestion_config = config_manager.get_job_ingestion_config()
+
+        client = JSearchClient(job_ingestion_config)
+        writer = JobWriter(job_ingestion_config, mode=job_ingestion_config.writer_mode)
 
 
-    all_jobs = []
-    page = 1
+        # writer = JobWriter(
+        #     mode="gcs",
+        #     bucket_name="your-bronze-bucket",
+        #     gcs_prefix="jobs/jsearch/ingest_date=2025-12-22"
+        # )
 
-    while len(all_jobs) < TOTAL_JOBS:
-        query = random.choice(QUERIES)
-        location = random.choice(LOCATIONS)
-        remote = random.choice(REMOTE_OPTIONS)
+        all_jobs = []
+        page = 1
 
-        jobs = client.fetch_jobs(
-            query=query,
-            page=page,
-            location=location,
-            remote=remote
-        )
+        while len(all_jobs) < job_ingestion_config.total_jobs:
+            query = random.choice(job_ingestion_config.queries)
+            location = random.choice(job_ingestion_config.locations)
+            remote = random.choice(job_ingestion_config.remote_options)
 
-        if not jobs:
+            jobs = client.fetch_jobs(
+                query=query,
+                page=page,
+                location=location,
+                remote=remote
+            )
+
+            if not jobs:
+                page += 1
+                continue
+
+            for job in jobs:
+                if len(all_jobs) >= job_ingestion_config.total_jobs:
+                    break
+                all_jobs.append(job)
+
+            logging.info("<-----Fetched %d jobs for query='%s', location='%s', remote='%s'----->", len(jobs), query, location, remote)
+            logging.info(f"Collected {len(all_jobs)} jobs")
+            print(f"Collected {len(all_jobs)} jobs")
             page += 1
-            continue
 
-        for job in jobs:
-            if len(all_jobs) >= TOTAL_JOBS:
-                break
-            all_jobs.append(job)
+    
+        writer.write(all_jobs, job_ingestion_config.job_local_file_name)
+        logging.info("<-----Job Ingestion Completed. Total jobs collected: %d----->", len(all_jobs))
+    except Exception as e:
+         raise RecommendationsystemDataServie(e, sys)
+    
 
-        print(f"Collected {len(all_jobs)} jobs")
-        page += 1
-
-    writer.write(all_jobs, "jsearch_jobs_raw.json")
 
 if __name__ == "__main__":
     run()
