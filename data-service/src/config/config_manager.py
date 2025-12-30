@@ -3,7 +3,7 @@ import yaml
 from pathlib import Path
 from src.utils.common import read_yaml
 from src.constants import CONFIG_FILE_PATH
-from src.config.config_entities import JobIngestionConfig, UserDataIngestionConfig
+from src.config.config_entities import JobIngestionConfig, UserDataIngestionConfig, InteractionIngestionConfig
 
 
 class ConfigurationManager:
@@ -47,3 +47,17 @@ class ConfigurationManager:
             num_users=config.num_users
         )
 
+    def get_interaction_ingestion_config(self) -> InteractionIngestionConfig:
+        config = self.config.interaction_ingestion
+
+        return InteractionIngestionConfig(
+            interaction_gcs_prefix=config.interaction_gcs_prefix,
+            interaction_gcs_bucket_name=config.interaction_gcs_bucket_name,
+            interaction_local_file_name=config.interaction_local_file_name,
+            interaction_base_path=config.interaction_base_path,
+            writer_mode=config.writer_mode,
+            interaction_per_user=config.interaction_per_user,
+            interaction_events_type=config.interaction_events_type,
+            interaction_events_weights=config.interaction_events_weights,
+            interaction_seed=config.interaction_seed
+        )

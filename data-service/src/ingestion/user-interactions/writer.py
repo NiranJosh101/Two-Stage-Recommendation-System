@@ -1,17 +1,20 @@
 import json
+import sys
 from pathlib import Path
 from typing import List, Dict
 
 from google.cloud import storage
+from src.utils.exception import RecommendationsystemDataServie
+from src.utils.logging import logging 
 
 
 class InteractionWriter:
     def __init__(
         self,
-        mode: str = "local",
-        base_path: str = "data/bronze/interactions",
-        bucket_name: str | None = None,
-        gcs_prefix: str = "interactions/raw"
+        mode: str,
+        base_path: str,
+        bucket_name: str,
+        gcs_prefix: str
     ):
         self.mode = mode
 
@@ -31,20 +34,30 @@ class InteractionWriter:
             raise ValueError(f"Unsupported writer mode: {mode}")
 
     def write(self, interactions: List[Dict], filename: str) -> None:
-        if self.mode == "local":
-            self._write_local(interactions, filename)
-        elif self.mode == "gcs":
-            self._write_gcs(interactions, filename)
+        try:
+            if self.mode == "local":
+                self._write_local(interactions, filename)
+            elif self.mode == "gcs":
+                self._write_gcs(interactions, filename)
+        except Exception as e:
+            raise RecommendationsystemDataServie(e, sys)
 
     def _write_local(self, interactions: List[Dict], filename: str) -> None:
-        file_path = self.base_path / filename
-        with open(file_path, "w", encoding="utf-8") as f:
-            json.dump(interactions, f, ensure_ascii=False, indent=2)
-
+        try:
+            file_path = self.base_path / filename
+            with open(file_path, "w", encoding="utf-8") as f:
+                json.dump(interactions, f, ensure_ascii=False, indent=2)
+                logging.info(f"Interactions written to {file_path}")
+        except Exception as e:
+            raise RecommendationsystemDataServie(e, sys)
+        
     def _write_gcs(self, interactions: List[Dict], filename: str) -> None:
-        blob_path = f"{self.gcs_prefix}/{filename}"
-        blob = self.bucket.blob(blob_path)
-        blob.upload_from_string(
-            json.dumps(interactions, ensure_ascii=False),
-            content_type="application/json"
-        )
+        try:
+            blob_path = f"{self.gcs_prefix}/{filename}"
+            blob = self.bucket.blob(blob_path)
+            blob.upload_from_string(
+                json.dumps(interactions, ensure_ascii=False),
+                content_type="application/json"
+            )
+        except Exception as e:
+            raise RecommendationsystemDataServie(e, sys)

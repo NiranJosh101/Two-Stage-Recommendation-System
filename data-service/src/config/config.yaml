@@ -62,3 +62,21 @@ user_data_ingestion:
   total_users: 50
   num_users: 30
 
+user_interaction_ingestion:
+  interaction_gcs_prefix: "interactions/synthetic" 
+  interaction_gcs_bucket_name: "two-stage-recommendation-system-data"
+  interaction_local_file_name: "interactions_raw.json"
+  interaction_base_path: "data/interactions"
+  writer_mode: "local"  # options: "local" or "gcs"
+  random_seed: 42 
+  interactions_per_user: 10
+  interaction_events_type:
+    - view
+    - click
+    - apply
+  interaction_event_weights:
+    - 0.7
+    - 0.2 
+    - 0.1
+  interaction_seed: 42
+

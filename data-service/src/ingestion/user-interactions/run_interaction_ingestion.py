@@ -1,80 +1,92 @@
 import json
+import sys
 from pathlib import Path
 from datetime import datetime
-
+from src.config.config_manager import ConfigurationManager  
 from users_interaction_generator import InteractionGenerator
 from writer import InteractionWriter
 
+from src.utils.exception import RecommendationsystemDataServie
+from src.utils.logging import logging 
 
 
-USERS_BRONZE_PATH = Path("data/bronze/users")
-JOBS_BRONZE_PATH = Path("data/bronze/jobs")
 
-DEFAULT_INTERACTIONS_PER_USER = 10
 
 
 def _load_latest_json(path: Path) -> list:
-    """
-    Load the most recent JSON file from a directory.
-    """
-    files = sorted(path.glob("*.json"))
-    if not files:
-        raise FileNotFoundError(f"No JSON files found in {path}")
-    latest_file = files[-1]
+    try:
+        """
+        Load the most recent JSON file from a directory.
+        """
+        files = sorted(path.glob("*.json"))
+        if not files:
+            raise FileNotFoundError(f"No JSON files found in {path}")
+        latest_file = files[-1]
 
-    with open(latest_file, "r", encoding="utf-8") as f:
-        return json.load(f)
-
+        with open(latest_file, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception as e:
+        raise RecommendationsystemDataServie(e, sys)
 
 def run_interactions_ingestion(
-    interactions_per_user: int = DEFAULT_INTERACTIONS_PER_USER
 ):
-    """
-    Orchestrates interaction ingestion:
-    load users + jobs → generate interactions → persist
-    """
+    try:
+        """
+        Orchestrates interaction ingestion:
+        load users + jobs → generate interactions → persist
+        """
+        logging.info("<----- Starting Interactions Ingestion ----->")
+        config_manager = ConfigurationManager()
+        jobs_config = config_manager.get_job_ingestion_config()
+        user_config = config_manager.get_user_data_ingestion_config()
+        interaction_config = config_manager.get_interaction_ingestion_config()
 
-    users = _load_latest_json(USERS_BRONZE_PATH)
-    jobs = _load_latest_json(JOBS_BRONZE_PATH)
 
-    generator = InteractionGenerator(seed=42)
+        users = _load_latest_json(user_config.user_base_path)
+        jobs = _load_latest_json(jobs_config.job_base_path)
 
-    interactions = generator.generate(
-        users=users,
-        jobs=jobs,
-        interactions_per_user=interactions_per_user
-    )
+        generator = InteractionGenerator(interaction_config.interaction_seed, interaction_config)
 
-    
-    filename = f"interactions_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}.json"
+        interactions = generator.generate(
+            users=users,
+            jobs=jobs,
+            interactions_per_user=interaction_config.interaction_per_user
+        )
 
-    writer = InteractionWriter(
-        mode="local",
-        base_path="data/bronze/interactions"
-    )
-    writer.write(interactions, filename)
+        
+        filename = f"interactions_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}.json"
 
-    # --- GCS persistence (enable later) ---
-    # writer = InteractionWriter(
-    #     mode="gcs",
-    #     bucket_name="your-temp-bucket",
-    #     gcs_prefix="interactions/raw"
-    # )
-    # writer.write(interactions, filename)
+        writer = InteractionWriter(
+            mode=interaction_config.writer_mode,
+            base_path=interaction_config.interaction_base_path,
+            bucket_name=interaction_config.interaction_gcs_bucket_name,
+            gcs_prefix=interaction_config.interaction_gcs_prefix
+        )
+        writer.write(interactions, filename)
 
-    print(f"[Interactions Ingestion]")
-    print(f"Users loaded: {len(users)}")
-    print(f"Jobs loaded: {len(jobs)}")
-    print(f"Interactions generated: {len(interactions)}")
-    print(f"Saved to: data/bronze/interactions/{filename}")
+        # --- GCS persistence (enable later) ---
+        # writer = InteractionWriter(
+        #     mode="gcs",
+        #     bucket_name="your-temp-bucket",
+        #     gcs_prefix="interactions/raw"
+        # )
+        # writer.write(interactions, filename)
 
-    return {
-        "entity": "interactions",
-        "num_users": len(users),
-        "num_jobs": len(jobs),
-        "num_interactions": len(interactions)
-    }
+        print(f"[Interactions Ingestion]")
+        print(f"Users loaded: {len(users)}")
+        print(f"Jobs loaded: {len(jobs)}")
+        print(f"Interactions generated: {len(interactions)}")
+        print(f"Saved to: data/bronze/interactions/{filename}")
 
+        logging.info("<----- Interactions Ingestion Completed ----->")
+        return {
+            "entity": "interactions",
+            "num_users": len(users),
+            "num_jobs": len(jobs),
+            "num_interactions": len(interactions)
+        }
+    except Exception as e:
+        raise RecommendationsystemDataServie(e, sys)
 
 if __name__ == "__main__":
     run_interactions_ingestion()
