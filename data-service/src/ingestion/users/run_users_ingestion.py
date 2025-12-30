@@ -1,36 +1,48 @@
-from user_generator import UserGenerator
-from writer import UserWriter
+import sys
+from src.ingestion.users.user_generator import UserGenerator
+from src.ingestion.users.writer import UserWriter
+from src.config.config_manager import ConfigurationManager  
+
+from src.utils.exception import RecommendationsystemDataServie
+from src.utils.logging import logging 
 
 from datetime import datetime
 
-DEFAULT_NUM_USERS = 500
 
+def run_users_ingestion():
+    try:
+        """
+        Orchestrates user ingestion:
+        generate → persist (config-driven)
+        """
+        logging.info("<----- Starting Users Ingestion ----->")
+        config_manager = ConfigurationManager()
+        user_config = config_manager.get_user_data_ingestion_config()
 
-def run_users_ingestion(num_users: int = DEFAULT_NUM_USERS):
-    """
-    Orchestrates user ingestion:
-    generate → persist (local for now)
-    """
+        generator = UserGenerator(users_config=user_config, seed=user_config.random_seed)
+        users = generator.generate()
 
-    generator = UserGenerator(seed=42)
-    users = generator.generate(num_users)
+        writer = UserWriter(
+            mode=user_config.writer_mode,
+            base_path=user_config.user_base_path,
+            config=user_config
+        )
+
+        filename = f"users_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}.json"
+        writer.write(users, filename)
+
+        print(f"[Users Ingestion] Generated {len(users)} users")
+
+        return {
+            "entity": "users",
+            "num_records": len(users)
+        }
+          
+    except Exception as e:
+        logging.info("<----- Users Ingestion Completed. Total users collected: %d ----->")
+        raise RecommendationsystemDataServie(e, sys)
 
     
-    writer = UserWriter(
-        mode="local",
-        base_path="data/bronze/users"
-    )
-    
-    filename = f"users_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}.json"
-    writer.write(users, filename)
-
-    print(f"[Users Ingestion] Generated {len(users)} users")
-
-    return {
-        "entity": "users",
-        "num_records": len(users)
-    }
-
 
 if __name__ == "__main__":
     run_users_ingestion()

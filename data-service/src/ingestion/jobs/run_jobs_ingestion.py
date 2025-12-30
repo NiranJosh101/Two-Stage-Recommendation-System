@@ -56,14 +56,14 @@ def run():
                     break
                 all_jobs.append(job)
 
-            logging.info("<-----Fetched %d jobs for query='%s', location='%s', remote='%s'----->", len(jobs), query, location, remote)
+            logging.info("Fetched %d jobs for query='%s', location='%s', remote='%s'", len(jobs), query, location, remote)
             logging.info(f"Collected {len(all_jobs)} jobs")
             print(f"Collected {len(all_jobs)} jobs")
             page += 1
 
     
         writer.write(all_jobs, job_ingestion_config.job_local_file_name)
-        logging.info("<-----Job Ingestion Completed. Total jobs collected: %d----->", len(all_jobs))
+        logging.info("<----- Job Ingestion Completed. Total jobs collected: %d ----->", len(all_jobs))
     except Exception as e:
          raise RecommendationsystemDataServie(e, sys)
     

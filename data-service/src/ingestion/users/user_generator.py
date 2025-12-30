@@ -1,9 +1,11 @@
-# src/ingestion/users/generator.py
-
+import sys
 import uuid
 import random
 from datetime import datetime
 from typing import List, Dict
+from src.config.config_entities import UserDataIngestionConfig  
+from src.utils.exception import RecommendationsystemDataServie
+from src.utils.logging import logging
 
 
 class UserGenerator:
@@ -48,41 +50,54 @@ class UserGenerator:
         ]
     }
 
-    EXPERIENCE_LEVELS = ["junior", "mid", "senior"]
-    EDUCATION_LEVELS = ["bachelors", "masters", "phd", "bootcamp"]
-    LOCATIONS = [None, "remote", "USA", "UK", "Canada", "Germany"]
-
-    def __init__(self, seed: int | None = None):
-        if seed is not None:
-            random.seed(seed)
+    def __init__(self, users_config: UserDataIngestionConfig, seed: int | None = None):
+        try:
+            if seed is not None:
+                random.seed(seed)
+            self.EXPERIENCE_LEVELS = users_config.experience_levels
+            self.EDUCATION_LEVELS = users_config.education_levels
+            self.LOCATIONS = users_config.locations
+            self.num_users = users_config.num_users
+        except Exception as e:
+            raise RecommendationsystemDataServie(e, sys)
+        
 
     def _generate_single_user(self) -> Dict:
-        user_id = str(uuid.uuid4())
+        try:
+            user_id = str(uuid.uuid4())
 
-        primary_roles = random.sample(
-            self.JOB_QUERIES, random.randint(1, 2)
-        )
-
-        skills = set()
-        for role in primary_roles:
-            role_skills = self.ROLE_SKILLS[role]
-            skills.update(
-                random.sample(role_skills, random.randint(2, 4))
+            primary_roles = random.sample(
+                self.JOB_QUERIES, random.randint(1, 2)
             )
 
-        return {
-            "user_id": user_id,
-            "primary_roles": primary_roles,
-            "skills": list(skills),
-            "experience_level": random.choice(self.EXPERIENCE_LEVELS),
-            "education_level": random.choice(self.EDUCATION_LEVELS),
-            "location": random.choice(self.LOCATIONS),
-            "years_of_experience": random.randint(0, 15),
-            "created_at": datetime.utcnow().isoformat()
-        }
+            skills = set()
+            for role in primary_roles:
+                role_skills = self.ROLE_SKILLS[role]
+                skills.update(
+                    random.sample(role_skills, random.randint(2, 4))
+                )
 
-    def generate(self, num_users: int) -> List[Dict]:
-        """
-        Generate raw synthetic users.
-        """
-        return [self._generate_single_user() for _ in range(num_users)]
+            return {
+                "user_id": user_id,
+                "primary_roles": primary_roles,
+                "skills": list(skills),
+                "experience_level": random.choice(self.EXPERIENCE_LEVELS),
+                "education_level": random.choice(self.EDUCATION_LEVELS),
+                "location": random.choice(self.LOCATIONS),
+                "years_of_experience": random.randint(0, 15),
+                "created_at": datetime.utcnow().isoformat()
+            }
+        
+        except Exception as e:
+            raise RecommendationsystemDataServie(e, sys)
+    
+
+    def generate(self) -> List[Dict]:
+        try:
+            users = [self._generate_single_user() for _ in range(self.num_users)]
+            logging.info("Generated %d users", self.num_users)
+            return users
+        except Exception as e:
+            logging.exception("User Generation Failed")
+            raise RecommendationsystemDataServie(e, sys)
+

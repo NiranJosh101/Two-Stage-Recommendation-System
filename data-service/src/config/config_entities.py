@@ -20,3 +20,18 @@ class JobIngestionConfig:
     gcs_prefix: Optional[str] 
     gcs_bucket_name: Optional[str] 
     writer_mode: Optional[str] 
+
+
+
+@dataclass
+class UserDataIngestionConfig:
+    user_gcs_prefix: Optional[str]
+    user_gcs_bucket_name: Optional[str]
+    user_local_file_name: Optional[str]
+    user_base_path: Optional[str]
+    experience_levels: list[str]
+    education_levels: list[str]
+    locations: list[Optional[str]]
+    writer_mode: Optional[str]
+    random_seed: Optional[int]
+    num_users: Optional[int]

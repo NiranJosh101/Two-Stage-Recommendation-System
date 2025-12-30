@@ -11,6 +11,7 @@ job_ingestion_api:
     - data
     - engineer
     - product
+
   locations:
     - null
     - remote
@@ -18,6 +19,7 @@ job_ingestion_api:
     - UK
     - Canada
     - Germany
+
   remote_options:
     - null
     - true
@@ -29,3 +31,34 @@ job_ingestion_api:
   gcs_prefix: "jobs/jsearch"
   writer_mode: "local"  # options: "local" or "gcs"
   gcs_bucket_name: "two-stage-recommendation-system-data"
+
+
+user_data_ingestion:
+  user_gcs_prefix: "users/synthetic"
+  user_gcs_bucket_name: "two-stage-recommendation-system-data"
+  user_local_file_name: "users_raw.json"
+  user_base_path: "data/users"
+  
+  experience_levels:
+    - junior
+    - mid
+    - senior
+
+  education_levels:
+    - high_school
+    - bachelors
+    - masters
+    - phd
+
+  locations:
+    - USA
+    - UK
+    - Canada
+    - Germany
+    - remote
+  
+  writer_mode: "local"  # options: "local" or "gcs"
+  random_seed: 42
+  total_users: 50
+  num_users: 30
+

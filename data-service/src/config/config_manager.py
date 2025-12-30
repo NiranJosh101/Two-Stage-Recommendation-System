@@ -3,7 +3,7 @@ import yaml
 from pathlib import Path
 from src.utils.common import read_yaml
 from src.constants import CONFIG_FILE_PATH
-from src.config.config_entities import JobIngestionConfig
+from src.config.config_entities import JobIngestionConfig, UserDataIngestionConfig
 
 
 class ConfigurationManager:
@@ -29,5 +29,21 @@ class ConfigurationManager:
             gcs_bucket_name=config.gcs_bucket_name,
             gcs_prefix=config.gcs_prefix,
             job_base_path=config.job_base_path
+        )
+    
+    def get_user_data_ingestion_config(self) -> UserDataIngestionConfig:
+        config = self.config.user_data_ingestion
+
+        return UserDataIngestionConfig(
+            user_gcs_prefix=config.user_gcs_prefix,
+            user_gcs_bucket_name=config.user_gcs_bucket_name,
+            user_local_file_name=config.user_local_file_name,
+            user_base_path=config.user_base_path,
+            experience_levels=config.experience_levels,
+            education_levels=config.education_levels,
+            locations=config.locations,
+            writer_mode=config.writer_mode,
+            random_seed=config.random_seed,
+            num_users=config.num_users
         )
 
