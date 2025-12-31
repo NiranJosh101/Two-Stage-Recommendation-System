@@ -12,7 +12,7 @@ class InteractionGenerator:
 
     """
 
-    def __init__(self, interaction_config: InteractionIngestionConfig, seed: int | None = None):
+    def __init__(self, interaction_config: InteractionIngestionConfig, seed: int ):
 
         self.interaction_config = interaction_config
         self.EVENT_TYPES = interaction_config.interaction_events_type

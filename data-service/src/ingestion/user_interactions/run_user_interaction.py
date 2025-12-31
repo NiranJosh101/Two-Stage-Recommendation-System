@@ -2,9 +2,12 @@ import json
 import sys
 from pathlib import Path
 from datetime import datetime
-from src.config.config_manager import ConfigurationManager  
-from users_interaction_generator import InteractionGenerator
-from writer import InteractionWriter
+from src.config.config_manager import ConfigurationManager 
+from src.ingestion.user_interactions.users_interaction_generator import InteractionGenerator
+from src.ingestion.user_interactions.writer import InteractionWriter
+
+
+
 
 from src.utils.exception import RecommendationsystemDataServie
 from src.utils.logging import logging 
@@ -13,18 +16,24 @@ from src.utils.logging import logging
 
 
 
-def _load_latest_json(path: Path) -> list:
+from pathlib import Path
+
+def _load_latest_json(path: str | Path) -> list:
     try:
         """
         Load the most recent JSON file from a directory.
         """
+        path = Path(path) 
+
         files = sorted(path.glob("*.json"))
         if not files:
             raise FileNotFoundError(f"No JSON files found in {path}")
+
         latest_file = files[-1]
 
         with open(latest_file, "r", encoding="utf-8") as f:
             return json.load(f)
+
     except Exception as e:
         raise RecommendationsystemDataServie(e, sys)
 
@@ -45,12 +54,12 @@ def run_interactions_ingestion(
         users = _load_latest_json(user_config.user_base_path)
         jobs = _load_latest_json(jobs_config.job_base_path)
 
-        generator = InteractionGenerator(interaction_config.interaction_seed, interaction_config)
+        generator = InteractionGenerator(interaction_config, interaction_config.interaction_seed)
 
         interactions = generator.generate(
             users=users,
             jobs=jobs,
-            interactions_per_user=interaction_config.interaction_per_user
+            interactions_per_user=interaction_config.interactions_per_user
         )
 
         

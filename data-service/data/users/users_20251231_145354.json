@@ -1,0 +1,524 @@
+[
+  {
+    "user_id": "c2991701-0251-4e0e-ae15-72b8b8946134",
+    "primary_roles": [
+      "developer"
+    ],
+    "skills": [
+      "react",
+      "flask",
+      "javascript",
+      "django"
+    ],
+    "experience_level": "senior",
+    "education_level": "high_school",
+    "location": "remote",
+    "years_of_experience": 2,
+    "created_at": "2025-12-31T14:53:54.513931"
+  },
+  {
+    "user_id": "7a2e75d8-6be3-48f5-ab60-cbbb93e7a546",
+    "primary_roles": [
+      "developer",
+      "product"
+    ],
+    "skills": [
+      "git",
+      "product_strategy",
+      "javascript",
+      "roadmapping",
+      "analytics",
+      "stakeholder_management"
+    ],
+    "experience_level": "junior",
+    "education_level": "phd",
+    "location": "remote",
+    "years_of_experience": 8,
+    "created_at": "2025-12-31T14:53:54.514015"
+  },
+  {
+    "user_id": "ced65fd4-de1c-40a6-97a1-66bd29aa131c",
+    "primary_roles": [
+      "product"
+    ],
+    "skills": [
+      "roadmapping",
+      "analytics"
+    ],
+    "experience_level": "mid",
+    "education_level": "bachelors",
+    "location": "UK",
+    "years_of_experience": 10,
+    "created_at": "2025-12-31T14:53:54.514054"
+  },
+  {
+    "user_id": "c65af806-3125-4751-add2-29ac5d07b77e",
+    "primary_roles": [
+      "developer"
+    ],
+    "skills": [
+      "react",
+      "typescript",
+      "javascript"
+    ],
+    "experience_level": "senior",
+    "education_level": "masters",
+    "location": "USA",
+    "years_of_experience": 14,
+    "created_at": "2025-12-31T14:53:54.514090"
+  },
+  {
+    "user_id": "62e70ea0-c2a1-410c-8ddb-5eb799d9c91e",
+    "primary_roles": [
+      "sales"
+    ],
+    "skills": [
+      "negotiation",
+      "pipeline_management"
+    ],
+    "experience_level": "senior",
+    "education_level": "masters",
+    "location": "remote",
+    "years_of_experience": 6,
+    "created_at": "2025-12-31T14:53:54.514129"
+  },
+  {
+    "user_id": "80b33ad9-0c70-45cb-9b5d-a1046b7945df",
+    "primary_roles": [
+      "developer"
+    ],
+    "skills": [
+      "react",
+      "python",
+      "typescript",
+      "git"
+    ],
+    "experience_level": "junior",
+    "education_level": "high_school",
+    "location": "Germany",
+    "years_of_experience": 8,
+    "created_at": "2025-12-31T14:53:54.514187"
+  },
+  {
+    "user_id": "db7845e4-6405-4db6-820c-78be82d25bcf",
+    "primary_roles": [
+      "engineer",
+      "marketing"
+    ],
+    "skills": [
+      "growth",
+      "gcp",
+      "seo",
+      "system_design"
+    ],
+    "experience_level": "senior",
+    "education_level": "bachelors",
+    "location": "remote",
+    "years_of_experience": 7,
+    "created_at": "2025-12-31T14:53:54.514285"
+  },
+  {
+    "user_id": "48feb7fe-a3d6-4d9c-92a5-2573676d4b2e",
+    "primary_roles": [
+      "sales"
+    ],
+    "skills": [
+      "negotiation",
+      "pipeline_management",
+      "lead_generation"
+    ],
+    "experience_level": "senior",
+    "education_level": "masters",
+    "location": "USA",
+    "years_of_experience": 7,
+    "created_at": "2025-12-31T14:53:54.514352"
+  },
+  {
+    "user_id": "53e36a0a-ae3b-40ef-9e4f-9f28e8372fac",
+    "primary_roles": [
+      "product"
+    ],
+    "skills": [
+      "product_strategy",
+      "roadmapping",
+      "analytics"
+    ],
+    "experience_level": "junior",
+    "education_level": "masters",
+    "location": "UK",
+    "years_of_experience": 15,
+    "created_at": "2025-12-31T14:53:54.514415"
+  },
+  {
+    "user_id": "9cc47462-d475-4d2d-b047-11bb8701a9b0",
+    "primary_roles": [
+      "engineer",
+      "sales"
+    ],
+    "skills": [
+      "java",
+      "pipeline_management",
+      "negotiation",
+      "system_design"
+    ],
+    "experience_level": "senior",
+    "education_level": "phd",
+    "location": "remote",
+    "years_of_experience": 12,
+    "created_at": "2025-12-31T14:53:54.514454"
+  },
+  {
+    "user_id": "1a59240d-e1e3-4f6d-af35-9d9e4169a7cc",
+    "primary_roles": [
+      "designer",
+      "product"
+    ],
+    "skills": [
+      "figma",
+      "roadmapping",
+      "visual_design",
+      "prototyping",
+      "ux_research",
+      "stakeholder_management"
+    ],
+    "experience_level": "mid",
+    "education_level": "high_school",
+    "location": "Germany",
+    "years_of_experience": 12,
+    "created_at": "2025-12-31T14:53:54.514493"
+  },
+  {
+    "user_id": "23d85338-0355-48f6-befb-18f5690cbbf6",
+    "primary_roles": [
+      "data",
+      "marketing"
+    ],
+    "skills": [
+      "content_marketing",
+      "statistics",
+      "sql",
+      "growth",
+      "seo",
+      "copywriting",
+      "pandas",
+      "data_analysis"
+    ],
+    "experience_level": "junior",
+    "education_level": "phd",
+    "location": "USA",
+    "years_of_experience": 8,
+    "created_at": "2025-12-31T14:53:54.514536"
+  },
+  {
+    "user_id": "652d0a8b-8d21-41bd-b09e-1f5237fd8927",
+    "primary_roles": [
+      "data"
+    ],
+    "skills": [
+      "statistics",
+      "data_analysis"
+    ],
+    "experience_level": "mid",
+    "education_level": "bachelors",
+    "location": "UK",
+    "years_of_experience": 11,
+    "created_at": "2025-12-31T14:53:54.514573"
+  },
+  {
+    "user_id": "7f7b8348-ca4d-4ac7-9bd7-05a12910f0b0",
+    "primary_roles": [
+      "data"
+    ],
+    "skills": [
+      "numpy",
+      "sql",
+      "pandas",
+      "ml"
+    ],
+    "experience_level": "junior",
+    "education_level": "high_school",
+    "location": "Canada",
+    "years_of_experience": 9,
+    "created_at": "2025-12-31T14:53:54.514609"
+  },
+  {
+    "user_id": "2fd76e2d-4bed-4e85-b38f-23c1d0af24d9",
+    "primary_roles": [
+      "developer"
+    ],
+    "skills": [
+      "python",
+      "javascript"
+    ],
+    "experience_level": "senior",
+    "education_level": "phd",
+    "location": "USA",
+    "years_of_experience": 4,
+    "created_at": "2025-12-31T14:53:54.514645"
+  },
+  {
+    "user_id": "8b0c54b7-0273-4480-bd58-53de95f4c664",
+    "primary_roles": [
+      "engineer"
+    ],
+    "skills": [
+      "java",
+      "kubernetes",
+      "system_design"
+    ],
+    "experience_level": "senior",
+    "education_level": "phd",
+    "location": "UK",
+    "years_of_experience": 6,
+    "created_at": "2025-12-31T14:53:54.514684"
+  },
+  {
+    "user_id": "ab2c7afe-bdbe-4e16-9325-0af86dc21d1f",
+    "primary_roles": [
+      "sales",
+      "engineer"
+    ],
+    "skills": [
+      "negotiation",
+      "crm",
+      "python",
+      "java",
+      "pipeline_management",
+      "lead_generation"
+    ],
+    "experience_level": "mid",
+    "education_level": "high_school",
+    "location": "remote",
+    "years_of_experience": 7,
+    "created_at": "2025-12-31T14:53:54.514728"
+  },
+  {
+    "user_id": "a7856301-a830-40ef-92da-0ce5b734b001",
+    "primary_roles": [
+      "developer"
+    ],
+    "skills": [
+      "python",
+      "javascript"
+    ],
+    "experience_level": "junior",
+    "education_level": "high_school",
+    "location": "Canada",
+    "years_of_experience": 2,
+    "created_at": "2025-12-31T14:53:54.514784"
+  },
+  {
+    "user_id": "428fe282-e3f5-4522-9ff5-d6bae8a0b8c8",
+    "primary_roles": [
+      "marketing"
+    ],
+    "skills": [
+      "content_marketing",
+      "growth",
+      "seo",
+      "analytics"
+    ],
+    "experience_level": "senior",
+    "education_level": "phd",
+    "location": "UK",
+    "years_of_experience": 15,
+    "created_at": "2025-12-31T14:53:54.514821"
+  },
+  {
+    "user_id": "dc12ad7d-a5b1-4cb7-abb2-2b898a4053da",
+    "primary_roles": [
+      "designer",
+      "developer"
+    ],
+    "skills": [
+      "flask",
+      "git",
+      "prototyping",
+      "ux_research",
+      "react"
+    ],
+    "experience_level": "junior",
+    "education_level": "high_school",
+    "location": "USA",
+    "years_of_experience": 12,
+    "created_at": "2025-12-31T14:53:54.514857"
+  },
+  {
+    "user_id": "a2aaef23-c7c9-4c49-b39e-869d4a687fa6",
+    "primary_roles": [
+      "product",
+      "developer"
+    ],
+    "skills": [
+      "git",
+      "product_strategy",
+      "javascript",
+      "roadmapping",
+      "react",
+      "node"
+    ],
+    "experience_level": "mid",
+    "education_level": "phd",
+    "location": "UK",
+    "years_of_experience": 2,
+    "created_at": "2025-12-31T14:53:54.514893"
+  },
+  {
+    "user_id": "9c0215da-73cc-4284-86e3-076649b423cb",
+    "primary_roles": [
+      "product",
+      "data"
+    ],
+    "skills": [
+      "statistics",
+      "sql",
+      "python",
+      "product_strategy",
+      "stakeholder_management",
+      "data_analysis"
+    ],
+    "experience_level": "junior",
+    "education_level": "phd",
+    "location": "Germany",
+    "years_of_experience": 15,
+    "created_at": "2025-12-31T14:53:54.514927"
+  },
+  {
+    "user_id": "c2aa7931-2ccf-4774-85c2-13ecf909accc",
+    "primary_roles": [
+      "product"
+    ],
+    "skills": [
+      "product_strategy",
+      "roadmapping",
+      "analytics"
+    ],
+    "experience_level": "junior",
+    "education_level": "phd",
+    "location": "Canada",
+    "years_of_experience": 14,
+    "created_at": "2025-12-31T14:53:54.514957"
+  },
+  {
+    "user_id": "36fd99d6-7798-4e76-9d83-ae50aa3071a6",
+    "primary_roles": [
+      "sales",
+      "engineer"
+    ],
+    "skills": [
+      "negotiation",
+      "crm",
+      "python",
+      "lead_generation",
+      "pipeline_management",
+      "kubernetes"
+    ],
+    "experience_level": "senior",
+    "education_level": "high_school",
+    "location": "Canada",
+    "years_of_experience": 1,
+    "created_at": "2025-12-31T14:53:54.514994"
+  },
+  {
+    "user_id": "9db66c54-ead5-45d9-ab7b-82afa50866b2",
+    "primary_roles": [
+      "data"
+    ],
+    "skills": [
+      "python",
+      "data_analysis",
+      "ml"
+    ],
+    "experience_level": "junior",
+    "education_level": "high_school",
+    "location": "UK",
+    "years_of_experience": 2,
+    "created_at": "2025-12-31T14:53:54.515025"
+  },
+  {
+    "user_id": "45581cd1-3022-400d-8577-49d7e5c1bb39",
+    "primary_roles": [
+      "engineer"
+    ],
+    "skills": [
+      "python",
+      "docker"
+    ],
+    "experience_level": "senior",
+    "education_level": "bachelors",
+    "location": "remote",
+    "years_of_experience": 1,
+    "created_at": "2025-12-31T14:53:54.515055"
+  },
+  {
+    "user_id": "959d920c-1ce1-474a-8dfc-2f8e959438c4",
+    "primary_roles": [
+      "sales"
+    ],
+    "skills": [
+      "negotiation",
+      "pipeline_management",
+      "crm",
+      "lead_generation"
+    ],
+    "experience_level": "junior",
+    "education_level": "masters",
+    "location": "Germany",
+    "years_of_experience": 4,
+    "created_at": "2025-12-31T14:53:54.515088"
+  },
+  {
+    "user_id": "e90792ba-f997-48b9-a75d-4be17f907c9b",
+    "primary_roles": [
+      "sales",
+      "marketing"
+    ],
+    "skills": [
+      "crm",
+      "growth",
+      "lead_generation",
+      "analytics",
+      "seo",
+      "copywriting"
+    ],
+    "experience_level": "senior",
+    "education_level": "masters",
+    "location": "UK",
+    "years_of_experience": 11,
+    "created_at": "2025-12-31T14:53:54.515148"
+  },
+  {
+    "user_id": "1fbbdbcc-0549-48a2-a690-a82db6de0a14",
+    "primary_roles": [
+      "designer"
+    ],
+    "skills": [
+      "prototyping",
+      "ui_design",
+      "ux_research"
+    ],
+    "experience_level": "senior",
+    "education_level": "masters",
+    "location": "remote",
+    "years_of_experience": 0,
+    "created_at": "2025-12-31T14:53:54.515208"
+  },
+  {
+    "user_id": "28752bf0-7659-409d-9773-2d2600b75048",
+    "primary_roles": [
+      "engineer",
+      "developer"
+    ],
+    "skills": [
+      "python",
+      "typescript",
+      "system_design",
+      "node"
+    ],
+    "experience_level": "mid",
+    "education_level": "bachelors",
+    "location": "Canada",
+    "years_of_experience": 6,
+    "created_at": "2025-12-31T14:53:54.515244"
+  }
+]

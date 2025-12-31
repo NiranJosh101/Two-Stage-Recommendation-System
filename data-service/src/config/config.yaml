@@ -74,7 +74,7 @@ user_interaction_ingestion:
     - view
     - click
     - apply
-  interaction_event_weights:
+  interaction_events_weights:
     - 0.7
     - 0.2 
     - 0.1

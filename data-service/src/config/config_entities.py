@@ -44,7 +44,7 @@ class InteractionIngestionConfig:
     interaction_local_file_name: Optional[str]
     interaction_base_path: Optional[str]
     writer_mode: Optional[str]
-    interaction_per_user: Optional[int]
+    interactions_per_user: Optional[int]
     interaction_events_type: Optional[list[str]]
     interaction_events_weights: Optional[list[float]]
     interaction_seed: Optional[int]
