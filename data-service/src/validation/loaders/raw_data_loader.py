@@ -9,28 +9,25 @@ import pandas as pd
 def _read_raw(path: str) -> pd.DataFrame:
     p = Path(path)
 
-    
-    if p.is_dir():
-        dfs = []
-        for file in sorted(p.iterdir()):
-            if file.suffix == ".json":
+    dfs = []
+
+    files = [p] if p.is_file() else sorted(p.iterdir())
+
+    for file in files:
+        if file.suffix == ".json":
+            try:
+                
                 dfs.append(pd.read_json(file, lines=True))
-            elif file.suffix == ".parquet":
-                dfs.append(pd.read_parquet(file))
+            except ValueError:
+                dfs.append(pd.read_json(file, lines=False))
 
-        if not dfs:
-            raise ValueError(f"No supported raw files found in {path}")
+        elif file.suffix == ".parquet":
+            dfs.append(pd.read_parquet(file))
 
-        return pd.concat(dfs, ignore_index=True)
+    if not dfs:
+        raise ValueError(f"No supported raw files found in {path}")
 
-   
-    if p.suffix == ".json":
-        return pd.read_json(p, lines=True)
-
-    if p.suffix == ".parquet":
-        return pd.read_parquet(p)
-
-    raise ValueError(f"Unsupported raw data format: {path}")
+    return pd.concat(dfs, ignore_index=True)
 
 
 

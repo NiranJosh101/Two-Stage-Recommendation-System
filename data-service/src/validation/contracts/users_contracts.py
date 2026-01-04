@@ -38,7 +38,7 @@ USERS_RAW_CONTRACT: Dict[str, Any] = {
             "nullable": False,
         },
         "years_of_experience": {
-            "type": float,
+            "type": (int, float),
             "required": True,
             "nullable": False,
         },

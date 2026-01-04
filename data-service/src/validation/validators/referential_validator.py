@@ -11,12 +11,7 @@ def validate_referential_integrity(
     jobs_df: pd.DataFrame,
     dataset_name: str = "interactions_raw"
 ) -> None:
-    """
-    Validate that all interactions reference valid user_ids and job_ids.
-
-    Raises:
-        ReferentialIntegrityError if invalid references are found
-    """
+    
     errors = []
 
     invalid_users = interactions_df.loc[

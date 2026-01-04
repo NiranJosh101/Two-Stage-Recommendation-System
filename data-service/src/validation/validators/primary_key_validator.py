@@ -6,12 +6,7 @@ class PrimaryKeyValidationError(Exception):
 
 
 def validate_primary_key(df: pd.DataFrame, primary_key: str, dataset_name: str = "") -> None:
-    """
-    Validate that the primary key column has unique values.
-
-    Raises:
-        PrimaryKeyValidationError if duplicates are found or key is missing.
-    """
+    
     if primary_key not in df.columns:
         raise PrimaryKeyValidationError(
             f"Primary key '{primary_key}' not found in {dataset_name}"
