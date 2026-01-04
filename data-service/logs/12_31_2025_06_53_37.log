@@ -1,5 +1,0 @@
-2025-12-31 06:53:37,329 - root - INFO - <-----API call successful----->
-2025-12-31 06:53:44,328 - root - INFO - Fetched 10 jobs for query='sales', location='UK', remote='False'
-2025-12-31 06:53:44,328 - root - INFO - Collected 5 jobs
-2025-12-31 06:53:44,366 - root - INFO - jobs written successfully using local mode
-2025-12-31 06:53:44,366 - root - INFO - <----- Job Ingestion Completed. Total jobs collected: 5 ----->
