@@ -19,7 +19,8 @@ class JobIngestionConfig:
     job_base_path: Optional[str] 
     gcs_prefix: Optional[str] 
     gcs_bucket_name: Optional[str] 
-    writer_mode: Optional[str] 
+    writer_mode: Optional[str]
+    job_clean_path: Optional[str]
 
 
 
@@ -35,6 +36,7 @@ class UserDataIngestionConfig:
     writer_mode: Optional[str]
     random_seed: Optional[int]
     num_users: Optional[int]
+    user_clean_path: Optional[str]
 
 
 @dataclass
@@ -48,3 +50,4 @@ class InteractionIngestionConfig:
     interaction_events_type: Optional[list[str]]
     interaction_events_weights: Optional[list[float]]
     interaction_seed: Optional[int]
+    interaction_clean_path: Optional[str]

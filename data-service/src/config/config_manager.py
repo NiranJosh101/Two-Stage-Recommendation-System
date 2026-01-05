@@ -28,7 +28,8 @@ class ConfigurationManager:
             writer_mode=config.writer_mode,
             gcs_bucket_name=config.gcs_bucket_name,
             gcs_prefix=config.gcs_prefix,
-            job_base_path=config.job_base_path
+            job_base_path=config.job_base_path,
+            job_clean_path=config.job_clean_path
         )
     
     def get_user_data_ingestion_config(self) -> UserDataIngestionConfig:
@@ -44,7 +45,8 @@ class ConfigurationManager:
             locations=config.locations,
             writer_mode=config.writer_mode,
             random_seed=config.random_seed,
-            num_users=config.num_users
+            num_users=config.num_users,
+            user_clean_path=config.user_clean_path
         )
 
     def get_interaction_ingestion_config(self) -> InteractionIngestionConfig:
@@ -59,5 +61,6 @@ class ConfigurationManager:
             interactions_per_user=config.interactions_per_user,
             interaction_events_type=config.interaction_events_type,
             interaction_events_weights=config.interaction_events_weights,
-            interaction_seed=config.interaction_seed
+            interaction_seed=config.interaction_seed,
+            interaction_clean_path=config.interaction_clean_path
         )

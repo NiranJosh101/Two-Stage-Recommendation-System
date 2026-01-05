@@ -28,6 +28,7 @@ job_ingestion_api:
   jobs_per_page: 1
   job_local_file_name: "jsearch_jobs_raw.json"
   job_base_path: "data/raw_jobs"
+  job_clean_path: "data/clean_jobs/jobs_clean.json"
   gcs_prefix: "jobs/jsearch"
   writer_mode: "local"  # options: "local" or "gcs"
   gcs_bucket_name: "two-stage-recommendation-system-data"
@@ -61,6 +62,7 @@ user_data_ingestion:
   random_seed: 42
   total_users: 50
   num_users: 30
+  user_clean_path: "data/clean_users/users_clean.json"
 
 user_interaction_ingestion:
   interaction_gcs_prefix: "interactions/synthetic" 
@@ -79,4 +81,6 @@ user_interaction_ingestion:
     - 0.2 
     - 0.1
   interaction_seed: 42
+  interaction_clean_path: "data/clean_interactions/interactions_clean.json"
+  
 

@@ -27,13 +27,7 @@ JOBS_RAW_CONTRACT: Dict[str, Any] = {
             "required": True,
             "nullable": False,
         },
-        "job_publisher": {
-            "type": str,
-            "required": True,
-            "nullable": False,
-        },
-
-      
+    
         "job_employment_type": {
             "type": str,
             "required": False,
@@ -62,7 +56,6 @@ JOBS_RAW_CONTRACT: Dict[str, Any] = {
             "nullable": True,
         },
 
-       
         "job_is_remote": {
             "type": bool,
             "required": False,

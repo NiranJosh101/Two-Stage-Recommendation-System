@@ -32,7 +32,7 @@ def _read_raw(path: str) -> pd.DataFrame:
 
 
 def load_jobs_raw(path: str) -> pd.DataFrame:
-    """
+    """then
     Load JobsRaw dataset.
     """
     return _read_raw(path)
