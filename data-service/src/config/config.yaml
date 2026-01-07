@@ -82,5 +82,9 @@ user_interaction_ingestion:
     - 0.1
   interaction_seed: 42
   interaction_clean_path: "data/clean_interactions/interactions_clean.json"
-  
+  interaction_labeled_positives_path: "data/labeled_positives/labeled_positives.json"
+  interaction_policy_path: "src/supervision/policy/labeling_policy.yaml"
+  interaction_nagative_sampling_ratio: 3
+  interaction_negative_sampling_seed: 42
+  negative_sample_path: "data/negative_samples/negative_samples.json"
 

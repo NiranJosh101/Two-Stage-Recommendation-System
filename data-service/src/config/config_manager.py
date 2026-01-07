@@ -62,5 +62,10 @@ class ConfigurationManager:
             interaction_events_type=config.interaction_events_type,
             interaction_events_weights=config.interaction_events_weights,
             interaction_seed=config.interaction_seed,
-            interaction_clean_path=config.interaction_clean_path
+            interaction_clean_path=config.interaction_clean_path,
+            interaction_labeled_positives_path=config.interaction_labeled_positives_path,
+            interaction_policy_path=config.interaction_policy_path,
+            interaction_nagative_sampling_ratio=config.interaction_nagative_sampling_ratio,
+            interaction_negative_sampling_seed=config.interaction_negative_sampling_seed,
+            negative_sample_path=config.negative_sample_path,
         )

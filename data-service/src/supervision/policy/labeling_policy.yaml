@@ -1,0 +1,39 @@
+version: v1.0
+
+priority:
+  apply: 3
+  click: 2
+  view: 1
+
+
+label_map:
+  apply: 1
+  click: 1
+  view: 0
+
+
+ignored_events:
+  - bookmark
+  - share
+  - dismiss
+
+
+conflict_resolution:
+  strategy: highest_priority_wins
+  description: >
+    When multiple events exist for the same (user_id, job_id),
+    the event with the highest priority determines the label.
+
+
+dataset:
+  task_type: implicit_feedback
+  label_space: [0, 1]
+  negative_definition: no_observed_interaction
+
+
+metadata:
+  owner: data-service
+  created_for: recommendation_system
+  notes: >
+    This policy treats apply and click as positive intent.
+    Views are treated as weak negatives (exposure only).
