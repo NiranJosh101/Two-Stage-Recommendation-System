@@ -1,0 +1,25 @@
+2026-01-08 02:22:47,363 - root - INFO - <-----API call successful----->
+2026-01-08 02:22:58,644 - root - INFO - Fetched 10 jobs for query='marketing', location='None', remote='True'
+2026-01-08 02:22:58,646 - root - INFO - Collected 10 jobs
+2026-01-08 02:23:02,984 - root - INFO - Fetched 10 jobs for query='designer', location='Germany', remote='True'
+2026-01-08 02:23:02,984 - root - INFO - Collected 20 jobs
+2026-01-08 02:23:08,809 - root - INFO - Fetched 10 jobs for query='engineer', location='Germany', remote='False'
+2026-01-08 02:23:08,809 - root - INFO - Collected 30 jobs
+2026-01-08 02:23:15,217 - root - INFO - Fetched 10 jobs for query='sales', location='remote', remote='False'
+2026-01-08 02:23:15,217 - root - INFO - Collected 40 jobs
+2026-01-08 02:23:21,068 - root - INFO - Fetched 9 jobs for query='designer', location='None', remote='True'
+2026-01-08 02:23:21,068 - root - INFO - Collected 49 jobs
+2026-01-08 02:23:28,239 - root - INFO - Fetched 10 jobs for query='designer', location='Germany', remote='False'
+2026-01-08 02:23:28,239 - root - INFO - Collected 59 jobs
+2026-01-08 02:23:39,518 - root - INFO - Fetched 10 jobs for query='designer', location='USA', remote='True'
+2026-01-08 02:23:39,518 - root - INFO - Collected 69 jobs
+2026-01-08 02:23:53,496 - root - INFO - Fetched 10 jobs for query='product', location='Canada', remote='True'
+2026-01-08 02:23:53,496 - root - INFO - Collected 79 jobs
+2026-01-08 02:24:04,874 - root - INFO - Fetched 10 jobs for query='data', location='USA', remote='True'
+2026-01-08 02:24:04,874 - root - INFO - Collected 89 jobs
+2026-01-08 02:24:13,668 - root - INFO - Fetched 10 jobs for query='sales', location='remote', remote='True'
+2026-01-08 02:24:13,668 - root - INFO - Collected 99 jobs
+2026-01-08 02:24:23,585 - root - INFO - Fetched 9 jobs for query='marketing', location='UK', remote='False'
+2026-01-08 02:24:23,585 - root - INFO - Collected 100 jobs
+2026-01-08 02:24:23,642 - root - INFO - jobs written successfully using local mode
+2026-01-08 02:24:23,642 - root - INFO - <----- Job Ingestion Completed. Total jobs collected: 100 ----->

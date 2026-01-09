@@ -1,15 +1,14 @@
 import json
 import os
+import sys
 from typing import List, Dict
 
 from src.supervision.negative_sampling.sampler import sample_negatives
 from src.supervision.negative_sampling.popularity import compute_job_popularity
 from src.config.config_manager import ConfigurationManager
+from src.utils.exception import RecommendationsystemDataServie
+from src.utils.logging import logging
 
-
-# -------------------------------
-# Orchestrator function
-# -------------------------------
 
 def run_negative_sampling(
     labeled_positives: List[Dict[str, str]],
@@ -21,39 +20,29 @@ def run_negative_sampling(
     """
     Generate negative samples for the dataset.
     """
+    try:
+        if not isinstance(all_jobs, list):
+            raise TypeError("all_jobs must be a list of job_id strings")
 
-    # -------------------------------
-    # Safety guards (important)
-    # -------------------------------
-    if not isinstance(all_jobs, list):
-        raise TypeError("all_jobs must be a list of job_id strings")
+        if not all(isinstance(j, str) for j in all_jobs):
+            raise TypeError("all_jobs must contain only job_id strings")
 
-    if not all(isinstance(j, str) for j in all_jobs):
-        raise TypeError("all_jobs must contain only job_id strings")
+        if use_popularity:
+            popularity_dict = compute_job_popularity(labeled_positives)
+            print(" Popularity-weighted sampling enabled — sampler must support weights")
 
-    # -------------------------------
-    # Optional popularity weighting
-    # -------------------------------
-    if use_popularity:
-        popularity_dict = compute_job_popularity(labeled_positives)
-        print("⚠️ Popularity-weighted sampling enabled — sampler must support weights")
+        negatives = sample_negatives(
+            labeled_positives=labeled_positives,
+            all_jobs=all_jobs,   
+            ratio=ratio,
+            seed=seed
+        )
 
-    # -------------------------------
-    # Core negative sampling
-    # -------------------------------
-    negatives = sample_negatives(
-        labeled_positives=labeled_positives,
-        all_jobs=all_jobs,   # ✅ FIXED
-        ratio=ratio,
-        seed=seed
-    )
+        return negatives
+    except Exception as e:
+        logging.error(f"Error during negative sampling: {e}")
+        raise RecommendationsystemDataServie(e, sys)
 
-    return negatives
-
-
-# -------------------------------
-# Entry point
-# -------------------------------
 
 if __name__ == "__main__":
 
@@ -65,23 +54,16 @@ if __name__ == "__main__":
     JOBS_PATH = jobs_config.job_clean_path
     OUTPUT_PATH = interaction_config.negative_sample_path
 
-    # -------------------------------
-    # Load labeled positives
-    # -------------------------------
+
     with open(LABELED_PATH, "r", encoding="utf-8") as f:
         labeled_positives = json.load(f)
 
-    # -------------------------------
-    # Load jobs + extract job_ids
-    # -------------------------------
+   
     with open(JOBS_PATH, "r", encoding="utf-8") as f:
         jobs = json.load(f)
 
     all_jobs = [job["job_id"] for job in jobs]
 
-    # -------------------------------
-    # Run negative sampling
-    # -------------------------------
     negatives = run_negative_sampling(
         labeled_positives=labeled_positives,
         all_jobs=all_jobs,
@@ -90,12 +72,10 @@ if __name__ == "__main__":
         seed=interaction_config.interaction_negative_sampling_seed
     )
 
-    # -------------------------------
-    # Write output
-    # -------------------------------
+    
     os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
 
     with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
         json.dump(negatives, f, indent=2)
-
+    logging.info(f"✔ Wrote {len(negatives)} negative samples → {OUTPUT_PATH}")
     print(f"✔ Wrote {len(negatives)} negative samples → {OUTPUT_PATH}")

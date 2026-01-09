@@ -3,7 +3,7 @@ import yaml
 from pathlib import Path
 from src.utils.common import read_yaml
 from src.constants import CONFIG_FILE_PATH
-from src.config.config_entities import JobIngestionConfig, UserDataIngestionConfig, InteractionIngestionConfig
+from src.config.config_entities import JobIngestionConfig, UserDataIngestionConfig, InteractionIngestionConfig, modelTrainingConfig
 
 
 class ConfigurationManager:
@@ -69,3 +69,12 @@ class ConfigurationManager:
             interaction_negative_sampling_seed=config.interaction_negative_sampling_seed,
             negative_sample_path=config.negative_sample_path,
         )
+    
+
+    def get_model_training_config(self) -> modelTrainingConfig:
+        config = self.config.model_training
+
+        return modelTrainingConfig(
+            two_tower_dataset_path=config.two_tower_dataset_path
+        )
+    

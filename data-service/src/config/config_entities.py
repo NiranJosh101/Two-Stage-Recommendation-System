@@ -56,3 +56,8 @@ class InteractionIngestionConfig:
     interaction_nagative_sampling_ratio: Optional[int]
     interaction_negative_sampling_seed: Optional[int]
     negative_sample_path: Optional[str]
+
+
+@dataclass
+class modelTrainingConfig:
+    two_tower_dataset_path: Optional[str]

@@ -24,7 +24,7 @@ job_ingestion_api:
     - null
     - true
     - false
-  total_jobs: 5
+  total_jobs: 100
   jobs_per_page: 1
   job_local_file_name: "jsearch_jobs_raw.json"
   job_base_path: "data/raw_jobs"
@@ -88,3 +88,5 @@ user_interaction_ingestion:
   interaction_negative_sampling_seed: 42
   negative_sample_path: "data/negative_samples/negative_samples.json"
 
+model_training:
+  two_tower_dataset_path: "data/datasets/two_tower_dataset.json"
