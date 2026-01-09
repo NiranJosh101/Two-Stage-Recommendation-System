@@ -60,7 +60,7 @@ if __name__ == "__main__":
     interaction_ingestion_config = config.get_interaction_ingestion_config()
 
     INPUT_PATH = interaction_ingestion_config.interaction_clean_path
-    OUTPUT_PATH = interaction_ingestion_config.interaction_labeled_positives_path
+    OUTPUT_PATH = interaction_ingestion_config.interaction_labeled_path
     POLICY_PATH = interaction_ingestion_config.interaction_policy_path
 
     # Load raw interactions from JSON

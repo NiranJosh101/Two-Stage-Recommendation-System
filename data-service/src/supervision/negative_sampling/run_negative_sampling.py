@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 import os
 import sys
 from typing import List, Dict
@@ -44,26 +45,31 @@ def run_negative_sampling(
         raise RecommendationsystemDataServie(e, sys)
 
 
-if __name__ == "__main__":
 
+
+if __name__ == "__main__":
     config = ConfigurationManager()
     interaction_config = config.get_interaction_ingestion_config()
     jobs_config = config.get_job_ingestion_config()
+    model_config = config.get_model_training_config()
 
-    LABELED_PATH = interaction_config.interaction_labeled_positives_path
-    JOBS_PATH = jobs_config.job_clean_path
-    OUTPUT_PATH = interaction_config.negative_sample_path
+    LABELED_PATH = Path(interaction_config.interaction_positive_path)
+    JOBS_PATH = Path(jobs_config.job_clean_path)
+    OUTPUT_PATH = Path(model_config.two_tower_dataset_path)
 
+    # Ensure output directory exists
+    OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
 
+    # Load labeled positives
     with open(LABELED_PATH, "r", encoding="utf-8") as f:
         labeled_positives = json.load(f)
 
-   
+    # Load jobs
     with open(JOBS_PATH, "r", encoding="utf-8") as f:
         jobs = json.load(f)
-
     all_jobs = [job["job_id"] for job in jobs]
 
+    # Negative sampling
     negatives = run_negative_sampling(
         labeled_positives=labeled_positives,
         all_jobs=all_jobs,
@@ -72,10 +78,12 @@ if __name__ == "__main__":
         seed=interaction_config.interaction_negative_sampling_seed
     )
 
-    
-    os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
+    # Build final dataset
+    final_dataset = labeled_positives + negatives
 
+    # Write final dataset as pretty JSON
     with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
-        json.dump(negatives, f, indent=2)
-    logging.info(f"✔ Wrote {len(negatives)} negative samples → {OUTPUT_PATH}")
-    print(f"✔ Wrote {len(negatives)} negative samples → {OUTPUT_PATH}")
+        json.dump(final_dataset, f, indent=2)
+
+    logging.info(f"✔ Wrote {len(final_dataset)} rows → {OUTPUT_PATH}")
+    print(f"✔ Wrote {len(final_dataset)} rows → {OUTPUT_PATH}")

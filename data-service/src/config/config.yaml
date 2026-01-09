@@ -82,11 +82,16 @@ user_interaction_ingestion:
     - 0.1
   interaction_seed: 42
   interaction_clean_path: "data/clean_interactions/interactions_clean.json"
-  interaction_labeled_positives_path: "data/labeled_positives/labeled_positives.json"
+  interaction_labeled_path: "data/labeled/labeled.json"
   interaction_policy_path: "src/supervision/policy/labeling_policy.yaml"
   interaction_nagative_sampling_ratio: 3
   interaction_negative_sampling_seed: 42
   negative_sample_path: "data/negative_samples/negative_samples.json"
+  interaction_positive_path: "data/positive_samples/positive_samples.json"
 
 model_training:
+  user_feature_path: "data/features/user_features.json"
+  job_feature_path: "data/features/job_features.json"
+  final_dataset_path: "data/features/dataset/final_dataset.json"
   two_tower_dataset_path: "data/datasets/two_tower_dataset.json"
+  embed_model_names: "all-MiniLM-L6-v2"

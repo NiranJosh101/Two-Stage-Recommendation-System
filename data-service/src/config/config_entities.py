@@ -51,13 +51,18 @@ class InteractionIngestionConfig:
     interaction_events_weights: Optional[list[float]]
     interaction_seed: Optional[int]
     interaction_clean_path: Optional[str]
-    interaction_labeled_positives_path: Optional[str]
+    interaction_labeled_path: Optional[str]
     interaction_policy_path: Optional[str]
     interaction_nagative_sampling_ratio: Optional[int]
     interaction_negative_sampling_seed: Optional[int]
     negative_sample_path: Optional[str]
+    interaction_positive_path: Optional[str]
 
 
 @dataclass
 class modelTrainingConfig:
+    user_feature_path: Optional[str]
+    job_feature_path: Optional[str]
+    final_dataset_path: Optional[str]
     two_tower_dataset_path: Optional[str]
+    embed_model_names: Optional[str]

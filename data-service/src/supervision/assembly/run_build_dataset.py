@@ -1,5 +1,6 @@
 import json
 from typing import List, Dict
+from pathlib import Path
 
 from src.supervision.assembly.dataset_builder import build_contrastive_dataset
 from src.config.config_manager import ConfigurationManager
@@ -35,9 +36,9 @@ if __name__ == "__main__":
     interaction_config = config.get_interaction_ingestion_config()
     model_config = config.get_model_training_config()
 
-    LABELED_POS_PATH = interaction_config.interaction_labeled_positives_path
+    LABELED_POS_PATH = interaction_config.interaction_positive_path
     NEGATIVES_PATH = interaction_config.negative_sample_path
-    OUTPUT_PATH = model_config.two_tower_dataset_path
+    OUTPUT_PATH = Path(model_config.two_tower_dataset_path)
 
     
     with open(LABELED_POS_PATH, "r") as f:
@@ -53,8 +54,9 @@ if __name__ == "__main__":
         seed=42,
     )
 
-    
-    with open(OUTPUT_PATH, "w") as f:
+    OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
+
+    with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
         json.dump(final_dataset, f, indent=2)
 
     logging.info(f"✔ Wrote {len(final_dataset)} training samples → {OUTPUT_PATH}")

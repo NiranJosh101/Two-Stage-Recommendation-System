@@ -63,11 +63,12 @@ class ConfigurationManager:
             interaction_events_weights=config.interaction_events_weights,
             interaction_seed=config.interaction_seed,
             interaction_clean_path=config.interaction_clean_path,
-            interaction_labeled_positives_path=config.interaction_labeled_positives_path,
+            interaction_labeled_path=config.interaction_labeled_path,
             interaction_policy_path=config.interaction_policy_path,
             interaction_nagative_sampling_ratio=config.interaction_nagative_sampling_ratio,
             interaction_negative_sampling_seed=config.interaction_negative_sampling_seed,
             negative_sample_path=config.negative_sample_path,
+            interaction_positive_path=config.interaction_positive_path,
         )
     
 
@@ -75,6 +76,10 @@ class ConfigurationManager:
         config = self.config.model_training
 
         return modelTrainingConfig(
-            two_tower_dataset_path=config.two_tower_dataset_path
+            user_feature_path=config.user_feature_path,
+            job_feature_path=config.job_feature_path,
+            final_dataset_path=config.final_dataset_path,
+            two_tower_dataset_path=config.two_tower_dataset_path,
+            embed_model_names=config.embed_model_names
         )
     

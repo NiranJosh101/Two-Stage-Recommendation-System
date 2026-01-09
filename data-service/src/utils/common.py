@@ -36,3 +36,66 @@ def read_yaml(path_to_yaml: Path) -> ConfigBox:
 
 
 
+def safe_write_json(df, path: Path):
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    df.to_json(path, orient="records", indent=2)
+
+
+import json
+import pandas as pd
+from typing import List, Dict
+
+
+def load_clean_data(path: str) -> List[Dict]:
+    """
+    Load cleaned data from disk and return as list of dicts.
+
+    Supported formats:
+    - .json   (array of objects OR JSONL)
+    - .csv
+    - .parquet
+    """
+
+    if path.endswith(".json"):
+        # Try standard JSON array first
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            if not isinstance(data, list):
+                raise ValueError("JSON file must contain a list of objects")
+            return data
+
+        # Fallback: JSON Lines (one JSON object per line)
+        except json.JSONDecodeError:
+            records = []
+            with open(path, "r", encoding="utf-8") as f:
+                for line in f:
+                    if line.strip():
+                        records.append(json.loads(line))
+            return records
+
+    elif path.endswith(".csv"):
+        df = pd.read_csv(path)
+        return df.to_dict(orient="records")
+
+    elif path.endswith(".parquet"):
+        df = pd.read_parquet(path)
+        return df.to_dict(orient="records")
+
+    else:
+        raise ValueError(f"Unsupported file format: {path}")
+
+
+
+
+
+def write_jsonl(df, output_path: str):
+    """
+    Write DataFrame to newline-delimited JSON (JSONL).
+    """
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+
+    with open(output_path, "w", encoding="utf-8") as f:
+        for record in df.to_dict(orient="records"):
+            f.write(json.dumps(record) + "\n")
