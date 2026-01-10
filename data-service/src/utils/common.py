@@ -15,15 +15,6 @@ from typing import Any
 def read_yaml(path_to_yaml: Path) -> ConfigBox:
     """reads yaml file and returns
     
-    Args:
-        path_to_yaml (str): path like input
-    
-    Raises:
-        ValueError: if yaml file is empty
-        e: empty files
-    
-    Returns:
-        ConfigBox: Configbox type
     """
     
     with open(path_to_yaml) as yaml_file:
@@ -99,3 +90,18 @@ def write_jsonl(df, output_path: str):
     with open(output_path, "w", encoding="utf-8") as f:
         for record in df.to_dict(orient="records"):
             f.write(json.dumps(record) + "\n")
+
+
+
+def load_json(path: Path) -> List[dict]:
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+
+
+def write_json(data, path: str):
+    path = Path(path)  # ← convert string to Path
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)

@@ -80,6 +80,9 @@ class ConfigurationManager:
             job_feature_path=config.job_feature_path,
             final_dataset_path=config.final_dataset_path,
             two_tower_dataset_path=config.two_tower_dataset_path,
-            embed_model_names=config.embed_model_names
+            embed_model_names=config.embed_model_names,
+            user_embedding_dim=config.user_embedding_dim,
+            job_embedding_dim=config.job_embedding_dim,
+            allowed_labels=config.allowed_labels
         )
     

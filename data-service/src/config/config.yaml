@@ -95,3 +95,6 @@ model_training:
   final_dataset_path: "data/features/dataset/final_dataset.json"
   two_tower_dataset_path: "data/datasets/two_tower_dataset.json"
   embed_model_names: "all-MiniLM-L6-v2"
+  user_embedding_dim: 783
+  job_embedding_dim: 1159
+  allowed_labels: [0, 1]

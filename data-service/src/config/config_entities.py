@@ -66,3 +66,6 @@ class modelTrainingConfig:
     final_dataset_path: Optional[str]
     two_tower_dataset_path: Optional[str]
     embed_model_names: Optional[str]
+    user_embedding_dim: Optional[int]
+    job_embedding_dim: Optional[int]
+    allowed_labels: Optional[list[int]]
