@@ -22,16 +22,11 @@ class JobFeatureTransformer:
         desc_emb = get_text_embedding(job.get("job_description", ""))
         employer_emb = get_text_embedding(job.get("employer_name", ""))
 
-        # ---------------------------
-        # One-hot employment type
-        # ---------------------------
+       
         employment_types = ["full_time", "part_time", "contract", "internship", "unknown"]
         employment_type = job.get("job_employment_type", "unknown").lower()
         employment_one_hot = {f"employment_{t}": int(employment_type == t) for t in employment_types}
 
-        # ---------------------------
-        # Other numeric features
-        # ---------------------------
         is_remote = int(job.get("job_is_remote", False))
 
         salary_min = job.get("job_min_salary", 0.0)
@@ -40,9 +35,7 @@ class JobFeatureTransformer:
         if salary_min is not None and salary_max is not None:
             salary_avg = (salary_min + salary_max) / 2
 
-        # ---------------------------
-        # COLLAPSE ALL FEATURES INTO ONE EMBEDDING
-        # ---------------------------
+       
         job_embedding = np.concatenate([
             title_emb,
             desc_emb,
@@ -54,7 +47,7 @@ class JobFeatureTransformer:
 
         features = {
             "job_id": job["job_id"],
-            "job_embedding": job_embedding.tolist()  # JSON-serializable
+            "job_embedding": job_embedding.tolist() 
         }
 
         return features
