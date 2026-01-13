@@ -105,3 +105,38 @@ def write_json(data, path: str):
     path.parent.mkdir(parents=True, exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
+
+
+def load_json_to_df(path: str) -> pd.DataFrame:
+    path_obj = Path(path)
+    if not path_obj.exists():
+        raise FileNotFoundError(f"File not found: {path_obj}")
+
+    with open(path_obj, "r", encoding="utf-8") as f:
+        first_char = f.read(1)
+        f.seek(0)  # rewind file
+
+        if first_char == "[":  # standard JSON array
+            return pd.read_json(f)
+        elif first_char == "{":  # NDJSON (one JSON object per line)
+            return pd.read_json(f, lines=True)
+        else:
+            raise ValueError(f"Unknown JSON format in file: {path_obj}")
+
+
+
+def flatten_embeddings(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Flatten user_features and job_features columns if they contain embeddings.
+    """
+    if "user_features" in df.columns:
+        if isinstance(df["user_features"].iloc[0], dict) and "user_embedding" in df["user_features"].iloc[0]:
+            df["user_embedding"] = df["user_features"].apply(lambda x: x["user_embedding"])
+        df = df.drop(columns=["user_features"])
+
+    if "job_features" in df.columns:
+        if isinstance(df["job_features"].iloc[0], dict) and "job_embedding" in df["job_features"].iloc[0]:
+            df["job_embedding"] = df["job_features"].apply(lambda x: x["job_embedding"])
+        df = df.drop(columns=["job_features"])
+
+    return df

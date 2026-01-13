@@ -30,3 +30,15 @@ TRAINING_DATASET_SCHEMA: Dict[str, Any] = {
 }
 
 TRAINING_DATASET_PRIMARY_KEYS = ["user_id", "job_id"]
+
+
+RANKING_FEATURES_SCHEMA = {
+    "user_id": str,
+    "job_id": str,
+    "skill_overlap_score": float,
+    "experience_gap": int,
+    "label": int,
+}
+
+RANKING_FEATURE_PRIMARY_KEYS = ["user_id", "job_id"]
+

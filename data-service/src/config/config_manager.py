@@ -79,10 +79,16 @@ class ConfigurationManager:
             user_feature_path=config.user_feature_path,
             job_feature_path=config.job_feature_path,
             final_dataset_path=config.final_dataset_path,
+            ranking_dataset_path=config.ranking_dataset_path,
+            ranking_dataset_random_seed=config.ranking_dataset_random_seed,
+            ranking_ds_skill_overlap_range=config.ranking_ds_skill_overlap_range,
+            ranking_ds_experience_gap_range=config.ranking_ds_experience_gap_range,
             two_tower_dataset_path=config.two_tower_dataset_path,
             embed_model_names=config.embed_model_names,
             user_embedding_dim=config.user_embedding_dim,
             job_embedding_dim=config.job_embedding_dim,
-            allowed_labels=config.allowed_labels
+            allowed_labels=config.allowed_labels,
+            feast_repo_path=config.feast_repo_path,
+            fs_writer_version=config.fs_writer_version
         )
     

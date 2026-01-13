@@ -93,8 +93,14 @@ model_training:
   user_feature_path: "data/features/user_features.json"
   job_feature_path: "data/features/job_features.json"
   final_dataset_path: "data/features/dataset/final_dataset.json"
+  ranking_dataset_path: "data/features/dataset/ranking_dataset.json"
+  ranking_dataset_random_seed: 42
+  ranking_ds_skill_overlap_range: [0, 1]
+  ranking_ds_experience_gap_range: [-5, 5]
   two_tower_dataset_path: "data/datasets/two_tower_dataset.json"
   embed_model_names: "all-MiniLM-L6-v2"
   user_embedding_dim: 783
   job_embedding_dim: 1159
   allowed_labels: [0, 1]
+  feast_repo_path: "C:\\Users\\USER\\Desktop\\Two_stage_recommendation_system\\rs_feature_repo\\feature_repo"
+  fs_writer_version: "v1"    

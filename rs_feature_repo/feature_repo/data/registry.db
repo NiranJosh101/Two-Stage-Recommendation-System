@@ -1,0 +1,54 @@
+
+E
+%
+user_id"user_idJrs_feature_repo
+÷¦™ËÀè³‘÷¦™ËÀè³‘
+_
+?
+job_idPrimary key for job_features"job_idJrs_feature_repo
+©Ô™Ëğ¡¡«©Ô™Ëğ¡¡«
+s
+S
+user_id_job_id Primary key for training_dataset"user_id_job_idJrs_feature_repo
+©Ô™Ë°Åû©Ô™Ë°Åû
+F
+&
+__dummy"
+__dummy_idJrs_feature_repo
+÷¦™ËĞÑ¢”©Ô™Ë€¥ÎË1"$4616b626-89cd-4a15-baee-6a0f2bdb8501*©Ô™Ë¨„êÛ2Ã
+¤
+user_features_v1rs_feature_repouser_id"
+user_embedding2€ç„:Ëevent_timestampZrpC:\Users\USER\Desktop\Two_stage_recommendation_system\rs_feature_repo\feature_repo\data\user_features_v1.parquetŠ1feast.infra.offline_stores.file_source.FileSource¢pC:\Users\USER\Desktop\Two_stage_recommendation_system\rs_feature_repo\feature_repo\data\user_features_v1.parquet’©Ô™Ë¸µëV"©Ô™ËĞÈÙY@b
+user_id
+©Ô™ËÀ½–Z©Ô™ËÀ½–Z2Á
+ 
+job_features_v1rs_feature_repojob_id"
+job_embedding2€ç„:Ëevent_timestampZqoC:\Users\USER\Desktop\Two_stage_recommendation_system\rs_feature_repo\feature_repo\data\job_features_v1.parquetŠ1feast.infra.offline_stores.file_source.FileSource¢oC:\Users\USER\Desktop\Two_stage_recommendation_system\rs_feature_repo\feature_repo\data\job_features_v1.parquet’©Ô™Ë°”ê©"©Ô™Ë¸ÎËÍ@b
+
+job_id
+©Ô™ËàÚˆÎ©Ô™ËàÚˆÎ2
+ü
+training_dataset_v1rs_feature_repouser_id_job_id"
+id"
+user_id"
+
+job_id"	
+label"
+user_embedding"
+job_embedding2€ç„:Óevent_timestampZusC:\Users\USER\Desktop\Two_stage_recommendation_system\rs_feature_repo\feature_repo\data\training_dataset_v1.parquetŠ1feast.infra.offline_stores.file_source.FileSource¢sC:\Users\USER\Desktop\Two_stage_recommendation_system\rs_feature_repo\feature_repo\data\training_dataset_v1.parquet’©Ô™ËØ¿ÄŒ"©Ô™Ë°¯á¦@b
+user_id_job_id
+©Ô™Ëğ³§©Ô™Ëğ³§2›
+ú
+ranking_features_v1rs_feature_repouser_id_job_id"
+user_id"
+
+job_id"
+skill_overlap_score"
+experience_gap"	
+label2€ç„:Óevent_timestampZusC:\Users\USER\Desktop\Two_stage_recommendation_system\rs_feature_repo\feature_repo\data\ranking_features_v1.parquetŠ1feast.infra.offline_stores.file_source.FileSource¢sC:\Users\USER\Desktop\Two_stage_recommendation_system\rs_feature_repo\feature_repo\data\ranking_features_v1.parquet’©Ô™Ë€óØ¿"©Ô™Ë¸³ÔÊ@b
+user_id_job_id
+©Ô™Ë¨¨‘Ë©Ô™Ë¨¨‘Ëbİevent_timestampZrpC:\Users\USER\Desktop\Two_stage_recommendation_system\rs_feature_repo\feature_repo\data\user_features_v1.parquetŠ1feast.infra.offline_stores.file_source.FileSource¢pC:\Users\USER\Desktop\Two_stage_recommendation_system\rs_feature_repo\feature_repo\data\user_features_v1.parquetªrs_feature_repo’©Ô™Ë¸µëV"©Ô™ËĞÈÙYbİevent_timestampZqoC:\Users\USER\Desktop\Two_stage_recommendation_system\rs_feature_repo\feature_repo\data\job_features_v1.parquetŠ1feast.infra.offline_stores.file_source.FileSource¢oC:\Users\USER\Desktop\Two_stage_recommendation_system\rs_feature_repo\feature_repo\data\job_features_v1.parquetªrs_feature_repo’©Ô™Ë°”ê©"©Ô™Ë¸ÎËÍbåevent_timestampZusC:\Users\USER\Desktop\Two_stage_recommendation_system\rs_feature_repo\feature_repo\data\training_dataset_v1.parquetŠ1feast.infra.offline_stores.file_source.FileSource¢sC:\Users\USER\Desktop\Two_stage_recommendation_system\rs_feature_repo\feature_repo\data\training_dataset_v1.parquetªrs_feature_repo’©Ô™ËØ¿ÄŒ"©Ô™Ë°¯á¦båevent_timestampZusC:\Users\USER\Desktop\Two_stage_recommendation_system\rs_feature_repo\feature_repo\data\ranking_features_v1.parquetŠ1feast.infra.offline_stores.file_source.FileSource¢sC:\Users\USER\Desktop\Two_stage_recommendation_system\rs_feature_repo\feature_repo\data\ranking_features_v1.parquetªrs_feature_repo’©Ô™Ë€óØ¿"©Ô™Ë¸³ÔÊz7
+rs_feature_repo$9f7cde30-d82a-4ad8-80eb-1804e042be58Š1
+
+rs_feature_repo
+÷¦™Ë˜«­’÷¦™Ë˜«­’
