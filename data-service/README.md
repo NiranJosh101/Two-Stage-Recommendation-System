@@ -10,7 +10,7 @@ The purpose of this service is **not model training**. Its sole responsibility i
 
 This service is orchestrated with **Apache Airflow**, uses **ephemeral staging storage**, and persists final outputs into a **feature store**.
 
----
+
 
 ## What This Service Produces
 
@@ -25,7 +25,7 @@ Once these artifacts exist, the Data Service is complete.
 
 Downstream services (model training, ANN indexing, ranking) never touch raw data or Airflow internals.
 
----
+
 
 ## System Design Principles
 
@@ -37,7 +37,7 @@ This service was intentionally designed to mirror real production ML systems:
 * **Reproducibility** — deterministic pipelines, rerunnable DAGs
 * **Simplicity over overengineering** — no unnecessary tooling
 
----
+
 
 ## High-Level Data Flow
 
@@ -51,7 +51,7 @@ This service was intentionally designed to mirror real production ML systems:
 
 Airflow enforces ordering, retries, and failure boundaries.
 
----
+
 
 ## Orchestration
 
@@ -72,7 +72,7 @@ Design choices:
 
 Airflow is used **only for orchestration** — never for data processing or storage.
 
----
+
 
 ## Feature Store
 
@@ -87,7 +87,7 @@ Stored artifacts:
 
 The feature store acts as a **contract** between data and modeling services.
 
----
+
 
 ## Why This Design
 
@@ -99,7 +99,7 @@ This project intentionally prioritizes:
 
 Synthetic data and proxy features are used deliberately to focus on **architecture, data flow, and ownership**.
 
----
+
 
 ## How to Run
 
@@ -116,7 +116,7 @@ export PYTHONPATH=$PWD/data-service/src
 
 Trigger the DAG manually from the Airflow UI or CLI.
 
----
+
 
 ## What Comes Next
 
@@ -128,7 +128,7 @@ This Data Service feeds directly into:
 
 Those concerns intentionally live outside this service.
 
----
+
 
 ## Final Note
 
