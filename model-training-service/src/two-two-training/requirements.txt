@@ -5,4 +5,4 @@ pyarrow
 pyyaml
 mlflow
 scikit-learn
-kubeflow-sdk
+kfp

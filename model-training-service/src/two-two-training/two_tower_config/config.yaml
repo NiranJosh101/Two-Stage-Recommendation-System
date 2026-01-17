@@ -1,0 +1,21 @@
+artifacts_root: artifacts
+
+model:
+  user_embedding_dim: 783
+  job_embedding_dim: 1159
+  output_dim: 256
+  hidden_dims: [512, 256]
+
+train:
+  epochs: 10
+  batch_size: 1024
+  learning_rate: 0.001
+  temperature: 0.07
+  top_k: 10
+  min_recall_threshold: 0.7
+  val_size: 0.2
+  num_workers: 2
+
+mlflow:
+  experiment_name: "two_tower_retriever"
+  model_name: "job_recommender_v1"

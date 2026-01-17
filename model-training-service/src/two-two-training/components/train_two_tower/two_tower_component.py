@@ -4,92 +4,84 @@ import yaml
 import torch
 from torch.utils.data import DataLoader
 
-# Importing from our local src/two_tower package
 
+from two_tower_config.config_manager import two_tower_ConfigurationManager
 from src_retriever.two_tower.retriver_model_archi import TwoTowerModel
 from src_retriever.two_tower.retriver_training import TwoTowerTrainer
 from src_retriever.two_tower.schema_validation import TowerSchema
 from src_retriever.two_tower.dataset import JobDataset
+from src_retriever.two_tower.data_load import prepare_data
+
 
 def run_training(args):
-    # 1. Load Configuration
-    with open(args.config, 'r') as f:
-        config = yaml.safe_load(f)
+    # 1. Initialize Configuration Manager
+    config_manager = two_tower_ConfigurationManager(args.config)
+    
+    # Pull separate config entities
+    model_config = config_manager.get_model_config()
+    train_config = config_manager.get_training_config(args.checkpoint_path)
+    mlflow_config = config_manager.get_mlflow_config()
 
-    # 2. Setup Device and Directories
+    # 2. Data Preparation
+    print(f"Fetching data from: {args.feature_store_uri}")
+    train_file, val_file = prepare_data(
+        feature_store_uri=args.feature_store_uri,
+        temp_dir="./data_splits",
+        val_size=0.2
+    )
+
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    os.makedirs(os.path.dirname(args.checkpoint_path), exist_ok=True)
-    
-    print(f"Starting training on device: {device}")
+    os.makedirs(train_config.checkpoint_path.parent, exist_ok=True)
 
-    # 3. Initialize Schemas
-    # These validate that our pre-computed vectors are 783 and 1159 respectively
-    user_schema = TowerSchema(
-        feature_name="user_embedding", 
-        expected_dim=config['model']['user_embedding_dim']
-    )
-    job_schema = TowerSchema(
-        feature_name="job_embedding", 
-        expected_dim=config['model']['job_embedding_dim']
-    )
+    # 3. Initialize Schemas & Model
+    user_schema = TowerSchema("user_embedding", model_config.user_embedding_dim)
+    job_schema = TowerSchema("job_embedding", model_config.job_embedding_dim)
 
-    # 4. Initialize Model
     model = TwoTowerModel(
-        user_dim=config['model']['user_embedding_dim'],
-        job_dim=config['model']['job_embedding_dim'],
-        output_dim=config['model']['output_dim'],
-        hidden_dims=config['model']['hidden_dims']
-    )
+        user_dim=model_config.user_embedding_dim,
+        job_dim=model_config.job_embedding_dim,
+        output_dim=model_config.output_dim,
+        hidden_dims=model_config.hidden_dims
+    ).to(device)
 
-    # 5. Prepare DataLoaders
-    # We use is_eval=True for the validation set to ensure 'true_item_indices' is present
-    train_dataset = JobDataset(args.train_path, is_eval=False)
-    val_dataset = JobDataset(args.val_path, is_eval=True)
-
+    # 4. Datasets & Loaders
     train_loader = DataLoader(
-        train_dataset, 
-        batch_size=config['train']['batch_size'], 
-        shuffle=True,
-        num_workers=2
+        JobDataset(train_file, is_eval=False), 
+        batch_size=train_config.batch_size, 
+        shuffle=True
     )
-    
     val_loader = DataLoader(
-        val_dataset, 
-        batch_size=config['train']['batch_size'],
+        JobDataset(val_file, is_eval=True), 
+        batch_size=train_config.batch_size, 
         shuffle=False
     )
 
-    # 6. Initialize and Run Trainer
-    # Note: loss_fn (BCE) and MLflow tracking are handled inside the trainer
+    # 5. Initialize Trainer
     trainer = TwoTowerTrainer(
         model=model,
         user_schema=user_schema,
         job_schema=job_schema,
         train_dataloader=train_loader,
-        learning_rate=float(config['train']['learning_rate']),
-        temperature=float(config.get('train', {}).get('temperature', 1.0)),
+        learning_rate=train_config.learning_rate,
+        temperature=train_config.temperature,
         device=device,
-        checkpoint_path=args.checkpoint_path,
-        experiment_name=config['mlflow']['experiment_name'],
-        model_name=config['mlflow']['model_name']
+        checkpoint_path=str(train_config.checkpoint_path),
+        experiment_name=mlflow_config.experiment_name,
+        model_name=mlflow_config.model_name
     )
 
-    # 7. Start Training & Evaluation
-    # min_recall_threshold handles the auto-promotion to 'Production' in MLflow
+    # 6. Start Training
     trainer.train(
-        epochs=config['train']['epochs'],
+        epochs=train_config.epochs,
         val_dataloader=val_loader,
-        k=config['train']['top_k'],
-        min_recall_threshold=config['train'].get('min_recall_threshold', 0.7)
+        k=train_config.top_k,
+        min_recall_threshold=train_config.min_recall_threshold
     )
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    # Paths can be local or mapped from a cloud bucket (S3/GCS) in a pipeline
-    parser.add_argument("--config", type=str, required=True, help="Path to two_tower.yaml")
-    parser.add_argument("--train-path", type=str, required=True, help="Path to training parquet")
-    parser.add_argument("--val-path", type=str, required=True, help="Path to validation parquet")
+    parser.add_argument("--config", type=str, default="two_tower_config/config.yaml")
+    parser.add_argument("--feature-store-uri", type=str, required=True)
     parser.add_argument("--checkpoint-path", type=str, default="./checkpoints/two_tower.pt")
     
-    args = parser.parse_args()
-    run_training(args)
+    run_training(parser.parse_args())

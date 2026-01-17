@@ -34,8 +34,8 @@ class TwoTowerModel(nn.Module):
     """
     def __init__(
         self,
-        user_dim: int = 783,
-        job_dim: int = 1159,
+        user_dim: int,
+        job_dim: int,
         hidden_dims: list[int] = [512, 256],
         output_dim: int = 128,
     ):
