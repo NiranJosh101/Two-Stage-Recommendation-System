@@ -9,7 +9,7 @@ def train_two_tower_op(
 ):
     return dsl.ContainerSpec(
         image='gcr.io/your-project/train_two_tower:latest',
-        command=['python', 'train.py'], # Points to your training script
+        command=['python', 'retriver_training.py'], # Points to your training script
         args=[
             '--feature-store-uri', feature_store_uri,
             '--config', config_path,

@@ -1,35 +1,29 @@
-# 1. Use an official PyTorch base image with CUDA support
-# This ensures all drivers and C++ extensions are pre-configured
-FROM pytorch/pytorch:2.1.0-cuda12.1-cudnn8-devel
+# ===== Base image =====
+FROM python:3.10-slim
 
-# 2. Set the working directory
+# ===== Set working directory =====
 WORKDIR /app
 
-# 3. Prevent Python from writing .pyc files and enable unbuffered logging
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-
-# 4. Install system dependencies (needed for certain python libs or parquet handling)
+# ===== Install system dependencies (needed for pyarrow, torch, etc.) =====
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
-    curl \
+    libglib2.0-0 \
+    libgomp1 \
     && rm -rf /var/lib/apt/lists/*
 
-# 5. Copy requirements first to leverage Docker layer caching
+# ===== Install PyTorch CPU-only =====
+RUN pip install --no-cache-dir torch==2.0.1+cpu --index-url https://download.pytorch.org/whl/cpu
+
+
+# ===== Copy requirements and install other Python packages =====
 COPY requirements.txt .
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt \
+    && rm -rf /root/.cache/pip
 
-# 6. Copy the source code and install the local 'two_tower' package
-# This allows 'import two_tower' to work anywhere in the container
-COPY src/ /app/src/
-COPY setup.py /app/
-RUN pip install -e /app/src/
+# ===== Copy project code =====
+COPY src_retriever/ src_retriever/
+COPY two_tower_config/ two_tower_config/
+COPY components/train_two_tower/two_tower_component.py two_tower_component.py
 
-# 7. Copy the component entrypoint script and default config
-COPY components/train_two_tower/component.py /app/component.py
-COPY configs/two_tower.yaml /app/configs/two_tower.yaml
-
-# 8. Set the entrypoint to our component script
-# This allows the pipeline to pass arguments like --train-path directly
-ENTRYPOINT ["python", "component.py"]
+# ===== Set entrypoint =====
+ENTRYPOINT ["python", "two_tower_component.py"]
