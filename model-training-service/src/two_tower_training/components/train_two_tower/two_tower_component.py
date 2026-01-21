@@ -1,16 +1,16 @@
 import argparse
+from pathlib import Path
 import os
 import yaml
 import torch
 from torch.utils.data import DataLoader
 
-
-from two_tower_config.config_manager import two_tower_ConfigurationManager
-from src_retriever.two_tower.retriver_model_archi import TwoTowerModel
-from src_retriever.two_tower.retriver_training import TwoTowerTrainer
-from src_retriever.two_tower.schema_validation import TowerSchema
-from src_retriever.two_tower.dataset import JobDataset
-from src_retriever.two_tower.data_load import prepare_data
+from src.two_tower_training.src_retriever.two_tower_config.config_manager import two_tower_ConfigurationManager
+from src.two_tower_training.src_retriever.two_tower.retriver_model_archi import TwoTowerModel
+from src.two_tower_training.src_retriever.two_tower.retriver_training import TwoTowerTrainer
+from src.two_tower_training.src_retriever.two_tower.schema_validation import TowerSchema 
+from src.two_tower_training.src_retriever.two_tower.dataset import JobDataset
+from src.two_tower_training.src_retriever.two_tower.data_load import prepare_data
 
 
 def run_training(args):
@@ -24,6 +24,7 @@ def run_training(args):
 
     # 2. Data Preparation
     print(f"Fetching data from: {args.feature_store_uri}")
+    os.makedirs("./data_splits", exist_ok=True)
     train_file, val_file = prepare_data(
         feature_store_uri=args.feature_store_uri,
         temp_dir="./data_splits",
@@ -31,7 +32,10 @@ def run_training(args):
     )
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    os.makedirs(train_config.checkpoint_path.parent, exist_ok=True)
+    
+    # Ensure the output directory exists (Handle string vs Path object)
+    output_file = Path(args.checkpoint_path)
+    os.makedirs(output_file.parent, exist_ok=True)
 
     # 3. Initialize Schemas & Model
     user_schema = TowerSchema("user_embedding", model_config.user_embedding_dim)
@@ -65,7 +69,7 @@ def run_training(args):
         learning_rate=train_config.learning_rate,
         temperature=train_config.temperature,
         device=device,
-        checkpoint_path=str(train_config.checkpoint_path),
+        checkpoint_path=str(output_file),
         experiment_name=mlflow_config.experiment_name,
         model_name=mlflow_config.model_name
     )
@@ -78,10 +82,12 @@ def run_training(args):
         min_recall_threshold=train_config.min_recall_threshold
     )
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", type=str, default="two_tower_config/config.yaml")
     parser.add_argument("--feature-store-uri", type=str, required=True)
-    parser.add_argument("--checkpoint-path", type=str, default="./checkpoints/two_tower.pt")
+    parser.add_argument("--checkpoint-path", type=str, required=True) # Required for KFP
     
-    run_training(parser.parse_args())
+    args = parser.parse_args()
+    run_training(args)

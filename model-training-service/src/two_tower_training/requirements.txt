@@ -5,3 +5,4 @@ pyyaml
 mlflow
 scikit-learn
 kfp
+python-box

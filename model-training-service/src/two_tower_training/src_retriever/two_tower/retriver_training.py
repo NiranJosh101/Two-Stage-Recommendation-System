@@ -7,9 +7,9 @@ import mlflow.pytorch
 from mlflow.tracking import MlflowClient
 
 
-from retriver_model_archi import TwoTowerModel
-from schema_validation import TwoTowerValidator, TowerSchema
-from two_tower.metrics import recall_at_k, mrr_at_k, ndcg_at_k
+
+
+from src.two_tower_training.src_retriever.two_tower.metrics import recall_at_k, mrr_at_k, ndcg_at_k
 
 
 
