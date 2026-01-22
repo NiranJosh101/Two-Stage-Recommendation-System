@@ -40,12 +40,12 @@ class JobCleaner:
                 job.get("job_is_remote")
             ),
 
-            "job_min_salary": self.normalizer.normalize_salary(
-                job.get("job_min_salary")
-            ),
-            "job_max_salary": self.normalizer.normalize_salary(
-                job.get("job_max_salary")
-            ),
+            # "job_min_salary": self.normalizer.normalize_salary(
+            #     job.get("job_min_salary")
+            # ),
+            # "job_max_salary": self.normalizer.normalize_salary(
+            #     job.get("job_max_salary")
+            # ),
         }
     
 

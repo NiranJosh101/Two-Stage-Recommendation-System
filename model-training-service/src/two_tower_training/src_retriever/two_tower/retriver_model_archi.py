@@ -12,7 +12,7 @@ class Tower(nn.Module):
         layers = []
         curr_dim = input_dim
         
-        # Iteratively build the MLP
+        
         for h_dim in hidden_dims:
             layers.append(nn.Linear(curr_dim, h_dim))
             layers.append(nn.BatchNorm1d(h_dim)) # Using BatchNorm for stable training
@@ -45,14 +45,12 @@ class TwoTowerModel(nn.Module):
         self.job_tower = Tower(job_dim, hidden_dims, output_dim)
 
     def forward(self, user_features: torch.Tensor, job_features: torch.Tensor) -> torch.Tensor:
-        # 1. Generate representations
+       
         user_vector = self.user_tower(user_features)
         job_vector = self.job_tower(job_features)
 
-        # 2. L2 Normalize for Cosine Similarity (standard for retrieval)
+       
         user_vector = F.normalize(user_vector, p=2, dim=1)
         job_vector = F.normalize(job_vector, p=2, dim=1)
 
-        # 3. Compute similarity (dot product of normalized vectors)
-        # Returns shape [batch_size]
         return torch.sum(user_vector * job_vector, dim=1)

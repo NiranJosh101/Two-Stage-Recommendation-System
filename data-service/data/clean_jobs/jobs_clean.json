@@ -9,9 +9,7 @@
     "job_city": "washington",
     "job_state": "district of columbia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "GqcDcRg0BMYAN5o3AAAAAA==",
@@ -23,9 +21,7 @@
     "job_city": "washington",
     "job_state": "district of columbia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "HTUHYKP-lL41ETveAAAAAA==",
@@ -37,9 +33,7 @@
     "job_city": "silver spring",
     "job_state": "maryland",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": 42627.95,
-    "job_max_salary": 63379.89
+    "job_is_remote": false
   },
   {
     "job_id": "JFYcKPmF4BH34gcsAAAAAA==",
@@ -51,9 +45,7 @@
     "job_city": "washington",
     "job_state": "district of columbia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": 82000.0,
-    "job_max_salary": 141450.0
+    "job_is_remote": false
   },
   {
     "job_id": "4n0eiS1-_q3jAPGaAAAAAA==",
@@ -65,9 +57,7 @@
     "job_city": "arlington",
     "job_state": "virginia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": 185000.0,
-    "job_max_salary": 225000.0
+    "job_is_remote": false
   },
   {
     "job_id": "xPM33LYRNzXQB-GRAAAAAA==",
@@ -79,9 +69,7 @@
     "job_city": "washington",
     "job_state": "district of columbia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "kLtScUBpRCCTj3UmAAAAAA==",
@@ -93,9 +81,7 @@
     "job_city": "washington",
     "job_state": "district of columbia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "2Q1BcbwuoJ0IrST5AAAAAA==",
@@ -107,9 +93,7 @@
     "job_city": "washington",
     "job_state": "district of columbia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": 200000.0,
-    "job_max_salary": 240000.0
+    "job_is_remote": false
   },
   {
     "job_id": "ELpj2bvO5c3ZdayHAAAAAA==",
@@ -121,9 +105,7 @@
     "job_city": "washington",
     "job_state": "district of columbia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "P0Y6JmGJZTvnPTuOAAAAAA==",
@@ -135,9 +117,7 @@
     "job_city": "hyattsville",
     "job_state": "maryland",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "vAa7AU4qxD75VtgCAAAAAA==",
@@ -149,9 +129,7 @@
     "job_city": "bethesda",
     "job_state": "maryland",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "tLS6gCyDJtizssL9AAAAAA==",
@@ -163,9 +141,7 @@
     "job_city": "washington",
     "job_state": "district of columbia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "qMFnn-iqjI_1BwSgAAAAAA==",
@@ -177,9 +153,7 @@
     "job_city": "washington",
     "job_state": "district of columbia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": 63750.0,
-    "job_max_salary": 180400.0
+    "job_is_remote": false
   },
   {
     "job_id": "j6lUGU-ZXxHjYtDkAAAAAA==",
@@ -191,9 +165,7 @@
     "job_city": "washington",
     "job_state": "district of columbia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "vM5xpUXBaCZnJQdeAAAAAA==",
@@ -205,9 +177,7 @@
     "job_city": "washington",
     "job_state": "district of columbia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "xGp_usHNu4A_OOWDAAAAAA==",
@@ -219,9 +189,7 @@
     "job_city": "rockville",
     "job_state": "maryland",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": 75000.0,
-    "job_max_salary": 95000.0
+    "job_is_remote": false
   },
   {
     "job_id": "UQhvGnSGFxmaKxn4AAAAAA==",
@@ -233,9 +201,7 @@
     "job_city": "arlington",
     "job_state": "virginia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": 68300.0,
-    "job_max_salary": 220000.0
+    "job_is_remote": false
   },
   {
     "job_id": "DabVMK5F1w5dEY5BAAAAAA==",
@@ -247,9 +213,7 @@
     "job_city": "washington",
     "job_state": "district of columbia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "-9_6TEEJFAdFcJqNAAAAAA==",
@@ -261,9 +225,7 @@
     "job_city": "washington",
     "job_state": "district of columbia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "NvAcdJu5CBRgx7H3AAAAAA==",
@@ -275,9 +237,7 @@
     "job_city": "washington",
     "job_state": "district of columbia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "58lTlA1TurIUqjEnAAAAAA==",
@@ -289,9 +249,7 @@
     "job_city": "westlake",
     "job_state": "maryland",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "L7m7kvW20XhNjSnCAAAAAA==",
@@ -303,9 +261,7 @@
     "job_city": "washington",
     "job_state": "district of columbia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "dmuaGOeNSLbD40KWAAAAAA==",
@@ -317,9 +273,7 @@
     "job_city": "arlington",
     "job_state": "virginia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "pkrscD1LKNxu5zCMAAAAAA==",
@@ -331,9 +285,7 @@
     "job_city": "mclean",
     "job_state": "virginia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "xyQF7Fv4sjptDMw9AAAAAA==",
@@ -345,9 +297,7 @@
     "job_city": "alexandria",
     "job_state": "virginia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": 74000.0,
-    "job_max_salary": 90000.0
+    "job_is_remote": false
   },
   {
     "job_id": "ZOer0IBDl63kQAPgAAAAAA==",
@@ -359,9 +309,7 @@
     "job_city": "severn",
     "job_state": "maryland",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "-xac73Tg532n7hfJAAAAAA==",
@@ -373,9 +321,7 @@
     "job_city": "washington",
     "job_state": "district of columbia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": 124000.0,
-    "job_max_salary": 162000.0
+    "job_is_remote": false
   },
   {
     "job_id": "OI5k4DaQ56M2k1mEAAAAAA==",
@@ -387,9 +333,7 @@
     "job_city": "laurel",
     "job_state": "maryland",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "KgOnApYhU-9SvOTMAAAAAA==",
@@ -401,9 +345,7 @@
     "job_city": "arlington",
     "job_state": "virginia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "S1a0KAeYr6M9C6TwAAAAAA==",
@@ -415,9 +357,7 @@
     "job_city": "bethesda",
     "job_state": "maryland",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": 80000.0,
-    "job_max_salary": 120000.0
+    "job_is_remote": false
   },
   {
     "job_id": "o0sZR8mxSGdzYRYRAAAAAA==",
@@ -429,9 +369,7 @@
     "job_city": "baltimore",
     "job_state": "maryland",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "VLda3_mzMukG1dJLAAAAAA==",
@@ -443,9 +381,7 @@
     "job_city": "washington",
     "job_state": "district of columbia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "OC2BJw5-k4PuGkZiAAAAAA==",
@@ -457,9 +393,7 @@
     "job_city": "falls church",
     "job_state": "virginia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": 77000.0,
-    "job_max_salary": 101000.0
+    "job_is_remote": false
   },
   {
     "job_id": "mkQU1D_Al6J-Hmr3AAAAAA==",
@@ -471,9 +405,7 @@
     "job_city": "gaithersburg",
     "job_state": "maryland",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "ZcbpkRFcgN4L2IqEAAAAAA==",
@@ -485,9 +417,7 @@
     "job_city": "annapolis",
     "job_state": "maryland",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "cV3TKbpuhKdxjkJIAAAAAA==",
@@ -499,9 +429,7 @@
     "job_city": "washington",
     "job_state": "district of columbia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "S2EQOyRCelk7zP4dAAAAAA==",
@@ -513,9 +441,7 @@
     "job_city": "vienna",
     "job_state": "virginia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": 30.3,
-    "job_max_salary": 40.45
+    "job_is_remote": false
   },
   {
     "job_id": "ze2AZ88Uo9Gsfq3OAAAAAA==",
@@ -527,9 +453,7 @@
     "job_city": "lanham",
     "job_state": "maryland",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": 85000.0,
-    "job_max_salary": 340000.0
+    "job_is_remote": false
   },
   {
     "job_id": "EPwi59V26tOZUXjPAAAAAA==",
@@ -541,9 +465,7 @@
     "job_city": "ellicott city",
     "job_state": "maryland",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "BjXdWbB0ZrsICpT9AAAAAA==",
@@ -555,9 +477,7 @@
     "job_city": "arlington",
     "job_state": "virginia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "49TvhW0dEV6iIvVCAAAAAA==",
@@ -569,9 +489,7 @@
     "job_city": "arlington",
     "job_state": "virginia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": 94944.0,
-    "job_max_salary": 161405.0
+    "job_is_remote": false
   },
   {
     "job_id": "pHSZ6U9_e998deAmAAAAAA==",
@@ -583,9 +501,7 @@
     "job_city": "washington",
     "job_state": "district of columbia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "V8oMFKXFLuwfppEzAAAAAA==",
@@ -597,9 +513,7 @@
     "job_city": "washington",
     "job_state": "district of columbia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": 110000.0,
-    "job_max_salary": 135000.0
+    "job_is_remote": false
   },
   {
     "job_id": "pQr9yk-q8GhKrGaQAAAAAA==",
@@ -611,9 +525,7 @@
     "job_city": "annapolis",
     "job_state": "maryland",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "NVNNSNUbxpepmYijAAAAAA==",
@@ -625,9 +537,7 @@
     "job_city": "arlington",
     "job_state": "virginia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "L1e7E4MPH28S6AKGAAAAAA==",
@@ -639,9 +549,7 @@
     "job_city": "mclean",
     "job_state": "virginia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "AaMxsW4EobR7EKH1AAAAAA==",
@@ -653,9 +561,7 @@
     "job_city": "reston",
     "job_state": "virginia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "VGaTef-4APw_oWMfAAAAAA==",
@@ -667,9 +573,7 @@
     "job_city": "mclean",
     "job_state": "virginia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "9NZypkpeF1sfgyHHAAAAAA==",
@@ -681,9 +585,7 @@
     "job_city": "tysons",
     "job_state": "virginia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "fzpSckyps2tAwnyFAAAAAA==",
@@ -695,9 +597,7 @@
     "job_city": "rockville",
     "job_state": "maryland",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": 65000.0,
-    "job_max_salary": 75000.0
+    "job_is_remote": false
   },
   {
     "job_id": "RfADr_JNKjzgJuE5AAAAAA==",
@@ -709,9 +609,7 @@
     "job_city": "mclean",
     "job_state": "virginia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "912vgEHlAvJSKTH-AAAAAA==",
@@ -723,9 +621,7 @@
     "job_city": "rockville",
     "job_state": "maryland",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "eybrtj6Gp01a-rICAAAAAA==",
@@ -737,9 +633,7 @@
     "job_city": "owings mills",
     "job_state": "maryland",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "2ulgsqo3-0rXaLa5AAAAAA==",
@@ -751,9 +645,7 @@
     "job_city": "mclean",
     "job_state": "virginia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "BY9H8D9pA05KYr4VAAAAAA==",
@@ -765,9 +657,7 @@
     "job_city": "glen burnie",
     "job_state": "maryland",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": 19.25,
-    "job_max_salary": 36.95
+    "job_is_remote": false
   },
   {
     "job_id": "AJJoWOW1y2iGyYUuAAAAAA==",
@@ -779,9 +669,7 @@
     "job_city": "mt rainier",
     "job_state": "maryland",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "5qC9aat3ugPcfRfeAAAAAA==",
@@ -793,9 +681,7 @@
     "job_city": "easton",
     "job_state": "maryland",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "ApuhAbwpppggIDTlAAAAAA==",
@@ -807,9 +693,7 @@
     "job_city": "parkville",
     "job_state": "maryland",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": 17.75,
-    "job_max_salary": 24.65
+    "job_is_remote": false
   },
   {
     "job_id": "3xJ6viRktxqmqO4NAAAAAA==",
@@ -821,9 +705,7 @@
     "job_city": "arlington",
     "job_state": "virginia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "3NkYLhS574lfXmRsAAAAAA==",
@@ -835,9 +717,7 @@
     "job_city": "cockeysville",
     "job_state": "maryland",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": 45000.0,
-    "job_max_salary": 55000.0
+    "job_is_remote": false
   },
   {
     "job_id": "rRWvV04W-qCNxnF_AAAAAA==",
@@ -849,9 +729,7 @@
     "job_city": "forest heights",
     "job_state": "maryland",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "g7W-WS9b3cb4KqI_AAAAAA==",
@@ -863,9 +741,7 @@
     "job_city": "baltimore",
     "job_state": "maryland",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "PHbzOUZ0IWHADz4RAAAAAA==",
@@ -877,9 +753,7 @@
     "job_city": "columbia",
     "job_state": "maryland",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "Kxi9gtE_peU0RI3OAAAAAA==",
@@ -891,9 +765,7 @@
     "job_city": "washington",
     "job_state": "district of columbia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "m1lTcmQmSeduP6W2AAAAAA==",
@@ -905,9 +777,7 @@
     "job_city": "washington",
     "job_state": "district of columbia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "2tFph68Uz-rW5Q4cAAAAAA==",
@@ -919,9 +789,7 @@
     "job_city": "mclean",
     "job_state": "virginia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "PjNY3unD-7vkoIuQAAAAAA==",
@@ -933,9 +801,7 @@
     "job_city": "washington",
     "job_state": "district of columbia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "y2RWbKH2iBoeknVcAAAAAA==",
@@ -947,9 +813,7 @@
     "job_city": "reston",
     "job_state": "virginia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "oGdJz7Rqnw0MDL3zAAAAAA==",
@@ -961,9 +825,7 @@
     "job_city": "pittsburgh",
     "job_state": "pennsylvania",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "D85JxQMKGZah2MSnAAAAAA==",
@@ -975,9 +837,7 @@
     "job_city": "hampton",
     "job_state": "virginia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "68mkLQYYJsJIbtKyAAAAAA==",
@@ -989,9 +849,7 @@
     "job_city": "carrboro",
     "job_state": "north carolina",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "y1r6G15U3T3UXVDLAAAAAA==",
@@ -1003,9 +861,7 @@
     "job_city": "ridgefield park",
     "job_state": "new jersey",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": 85000.0,
-    "job_max_salary": 115000.0
+    "job_is_remote": false
   },
   {
     "job_id": "NQwlRj4WyKlMfWOrAAAAAA==",
@@ -1017,9 +873,7 @@
     "job_city": "philadelphia",
     "job_state": "pennsylvania",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "LQ-L0HImNdNZzD7yAAAAAA==",
@@ -1031,9 +885,7 @@
     "job_city": "ahoskie",
     "job_state": "north carolina",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "uX1-z-7LvRgsvJDrAAAAAA==",
@@ -1045,9 +897,7 @@
     "job_city": "marietta",
     "job_state": "ohio",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "bxjwvB30Z1NwQm3KAAAAAA==",
@@ -1059,9 +909,7 @@
     "job_city": "new york",
     "job_state": "new york",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "_ZLhsv6YK7pceu-HAAAAAA==",
@@ -1073,9 +921,7 @@
     "job_city": "new york",
     "job_state": "new york",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": 214000.0,
-    "job_max_salary": 322000.0
+    "job_is_remote": false
   },
   {
     "job_id": "kojTiAwbHpOq_ro5AAAAAA==",
@@ -1087,9 +933,7 @@
     "job_city": "fairplay",
     "job_state": "maryland",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "_rU6sFGYh2fmCHkCAAAAAA==",
@@ -1101,9 +945,7 @@
     "job_city": "philadelphia",
     "job_state": "pennsylvania",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "7RcrwyGfwnvecgg_AAAAAA==",
@@ -1115,9 +957,7 @@
     "job_city": "new york",
     "job_state": "new york",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "bDlxl9wjC0tRQhDVAAAAAA==",
@@ -1129,9 +969,7 @@
     "job_city": "new york",
     "job_state": "new york",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": 90000.0,
-    "job_max_salary": 130000.0
+    "job_is_remote": false
   },
   {
     "job_id": "Rv1vY1TCqQX4pWAzAAAAAA==",
@@ -1143,9 +981,7 @@
     "job_city": "new york",
     "job_state": "new york",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": 180000.0,
-    "job_max_salary": 200000.0
+    "job_is_remote": false
   },
   {
     "job_id": "Uthjx67jVc7AfhJxAAAAAA==",
@@ -1157,9 +993,7 @@
     "job_city": "edison",
     "job_state": "new jersey",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": 80000.0,
-    "job_max_salary": 120000.0
+    "job_is_remote": false
   },
   {
     "job_id": "sv5mQQx5R_Z0icSmAAAAAA==",
@@ -1171,9 +1005,7 @@
     "job_city": "bronx",
     "job_state": "new york",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "-LyVpIfDUyez8o0tAAAAAA==",
@@ -1185,9 +1017,7 @@
     "job_city": "new york",
     "job_state": "new york",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": 130000.0,
-    "job_max_salary": 180000.0
+    "job_is_remote": false
   },
   {
     "job_id": "SFb022xwgYprsfUsAAAAAA==",
@@ -1199,9 +1029,7 @@
     "job_city": "new york",
     "job_state": "new york",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": 170000.0,
-    "job_max_salary": 210000.0
+    "job_is_remote": false
   },
   {
     "job_id": "_7Zj8xfz_2dHsoSvAAAAAA==",
@@ -1213,9 +1041,7 @@
     "job_city": "lewistown",
     "job_state": "pennsylvania",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "ecNiyuDZ9Ved-fpKAAAAAA==",
@@ -1227,9 +1053,7 @@
     "job_city": "bristow",
     "job_state": "virginia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "_Vq5qQvdo2TVArrVAAAAAA==",
@@ -1241,9 +1065,7 @@
     "job_city": "ruby",
     "job_state": "virginia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "dyuB2TJIBaOZFx2BAAAAAA==",
@@ -1255,9 +1077,7 @@
     "job_city": "manassas",
     "job_state": "virginia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": 85000.0,
-    "job_max_salary": 105000.0
+    "job_is_remote": false
   },
   {
     "job_id": "K5Iv5O96RfP17jcCAAAAAA==",
@@ -1269,9 +1089,7 @@
     "job_city": "baltimore",
     "job_state": "maryland",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": 75000.0,
-    "job_max_salary": 90000.0
+    "job_is_remote": false
   },
   {
     "job_id": "Q41P2ZeYfNVv6dwVAAAAAA==",
@@ -1283,9 +1101,7 @@
     "job_city": "washington",
     "job_state": "district of columbia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "ICC8XYwFpEdxsCwrAAAAAA==",
@@ -1297,9 +1113,7 @@
     "job_city": "bel air",
     "job_state": "maryland",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "jPjiSiRvCPZTqnowAAAAAA==",
@@ -1311,9 +1125,7 @@
     "job_city": "rosedale",
     "job_state": "maryland",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": 44200.0,
-    "job_max_salary": 100000.0
+    "job_is_remote": false
   },
   {
     "job_id": "i7EusneSH38H51OZAAAAAA==",
@@ -1325,9 +1137,7 @@
     "job_city": "triangle",
     "job_state": "virginia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": 17.0,
-    "job_max_salary": 18.0
+    "job_is_remote": false
   },
   {
     "job_id": "6VtBR7ch0_QqEFfJAAAAAA==",
@@ -1339,9 +1149,7 @@
     "job_city": "warrenton",
     "job_state": "virginia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "nS9Zj365PMaSng1_AAAAAA==",
@@ -1353,9 +1161,7 @@
     "job_city": "fredericksburg",
     "job_state": "virginia",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   },
   {
     "job_id": "f2gO7-GpnsAsGfFiAAAAAA==",
@@ -1367,8 +1173,6 @@
     "job_city": "germantown",
     "job_state": "maryland",
     "job_country": "us",
-    "job_is_remote": false,
-    "job_min_salary": NaN,
-    "job_max_salary": NaN
+    "job_is_remote": false
   }
 ]

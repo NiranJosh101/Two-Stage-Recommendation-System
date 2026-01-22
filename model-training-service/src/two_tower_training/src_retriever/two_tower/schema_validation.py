@@ -13,8 +13,8 @@ class TowerSchema:
     """
     Schema for pre-computed embedding towers.
     """
-    feature_name: str     # e.g., "user_embedding" or "job_embedding"
-    expected_dim: int     # e.g., 783 or 1159
+    feature_name: str     
+    expected_dim: int     
     check_nan: bool = True
 
     def validate_batch(self, tensor: torch.Tensor) -> None:
@@ -27,8 +27,7 @@ class TowerSchema:
                 f"Feature '{self.feature_name}' must be a float tensor, got {tensor.dtype}"
             )
 
-        # 2. Dimensionality Check
-        # Expecting [batch_size, expected_dim]
+        
         if tensor.ndim != 2:
             raise SchemaValidationError(
                 f"Feature '{self.feature_name}' must be 2D [batch_size, dim], got {tensor.ndim}D"
@@ -41,7 +40,7 @@ class TowerSchema:
                 f"Expected {self.expected_dim}, got {actual_dim}"
             )
 
-        # 3. Data Integrity (NaNs and Infs)
+        
         if self.check_nan:
             if torch.isnan(tensor).any():
                 raise SchemaValidationError(f"NaN detected in '{self.feature_name}' batch")
@@ -57,11 +56,11 @@ class TwoTowerValidator:
         self.job_schema = job_schema
 
     def __call__(self, user_batch: torch.Tensor, job_batch: torch.Tensor):
-        # Validate individual towers
+      
         self.user_schema.validate_batch(user_batch)
         self.job_schema.validate_batch(job_batch)
 
-        # Cross-tower consistency (Batch size must match)
+       
         if user_batch.shape[0] != job_batch.shape[0]:
             raise SchemaValidationError(
                 f"Batch size mismatch: User ({user_batch.shape[0]}) vs "
