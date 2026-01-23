@@ -1,0 +1,21 @@
+model_config:
+  target: "label"
+  group_id: "user_id"
+  features: 
+    - "skill_overlap_score"
+    - "experience_gap"
+  xgboost_params:
+    objective: "rank:ndcg"
+    eval_metric: "ndcg@5"
+    eta: 0.1
+    max_depth: 6
+    verbosity: 1
+
+training_config:
+  num_rounds: 150
+  val_size: 0.2
+  early_stopping_rounds: 10
+
+mlflow_config:
+  experiment_name: "job-ranking-v1"
+  model_name: "xgboost-ranker"
