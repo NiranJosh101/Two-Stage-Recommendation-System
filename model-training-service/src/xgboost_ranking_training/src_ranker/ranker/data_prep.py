@@ -1,13 +1,13 @@
 import pandas as pd
-import os
-from sklearn.model_selection import GroupShadowTarget  # Or a manual group split
 import numpy as np
+import os
+from sklearn.model_selection import GroupShuffleSplit
 
 def prepare_data(
     feature_store_uri: str, 
-    temp_dir: str = "./temp_data", 
+    temp_dir: str = "./data_splits", 
     val_size: float = 0.2,
-    group_col: str = "user_id" # Critical for ranking
+    group_col: str = "user_id"
 ):
     try:
         df = pd.read_parquet(feature_store_uri)
@@ -16,22 +16,16 @@ def prepare_data(
 
     os.makedirs(temp_dir, exist_ok=True)
 
-    # 1. Get unique users
-    unique_users = df[group_col].unique()
+    # Use GroupShuffleSplit to keep users intact
+    gss = GroupShuffleSplit(n_splits=1, test_size=val_size, random_state=42)
     
-    # 2. Shuffle and split the USERS, not the rows
-    np.random.seed(42)
-    np.random.shuffle(unique_users)
-    
-    split_idx = int(len(unique_users) * (1 - val_size))
-    train_users = unique_users[:split_idx]
-    val_users = unique_users[split_idx:]
+    # .split returns indices. We use the group_col to define the groups.
+    train_idx, val_idx = next(gss.split(df, groups=df[group_col]))
 
-    # 3. Create splits based on user membership
-    train_df = df[df[group_col].isin(train_users)]
-    val_df = df[df[group_col].isin(val_users)]
+    train_df = df.iloc[train_idx]
+    val_df = df.iloc[val_idx]
 
-    # 4. Save to Parquet
+    # Save to Parquet
     train_path = os.path.join(temp_dir, "train_split.parquet")
     val_path = os.path.join(temp_dir, "val_split.parquet")
 

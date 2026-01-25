@@ -1,0 +1,13 @@
+2026-01-23 11:59:31,291 - root - INFO - Starting XGBoost Ranking Model Training Component
+2026-01-23 11:59:31,303 - root - INFO - Fetching data from: C:\Users\USER\Desktop\Two_stage_recommendation_system\rs_feature_repo\feature_repo\data\ranking_features_v1.parquet
+2026-01-23 11:59:33,499 - root - INFO - Formatting data for Listwise Ranking...
+2026-01-23 11:59:41,879 - __name__ - INFO - setup plugin alembic.autogenerate.schemas
+2026-01-23 11:59:41,880 - __name__ - INFO - setup plugin alembic.autogenerate.tables
+2026-01-23 11:59:41,881 - __name__ - INFO - setup plugin alembic.autogenerate.types
+2026-01-23 11:59:41,881 - __name__ - INFO - setup plugin alembic.autogenerate.constraints
+2026-01-23 11:59:41,881 - __name__ - INFO - setup plugin alembic.autogenerate.defaults
+2026-01-23 11:59:41,881 - __name__ - INFO - setup plugin alembic.autogenerate.comments
+2026-01-23 11:59:44,303 - root - INFO - Starting XGBoost training...
+2026-01-23 11:59:44,482 - root - INFO - Calculating Ranking Metrics...
+2026-01-23 11:59:44,573 - root - INFO - Training Metrics: {'mean_ndcg_at_5': np.float64(0.761009481069898)}
+2026-01-23 12:00:14,408 - root - INFO - \u2705 Model saved at: artifacts/ranking_model/model.json

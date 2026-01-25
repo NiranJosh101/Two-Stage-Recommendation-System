@@ -1,0 +1,22 @@
+artifact_path: file:C:/Users/USER/Desktop/Two_stage_recommendation_system/model-training-service/mlruns/2/models/m-d4224e5db7b443739daf37dec7bdccd6/artifacts
+flavors:
+  python_function:
+    data: model.ubj
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.xgboost
+    python_version: 3.12.8
+  xgboost:
+    code: null
+    data: model.ubj
+    model_class: xgboost.core.Booster
+    model_format: ubj
+    xgb_version: 3.1.3
+mlflow_version: 3.8.1
+model_id: m-d4224e5db7b443739daf37dec7bdccd6
+model_size_bytes: 48703
+model_uuid: m-d4224e5db7b443739daf37dec7bdccd6
+prompts: null
+run_id: 28dcb0230682417cb6abe6117f9dd56d
+utc_time_created: '2026-01-23 19:59:44.829004'
