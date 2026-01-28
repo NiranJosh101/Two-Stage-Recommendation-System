@@ -18,15 +18,12 @@ class FeatureReader:
     def _transform_to_tensors(self, df: pd.DataFrame) -> Dict:
         job_ids = df['job_id'].values.tolist()
         
-        # 1. Grab the column that actually exists in your data
-        # We convert the list of lists into a clean 2D numpy array
+   
+        # convert the list of lists into a clean 2D numpy array
         raw_features = np.array(df['job_embedding'].tolist()) 
         
-        # 2. Dimension Check
-        # In your previous error, we expected 1159. 
-        # Check if raw_features.shape[1] is 1159.
+       
         if raw_features.shape[1] != 1159:
-             # Just a warning for now so we can see what the real number is
              print(f"Note: Input features have dimension {raw_features.shape[1]}")
 
         return {

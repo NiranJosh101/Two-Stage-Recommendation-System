@@ -12,13 +12,13 @@ class JobEmbedder:
     @torch.inference_mode()
     def compute(self, batch: Dict) -> Tuple[List[str], np.ndarray]:
         job_ids = batch["ids"]
-        # We expect the FeatureReader to provide a single tensor named 'job_input'
+        
         job_tensors = batch["tensors"]["job_input"].to(self.device)
 
-        # 1. Access the sub-module 'job_tower' directly to skip the user-tower logic
+      
         job_embeddings = self.model.job_tower(job_tensors)
 
-        # 2. Normalize (Ensures compatibility with the Dot Product training)
+        # Normalize (Ensures compatibility with the Dot Product training)
         normalized_embeddings = F.normalize(job_embeddings, p=2, dim=1)
 
         return job_ids, normalized_embeddings.cpu().numpy()

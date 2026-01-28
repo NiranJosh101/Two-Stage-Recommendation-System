@@ -1,5 +1,7 @@
 import os
 import logging
+import sys
+from venv import logger
 from dotenv import load_dotenv
 
 from src.model_loader import ModelLoader
@@ -8,52 +10,60 @@ from src.embedder import JobEmbedder
 from src.vector_writer import VectorWriter
 from src.pc_embeds_index import IndexManager 
 
+from src.config.config_manager import ConfigurationManager
+
+from src.utils.logging import logging
+from src.utils.exception import RecommendationsystemDataServie
+
 import mlflow
 
-# Tell MLflow to look at the server you started in the other terminal
+
 mlflow.set_tracking_uri("http://127.0.0.1:5000")
 
 load_dotenv() 
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+
+
 
 def run_embedding_pipeline():
-    MODEL_NAME = "job_recommender_v1"
-    MODEL_VERSION = "2"
-    DATA_PATH = r"C:\Users\USER\Desktop\Two_stage_recommendation_system\rs_feature_repo\feature_repo\data\job_features_v1.parquet"
-    VDB_API_KEY = os.getenv("PINECONE_API_KEY")
-    INDEX_NAME = "job-embeddings"
-
     try:
-        logger.info("Initializing services...")
         
-        # 1. INFRASTRUCTURE CHECK
-        # We do this first so we don't waste time loading the model if the DB is down
-        manager = IndexManager(api_key=VDB_API_KEY, index_name=INDEX_NAME)
-        manager.ensure_index_exists(dimension=256, metric="dotproduct")
+        config_manager = ConfigurationManager()
+        
+        
+        ml_cfg = config_manager.get_mlflow_config()
+        data_cfg = config_manager.get_data_config()
+        pc_cfg = config_manager.get_pinecone_config()
 
-        # 2. LOAD AI ASSETS
-        model_wrapper = ModelLoader(MODEL_NAME, MODEL_VERSION)
+        logging.info("Initializing services with dynamic config...")
+        
+        
+        manager = IndexManager(api_key=pc_cfg.api_key, index_name=pc_cfg.index_name)
+        manager.ensure_index_exists(dimension=pc_cfg.dimension, metric=pc_cfg.metric)
+
+    
+        import mlflow
+        mlflow.set_tracking_uri(ml_cfg.tracking_uri)
+        
+        model_wrapper = ModelLoader(ml_cfg.model_name, ml_cfg.model_version)
         model = model_wrapper.get_model()
         
-        # 3. SETUP DATA FLOW
-        reader = FeatureReader(source_path=DATA_PATH, batch_size=1024)
+       
+        reader = FeatureReader(source_path=str(data_cfg.source_path), batch_size=data_cfg.batch_size)
         embedder = JobEmbedder(model=model)
-        writer = VectorWriter(api_key=VDB_API_KEY, index_name=INDEX_NAME)
+        writer = VectorWriter(api_key=pc_cfg.api_key, index_name=pc_cfg.index_name)
 
-        # 4. EXECUTION
-        logger.info(f"Starting batch embedding from {DATA_PATH}...")
+      
+        logging.info(f"Starting batch embedding from {data_cfg.source_path}...")
         for batch_count, batch in enumerate(reader.stream_batches()):
             job_ids, vectors = embedder.compute(batch)
             writer.upsert_batch(ids=job_ids, vectors=vectors)
-            logger.info(f"Processed batch {batch_count + 1} ({len(job_ids)} jobs)")
-
-        logger.info("Pipeline completed successfully.")
+            logging.info(f"Processed batch {batch_count + 1} ({len(job_ids)} jobs)")
+        logging.info("Pipeline completed successfully.")
 
     except Exception as e:
-        logger.error(f"Pipeline failed: {e}")
-        raise
+        logging.error("An error occurred during the embedding pipeline execution.")
+        raise RecommendationsystemDataServie(e, sys) from e
 
 if __name__ == "__main__":
     run_embedding_pipeline()

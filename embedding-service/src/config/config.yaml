@@ -1,0 +1,13 @@
+mlflow_config:
+  model_name: "job_recommender_v1"
+  model_version: "2"
+  tracking_uri: "http://127.0.0.1:5000"
+
+data_config:
+  source_path: "C:\\Users\\USER\\Desktop\\Two_stage_recommendation_system\\rs_feature_repo\\feature_repo\\data\\job_features_v1.parquet"
+  batch_size: 1024
+
+pinecone_config:
+  index_name: "job-embeddings"
+  dimension: 256
+  metric: "dotproduct"
