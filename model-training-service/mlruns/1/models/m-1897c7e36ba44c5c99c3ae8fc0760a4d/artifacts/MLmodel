@@ -1,0 +1,23 @@
+artifact_path: file:C:/Users/USER/Desktop/Two_stage_recommendation_system/model-training-service/mlruns/1/models/m-1897c7e36ba44c5c99c3ae8fc0760a4d/artifacts
+flavors:
+  python_function:
+    config:
+      device: null
+    data: data
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.pytorch
+    pickle_module_name: mlflow.pytorch.pickle_module
+    python_version: 3.12.8
+  pytorch:
+    code: null
+    model_data: data
+    pytorch_version: 2.9.1+cpu
+mlflow_version: 3.8.1
+model_id: m-1897c7e36ba44c5c99c3ae8fc0760a4d
+model_size_bytes: 5596563
+model_uuid: m-1897c7e36ba44c5c99c3ae8fc0760a4d
+prompts: null
+run_id: 9c19a85333c748829d0daef7ccdf6dd1
+utc_time_created: '2026-01-27 14:02:24.084418'
