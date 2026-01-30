@@ -3,3 +3,4 @@ numpy
 yaml
 feast
 airflow
+redis

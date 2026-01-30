@@ -75,3 +75,10 @@ class modelTrainingConfig:
     allowed_labels: Optional[list[int]]
     feast_repo_path: Optional[str]
     fs_writer_version: Optional[str]
+
+@dataclass(frozen=True)
+class RedisConfig:
+    host: str
+    port: int
+    db: int
+    decode_responses: bool

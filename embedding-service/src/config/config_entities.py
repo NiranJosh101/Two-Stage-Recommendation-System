@@ -18,3 +18,11 @@ class PineconeConfig:
     dimension: int
     metric: str
     api_key: str  # We will pull this from env vars
+
+
+@dataclass(frozen=True)
+class RedisConfig:
+    host: str
+    port: int
+    db: int
+    decode_responses: bool

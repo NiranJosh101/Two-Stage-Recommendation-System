@@ -2,7 +2,7 @@ import yaml
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-from src.config.config_entities import MLflowConfig, DataConfig, PineconeConfig
+from src.config.config_entities import MLflowConfig, DataConfig, PineconeConfig, RedisConfig
 
 load_dotenv()
 
@@ -34,3 +34,18 @@ class ConfigurationManager:
             metric=config['metric'],
             api_key=os.getenv("PINECONE_API_KEY")
         )
+
+    def get_redis_config(self) -> RedisConfig:
+        """
+        Extracts Redis connection details from the config file.
+        """
+        config = self.config.redis
+
+        redis_config = RedisConfig(
+            host=config.host,
+            port=config.port,
+            db=config.db,
+            decode_responses=config.decode_responses
+        )
+
+        return redis_config

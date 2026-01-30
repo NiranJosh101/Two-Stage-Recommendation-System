@@ -3,7 +3,7 @@ import yaml
 from pathlib import Path
 from src.utils.common import read_yaml
 from src.constants import CONFIG_FILE_PATH
-from src.config.config_entities import JobIngestionConfig, UserDataIngestionConfig, InteractionIngestionConfig, modelTrainingConfig
+from src.config.config_entities import JobIngestionConfig, UserDataIngestionConfig, InteractionIngestionConfig, modelTrainingConfig, RedisConfig
 
 
 class ConfigurationManager:
@@ -92,3 +92,19 @@ class ConfigurationManager:
             fs_writer_version=config.fs_writer_version
         )
     
+    
+    
+    def get_redis_config(self) -> RedisConfig:
+        """
+        Extracts Redis connection details from the config file.
+        """
+        config = self.config.redis
+
+        redis_config = RedisConfig(
+            host=config.host,
+            port=config.port,
+            db=config.db,
+            decode_responses=config.decode_responses
+        )
+
+        return redis_config

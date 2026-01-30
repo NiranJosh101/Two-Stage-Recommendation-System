@@ -11,3 +11,10 @@ pinecone_config:
   index_name: "job-embeddings"
   dimension: 256
   metric: "dotproduct"
+
+
+redis:
+  host: "localhost"
+  port: 6379
+  db: 0
+  decode_responses: True
