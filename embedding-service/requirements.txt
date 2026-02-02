@@ -1,0 +1,6 @@
+pinecone
+fastapi
+uvicorn
+redis
+torch
+sentence-transformers
