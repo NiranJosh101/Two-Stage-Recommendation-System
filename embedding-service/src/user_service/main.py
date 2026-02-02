@@ -2,8 +2,12 @@ import sys
 import logging
 from typing import Optional, Dict, Any
 from fastapi import FastAPI, HTTPException, status
+import mlflow
 from pydantic import BaseModel, Field
 
+
+
+from src.config.config_manager import ConfigurationManager
 from src.utils.exception import RecommendationsystemDataServie
 from src.user_service.feature_reader import UserFeatureReader
 from src.user_service.processor import UserProcessor
@@ -21,38 +25,51 @@ class EmbeddingResponse(BaseModel):
     vector: list[float]
     source: str  # 'redis' or 'payload'
 
-# --- Service Initialization ---
+
 
 app = FastAPI(title="User Embedding Service")
 
-# Global containers for our components
+
 services = {}
 
 @app.on_event("startup")
 async def startup_event():
     """Load models and initialize clients once at startup."""
     try:
-        logging.info("Initializing User Embedding Service components...")
+        logging.info("Initializing User Embedding Service components with dynamic config...")
         
-        # 1. Feature Reader (Redis)
+       
+        config_manager = ConfigurationManager()
+        ml_cfg = config_manager.get_mlflow_config()
+
+        
+        mlflow.set_tracking_uri(ml_cfg.tracking_uri)
+        logging.info(f"MLflow Tracking URI set to: {ml_cfg.tracking_uri}")
+        
+        
         services["reader"] = UserFeatureReader()
         
-        # 2. Processor (Normalizer + SentenceTransformer)
+       
         services["processor"] = UserProcessor()
         
-        # 3. Model Loader (MLflow)
-        loader = UserModelLoader(model_name="user_tower_two_stage", stage="Production")
+       
+        loader = UserModelLoader(
+            model_name=ml_cfg.model_name, 
+            stage=ml_cfg.model_version
+        )
         user_model = loader.load_user_tower()
         
-        # 4. Embedder (Torch Inference)
+    
         services["embedder"] = UserEmbedder(model=user_model)
         
-        logging.info("Service fully initialized and ready for inference.")
+        logging.info(f"Service fully initialized. Model '{ml_cfg.model_name}' (v:{ml_cfg.model_version}) loaded.")
+        
     except Exception as e:
         logging.error(f"Failed to start User Service: {e}")
+       
         sys.exit(1)
 
-# --- Routes ---
+
 
 @app.post("/embed/user", response_model=EmbeddingResponse)
 async def get_user_embedding(request: UserRequest):
@@ -64,13 +81,13 @@ async def get_user_embedding(request: UserRequest):
     user_data = None
     data_source = "unknown"
 
-    # Path A: Returning User
+   
     if request.user_id:
         user_data = services["reader"].fetch_user_features(request.user_id)
         if user_data:
             data_source = "redis"
 
-    # Path B: New User / Cold Start
+    # New User / Cold Start
     if not user_data and request.raw_features:
         user_data = request.raw_features
         # Ensure user_data has a user_id key even if temporary
@@ -86,8 +103,7 @@ async def get_user_embedding(request: UserRequest):
         )
 
     try:
-        # 1. Clean and Transform (Processor)
-        # 2. Run through User Tower (Embedder)
+       
         processed_features = services["processor"].preprocess(user_data)
         vector = services["embedder"].compute(processed_features)
 

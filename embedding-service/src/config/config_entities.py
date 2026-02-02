@@ -18,7 +18,7 @@ class PineconeConfig:
     index_name: str
     dimension: int
     metric: str
-    api_key: str  # We will pull this from env vars
+    api_key: str  
 
 
 @dataclass(frozen=True)

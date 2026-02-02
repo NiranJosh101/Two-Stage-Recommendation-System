@@ -1,0 +1,8 @@
+2026-02-02 07:33:30,013 - root - INFO - Initializing User Embedding Service components with dynamic config...
+2026-02-02 07:33:30,022 - root - INFO - MLflow Tracking URI set to: http://127.0.0.1:5000
+2026-02-02 07:33:30,031 - root - INFO - UserFeatureReader connected to Redis at localhost:6379
+2026-02-02 07:33:30,045 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2026-02-02 07:33:30,045 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-02 07:33:36,249 - root - INFO - Attempting to fetch User Tower from MLflow: models:/job_recommender_v1/2
+2026-02-02 07:33:40,910 - root - INFO - User Tower successfully loaded on cpu
+2026-02-02 07:33:40,915 - root - INFO - Service fully initialized. Model 'job_recommender_v1' (v:2) loaded.

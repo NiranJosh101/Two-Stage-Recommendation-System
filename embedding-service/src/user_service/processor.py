@@ -61,14 +61,14 @@ class UserProcessor:
             if not text:
                 return np.zeros(self.embed_model.get_sentence_embedding_dimension())
             processed_texts = [t if t else " " for t in text]
-            # If it's a list, we might want to mean-pool them into one vector
+            # If it's a list, I might want to mean-pool them into one vector
             embeddings = self.embed_model.encode(processed_texts, convert_to_numpy=True)
             return np.mean(embeddings, axis=0) if embeddings.ndim > 1 else embeddings
 
     def preprocess(self, raw_user_data: Dict[str, Any]) -> np.ndarray:
         """The core 'Factory' that turns JSON into the Model's Input Tensor."""
         
-        # 1. Clean (The 'Cleaner' Logic)
+        # Clean
         user_id = raw_user_data.get("user_id")
         skills = self.normalizer.normalize_string_list(raw_user_data.get("skills"))
         roles = self.normalizer.normalize_string_list(raw_user_data.get("primary_roles"))
@@ -77,7 +77,7 @@ class UserProcessor:
         loc = self.normalizer.normalize_location(raw_user_data.get("location"))
         years_exp = self.normalizer.normalize_years_of_experience(raw_user_data.get("years_of_experience"))
 
-        # 2. Transform (The 'Transformer' Logic)
+        # Transform
         skills_emb = self.get_text_embedding(" ".join(skills))
         roles_emb = self.get_text_embedding(" ".join(roles))
 
@@ -89,7 +89,7 @@ class UserProcessor:
         edu_vec = to_oh(edu_lvl, self.education_levels)
         loc_vec = to_oh(loc, self.locations)
 
-        # 3. Concatenate (Exact same order as Training!)
+        # Concatenate
         return np.concatenate([
             skills_emb,
             roles_emb,
