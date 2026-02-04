@@ -1,0 +1,9 @@
+embedding_service_url: "http://127.0.0.1:8000"
+
+
+pinecone:
+  index_name: "job-embeddings"
+  index_host: "https://job-embeddings-0x54kj0.svc.aped-4627-b74a.pinecone.io"
+  top_k: 50
+  # api_key: "your-pinecone-api-key"
+

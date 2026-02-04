@@ -1,0 +1,4 @@
+pinecone[asyncio]
+httpx
+fastapi
+uvicorn
