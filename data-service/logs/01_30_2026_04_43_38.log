@@ -1,5 +1,0 @@
-2026-01-30 04:43:58,717 - root - INFO - <----- Starting Users Ingestion ----->
-2026-01-30 04:43:58,768 - root - INFO - Generated 30 users
-2026-01-30 04:43:58,773 - root - INFO - Starting Redis hydration...
-2026-01-30 04:44:02,870 - root - ERROR - Redis hydration failed: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
-2026-01-30 04:44:02,870 - root - ERROR - Users Ingestion Failed.

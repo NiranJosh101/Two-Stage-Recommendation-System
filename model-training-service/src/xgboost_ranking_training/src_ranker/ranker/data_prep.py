@@ -16,10 +16,10 @@ def prepare_data(
 
     os.makedirs(temp_dir, exist_ok=True)
 
-    # Use GroupShuffleSplit to keep users intact
+    
     gss = GroupShuffleSplit(n_splits=1, test_size=val_size, random_state=42)
     
-    # .split returns indices. We use the group_col to define the groups.
+   
     train_idx, val_idx = next(gss.split(df, groups=df[group_col]))
 
     train_df = df.iloc[train_idx]

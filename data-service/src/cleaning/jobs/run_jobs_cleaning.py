@@ -2,6 +2,7 @@ import json
 import logging
 from pathlib import Path
 from typing import List, Dict, Any
+import redis
 
 from src.cleaning.jobs.cleaner import JobCleaner
 from src.config.config_manager import ConfigurationManager
@@ -40,6 +41,9 @@ def write_jobs_clean(jobs: List[Dict[str, Any]], path: Path) -> None:
 
 
 
+
+
+
 def deduplicate_jobs(jobs: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     try:
         seen = set()
@@ -59,30 +63,69 @@ def deduplicate_jobs(jobs: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
 
 
 
+
+
+def upload_to_redis(jobs: List[Dict[str, Any]]):
+    try:
+       
+        r = redis.Redis(
+            host='localhost', 
+            port=6379, 
+            password=None,  
+            decode_responses=True
+        )
+
+       
+        if not r.ping():
+            raise ConnectionError("Could not connect to Redis server.")
+
+        logging.info(f"Starting Redis upload for {len(jobs)} items...")
+        print(f"Syncing {len(jobs)} items to Redis...")
+        
+        pipe = r.pipeline()
+        for job in jobs:
+            job_id = job["job_id"]
+          
+            pipe.set(f"item:features:{job_id}", json.dumps(job))
+        
+        pipe.execute()
+        logging.info("Redis upload successful.")
+        print("Successfully synced data to Redis.")
+
+    except Exception as e:
+        logging.error(f"Redis upload failed: {e}")
+        raise RecommendationsystemDataServie(f"Redis sync failed: {e}")
+
+
 def run_jobs_cleaning():
     try:
         logging.info("<=== Starting Jobs Cleaning ===>")
-        print("Loading raw jobs...")
         jobs_raw = load_jobs_raw(RAW_JOBS_PATH)
-
-        print(f"Loaded {len(jobs_raw)} jobs")
-
+        
         cleaner = JobCleaner()
         jobs_cleaned = cleaner.clean_many(jobs_raw)
 
         logging.info("Deduplicating jobs...")
-        print("Deduplicating jobs...")
         jobs_cleaned = deduplicate_jobs(jobs_cleaned)
 
+       
         logging.info("Writing cleaned jobs to file...")
-        print(f"Writing {len(jobs_cleaned)} cleaned jobs...")
         write_jobs_clean(jobs_cleaned, CLEAN_JOBS_PATH)
 
-        logging.info("<=== Job cleaning complete.===>")
-        print("Job cleaning complete.")
+       
+        upload_to_redis(jobs_cleaned)
+
+        logging.info("<=== Job cleaning and Redis sync complete.===>")
     except Exception as e:
         raise RecommendationsystemDataServie(f"Job cleaning failed: {e}") from e
+    
+
+
 
 
 if __name__ == "__main__":
     run_jobs_cleaning()
+
+
+
+    
