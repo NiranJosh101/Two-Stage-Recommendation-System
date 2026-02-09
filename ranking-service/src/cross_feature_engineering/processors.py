@@ -3,7 +3,7 @@ from typing import List, Dict, Any
 
 class FeatureProcessor:
     def __init__(self):
-        # Must match your training feature names exactly
+        
         self.feature_cols = ["skill_overlap_score", "experience_gap"]
         self.group_col = "user_id" 
 
@@ -41,11 +41,10 @@ class FeatureProcessor:
         """
         rows = []
         
-        # Extract user data with defensive mapping
-        # Gateway might send different field names than what's in Redis
+       
         user_id = user_profile.get("user_id", "unknown_user")
         
-        # Handle various possible field names for skills
+       
         user_skills = (
             user_profile.get("skills") or 
             user_profile.get("primary_roles") or 
@@ -53,7 +52,7 @@ class FeatureProcessor:
             []
         )
         
-        # Handle various possible field names for experience
+       
         user_years = (
             user_profile.get("years_of_experience") or 
             user_profile.get("experience") or 
@@ -75,8 +74,6 @@ class FeatureProcessor:
 
         df = pd.DataFrame(rows)
 
-        # Ensure the feature columns are in the correct order for the model
-        # and rows are grouped by user_id
         df = df.sort_values(by=self.group_col).reset_index(drop=True)
         
         return df

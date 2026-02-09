@@ -1,0 +1,17 @@
+app:
+  port: 8000
+  top_n: 10
+
+mlflow:
+  model_name: "job-ranker-xgboost"
+  stage: "Production"
+
+redis:
+  host: "localhost"
+  port: 6379
+
+features:
+  group_col: "user_id"
+  feature_cols: 
+    - "skill_overlap_score"
+    - "experience_gap"

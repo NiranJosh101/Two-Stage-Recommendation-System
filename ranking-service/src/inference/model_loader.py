@@ -11,7 +11,7 @@ class ModelLoader:
     def load(self):
         """Lazy load the model to ensure it's only fetched when needed."""
         if self._model is None:
-            # This fetches the model from the MLflow Registry
+           
             print(f"Fetching model {self.model_name} from stage {self.stage}...")
             self._model = mlflow.xgboost.load_model(self.model_uri)
         return self._model
