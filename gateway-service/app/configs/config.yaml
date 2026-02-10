@@ -1,0 +1,21 @@
+app:
+  title: "Recommendation Gateway Service"
+  host: "0.0.0.0"
+  port: 8000
+
+redis:
+  url: "redis://localhost:6379/0"
+  ttl_seconds: 86400
+
+services:
+  retrieval:
+    url: "http://retrieval-service:8001"
+    timeout: 5.0
+    connect_timeout: 2.0
+  ranking:
+    url: "http://ranking-service:8002"
+    timeout: 10.0
+    connect_timeout: 2.0
+
+global:
+  http_client_timeout: 10.0
