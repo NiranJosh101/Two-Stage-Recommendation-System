@@ -5,7 +5,7 @@ from typing import List, Optional, Dict, Any
 # --- Retrieval Service Response ---
 class RetrievalResponse(BaseModel):
     status: str
-    item_ids: List[str]  # Matching your return {"item_ids": final_items}
+    jobs_ids: List[str]  # Matching your return {"item_ids": final_items}
     detail: Optional[str] = None
 
 # --- Ranking Service Response ---

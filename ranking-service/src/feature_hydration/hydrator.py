@@ -1,40 +1,39 @@
-import redis
+import redis.asyncio as redis # Switching to async to match your other services
 import json
 import logging
 from typing import List, Dict, Any, Optional
 
 class FeatureHydrator:
     def __init__(self, host='localhost', port=6379):
+        # Using async redis to prevent blocking the Ranking Service's event loop
         self.client = redis.Redis(host=host, port=port, decode_responses=True)
-        # Separate prefixes for clarity
         self.item_prefix = "item:features:"
-        self.user_prefix = "user:features:"
 
-    def get_user_features(self, user_id: str) -> Optional[Dict[str, Any]]:
-        """
-        Fetches the user profile (skills, exp, etc.) from Redis.
-        """
-        key = f"{self.user_prefix}{user_id}"
-        raw_data = self.client.get(key)
-        
-        if not raw_data:
-            logging.error(f"User profile for {user_id} missing from Redis!")
-            return None
-            
-        return json.loads(raw_data)
-
-    def get_features_batch(self, item_ids: List[str]) -> List[Dict[str, Any]]:
+    async def get_job_features_batch(self, job_ids: List[str]) -> List[Dict[str, Any]]:
         """
         Fetches the list of job features for the candidates.
+        Only jobs are fetched here; User features come from the Gateway payload.
         """
-        keys = [f"{self.item_prefix}{i}" for i in item_ids]
-        raw_data = self.client.mget(keys)
+        if not job_ids:
+            return []
+
+        keys = [f"{self.item_prefix}{i}" for i in job_ids]
         
-        hydrated_items = []
-        for item in raw_data:
-            if item:
-                hydrated_items.append(json.loads(item))
-            else:
-                logging.warning("Job Candidate ID missing in Redis feature store.")
-                
-        return hydrated_items
+        try:
+            raw_data = await self.client.mget(keys)
+            
+            hydrated_jobs = []
+            for i, item in enumerate(raw_data):
+                if item:
+                    hydrated_jobs.append(json.loads(item))
+                else:
+                    # Log which specific job is missing
+                    logging.warning(f"Job ID {job_ids[i]} missing in Redis feature store.")
+                    
+            return hydrated_jobs
+        except Exception as e:
+            logging.error(f"Redis MGET failed in Ranking Service: {e}")
+            return []
+
+    async def close(self):
+        await self.client.close()

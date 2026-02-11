@@ -1,3 +1,4 @@
+from pyexpat import features
 import httpx
 from fastapi import FastAPI, Request
 from contextlib import asynccontextmanager
@@ -54,11 +55,10 @@ async def retrieve(request: Request):
         Gateway -> Retrieval -> Embedding Service -> Vector DB -> Post-Processor -> Result
         """
     
-        payload = await request.json()
-        
+        # payload = await request.json()
+        payload = features.model_dump()
         
         vector = await get_user_vector(request.app.state.http_client, payload)
-        
 
         candidate_ids = await search_similar_items(vector, top_k=100)
         
@@ -66,7 +66,7 @@ async def retrieve(request: Request):
         
         return {
             "status": "success",
-            "item_ids": final_items
+            "jobs_ids": final_items
         }
     
     except RecommendationsystemDataServie as rds_exc:

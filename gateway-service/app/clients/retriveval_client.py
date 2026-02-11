@@ -15,19 +15,19 @@ class RetrievalClient:
             connect=self.cfg.connect_timeout
         )
 
+
     async def get_candidate_ids(self, features: UserFeatures) -> List[str]:
-        """
-        Calls the Retrieval Service using configured timeouts and URL.
-        """
-        payload = features.dict()
+        # Using model_dump() for Pydantic v2
+        payload = features.model_dump() 
 
         async with httpx.AsyncClient(timeout=self.timeout) as client:
             try:
                 response = await client.post(self.url, json=payload)
                 response.raise_for_status()
                 
+
                 data = RetrievalResponse(**response.json())
-                return data.item_ids if data.status == "success" else []
+                return data.jobs_ids if data.status == "success" else []
 
             except httpx.HTTPStatusError as e:
                 print(f"Retrieval Service Error [{e.response.status_code}] at {self.url}")

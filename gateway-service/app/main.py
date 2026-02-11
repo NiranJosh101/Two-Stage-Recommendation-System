@@ -6,7 +6,8 @@ from app.schemas.recommendation import RecommendRequest, RecommendationResponse
 from app.api_logic.logic import recommend_jobs_logic
 from app.service_db.user_service import RedisManager
 from app.configs.config_manager import ConfigurationManager
-
+from app.clients.retriveval_client import RetrievalClient
+from app.clients.ranking_client import RankingClient
 
 # Initialize Config Manager
 config_manager = ConfigurationManager()
@@ -19,6 +20,8 @@ async def lifespan(app: FastAPI):
     """
     # Initialize Redis Manager (now uses cfg.redis internal to its __init__)
     app.state.redis_manager = RedisManager()
+    app.state.retrieval_client = RetrievalClient()
+    app.state.ranking_client = RankingClient()
     
     # Global HTTP client using the configured global timeout
     app.state.http_client = httpx.AsyncClient(
@@ -46,7 +49,7 @@ async def get_recommendations(request: RecommendRequest):
     Coordinates the Retrieval -> Ranking pipeline via logic.py.
     """
     try:
-        results = await recommend_jobs_logic(request)
+        results = await recommend_jobs_logic(request, app.state.redis_manager, app.state.retrieval_client, app.state.ranking_client)
         
         # Consistent response format
         return {

@@ -27,7 +27,7 @@ class RankingClient:
         payload = {
             "user_id": user_id,
             "job_ids": job_ids,
-            "user_features": features.dict(exclude={"user_id"})
+            "user_features": features.model_dump(exclude={"user_id"})
         }
 
         async with httpx.AsyncClient(timeout=self.timeout) as client:

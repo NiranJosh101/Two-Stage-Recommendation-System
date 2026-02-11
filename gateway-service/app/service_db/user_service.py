@@ -25,25 +25,32 @@ class RedisManager:
             if not data:
                 return None
             
-            # Convert JSON string back to dictionary then to Pydantic
             feature_dict = json.loads(data)
+            
+            # Safeguard: Ensure user_id is in the dict even if it wasn't in the JSON
+            if "user_id" not in feature_dict:
+                feature_dict["user_id"] = user_id
+                
             return UserFeatures(**feature_dict)
             
         except Exception as e:
-            # In production, replace print with a proper logger
+            # Replace with proper logging in production
             print(f"Redis Lookup Error: {e}")
             return None
 
     async def save_user_features(self, user_id: str, features: UserFeatures):
         """
-        Store features in Redis with a TTL (Time-To-Live).
-        TTL is now driven by config.yaml (redis.ttl_seconds).
+        Store features in Redis with a TTL.
+        Using model_dump_json() for Pydantic v2 compatibility.
         """
         try:
+            # Ensure the object being saved actually belongs to the user_id key
+            features.user_id = user_id 
+            
             await self.pool.setex(
                 f"user_feat:{user_id}",
                 self.config.ttl_seconds,
-                features.json()
+                features.model_dump_json() # Updated from .json()
             )
         except Exception as e:
             print(f"Redis Save Error: {e}")

@@ -37,33 +37,41 @@ class RankRequest(BaseModel):
 @app.post("/rank")
 async def rank_jobs(request: RankRequest):
     try:
-        # User Hydration
-        if request.user_features:
-            user_profile = request.user_features
-            user_profile["user_id"] = request.user_id
-        else:
-            user_profile = hydrator.get_user_features(request.user_id)
         
-        if not user_profile:
-            return {"user_id": request.user_id, "results": "fallback", "job_ids": request.job_ids}
-
-        # Item Hydration
-        raw_jobs = hydrator.get_features_batch(request.job_ids)
-        if not raw_jobs:
-            raise HTTPException(status_code=404, detail="No job features in Redis")
-
-    
-        feature_df = processor.create_grouped_dataset(user_profile, raw_jobs)
+        if not request.user_features:
+            logging.warning(f"No features provided for user {request.user_id}. Using fallback.")
+            return {
+                "user_id": request.user_id, 
+                "results": "fallback", 
+                "job_ids": request.job_ids
+            }
+        
+       
+        user_profile = request.user_features
+        user_profile["user_id"] = request.user_id
 
        
+        raw_jobs = await hydrator.get_job_features_batch(request.job_ids)
+        
+        if not raw_jobs:
+           
+            return {"user_id": request.user_id, "results": "fallback"}
+
+
+        feature_df = processor.create_grouped_dataset(user_profile, raw_jobs)
+
+        # Model Inference
         ranked_df = model_server.predict(feature_df)
 
-      
+        
         top_n_ids = ranked_df.head(cfg.app.top_n)["job_id"].tolist()
-        final_results = [job for job in raw_jobs if job.get("job_id") in top_n_ids]
+        
+        
+        job_lookup = {str(job.get("job_id")): job for job in raw_jobs}
+        final_results = [job_lookup[str(jid)] for jid in top_n_ids if str(jid) in job_lookup]
 
         return {"user_id": request.user_id, "results": final_results}
 
-    except RecommendationsystemDataServie as e:
-        logging.error(f"Data service error: {e}")
-        raise HTTPException(status_code=503, detail="Data service unavailable")
+    except Exception as e:
+        logging.error(f"Ranking Error: {e}")
+        raise HTTPException(status_code=500, detail="Ranking pipeline failed")
