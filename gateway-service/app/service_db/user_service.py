@@ -6,10 +6,8 @@ from app.configs.config_manager import ConfigurationManager
 
 class RedisManager:
     def __init__(self):
-        # Initialize config and grab the redis entity
         self.config = ConfigurationManager().get_master_config().redis
         
-        # Create the connection pool using configured URL
         self.pool = redis.from_url(
             self.config.url, 
             encoding="utf-8", 
@@ -27,14 +25,14 @@ class RedisManager:
             
             feature_dict = json.loads(data)
             
-            # Safeguard: Ensure user_id is in the dict even if it wasn't in the JSON
+           
             if "user_id" not in feature_dict:
                 feature_dict["user_id"] = user_id
                 
             return UserFeatures(**feature_dict)
             
         except Exception as e:
-            # Replace with proper logging in production
+           
             print(f"Redis Lookup Error: {e}")
             return None
 
@@ -44,13 +42,13 @@ class RedisManager:
         Using model_dump_json() for Pydantic v2 compatibility.
         """
         try:
-            # Ensure the object being saved actually belongs to the user_id key
+           
             features.user_id = user_id 
             
             await self.pool.setex(
                 f"user_feat:{user_id}",
                 self.config.ttl_seconds,
-                features.model_dump_json() # Updated from .json()
+                features.model_dump_json() 
             )
         except Exception as e:
             print(f"Redis Save Error: {e}")

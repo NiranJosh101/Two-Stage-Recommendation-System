@@ -6,7 +6,7 @@ from app.configs.config_manager import ConfigurationManager
 
 class RetrievalClient:
     def __init__(self):
-        # Fetch the specific retrieval config entity
+       
         self.cfg = ConfigurationManager().get_master_config().retrieval
         
         self.url = f"{self.cfg.url}/retrieve"
@@ -17,7 +17,7 @@ class RetrievalClient:
 
 
     async def get_candidate_ids(self, features: UserFeatures) -> List[str]:
-        # Using model_dump() for Pydantic v2
+        
         payload = features.model_dump() 
 
         async with httpx.AsyncClient(timeout=self.timeout) as client:

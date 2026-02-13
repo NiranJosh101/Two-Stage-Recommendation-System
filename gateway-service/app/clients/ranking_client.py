@@ -5,7 +5,7 @@ from app.configs.config_manager import ConfigurationManager
 
 class RankingClient:
     def __init__(self):
-        # Fetch the specific ranking config entity
+        
         self.cfg = ConfigurationManager().get_master_config().ranking
         
         self.url = f"{self.cfg.url}/rank"
@@ -37,7 +37,7 @@ class RankingClient:
                 
                 data = response.json()
                 
-                # Handling the explicit 'fallback' string from your Ranking service
+                
                 if data.get("results") == "fallback":
                     return [] 
                 
