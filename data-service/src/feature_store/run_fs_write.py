@@ -15,6 +15,7 @@ from src.feature_store.fs_contract import (
 from src.utils.common import load_json_to_df, flatten_embeddings 
 from src.feature_store.fs_validate import validate_feature_group
 from src.feature_store.fs_writer import write_feature_group_feast
+from src.sentinel.sentinel import check_stockpile_and_trigger  
 from src.config.config_manager import ConfigurationManager
 from src.utils.exception import RecommendationsystemDataServie
 from src.utils.logging import logging
@@ -43,6 +44,10 @@ def main():
 
     
         df_training = flatten_embeddings(df_training)
+
+        # Calculate the new rows count (using the training dataset as the trigger)
+        new_rows_count = len(df_training)
+        new_rows_count_ranking = len(df_ranking)
         
 
         
@@ -60,6 +65,13 @@ def main():
 
 
         logging.info("✔✔ Feature Store Write Process Completed Successfully")
+
+        # Trigger the Sentinel check
+        logging.info(f"Checking sentinel with {new_rows_count} new rows...")
+        check_stockpile_and_trigger(new_rows_count=new_rows_count, threshold=100)
+        check_stockpile_and_trigger(new_rows_count=new_rows_count_ranking, threshold=100)
+
+
         print("✔✔ All feature groups ingested successfully!")
 
     except Exception as e:

@@ -11,6 +11,7 @@ from mlflow.tracking import MlflowClient
 
 from src.two_tower_training.src_retriever.two_tower.metrics import recall_at_k, mrr_at_k, ndcg_at_k
 from src.utils.exception import RecommendationsystemDataServie
+from src.eval.evaluator import ModelPromoter
 from src.utils.logging import logging
 
 
@@ -162,19 +163,20 @@ class TwoTowerTrainer:
         epochs: int = 5,
         val_dataloader: Optional[DataLoader] = None,
         k: int = 10,
-        min_recall_threshold: float = 0.7
+        improvement_margin: float = 0.01
     ):
         try:
             print(
                 f"\n[RUN] Starting training for {epochs} epochs | "
-                f"min_recall_threshold={min_recall_threshold}"
+                f"improvement_margin={improvement_margin}"
             )
 
             with mlflow.start_run() as run:
                 mlflow.log_params({
                     "epochs": epochs,
                     "learning_rate": self.optimizer.param_groups[0]['lr'],
-                    "loss_type": "BCE_Pointwise"
+                    "loss_type": "BCE_Pointwise",
+                    "improvement_margin": improvement_margin
                 })
 
                 best_recall = 0.0
@@ -202,26 +204,31 @@ class TwoTowerTrainer:
                     registered_model_name=self.model_name
                 )
 
-                if best_recall >= min_recall_threshold:
-                    model_version = model_info.registered_model_version
-                    self.client.transition_model_version_stage(
-                        name=self.model_name,
-                        version=model_version,
-                        stage="Production",
-                        archive_existing_versions=True
-                    )
-                    mlflow.set_tag("deployment_status", "promoted_to_production")
+                promoter = ModelPromoter(model_name=self.model_name)
+                champion_metrics = promoter.get_champion_metrics()
+                
+                # Define the dynamic threshold
+                # If no champion exists, we use a low baseline (e.g., 0.1) to bootstrap
+                champion_recall = champion_metrics.get(f"recall_at_{k}", 0.1) if champion_metrics else 0.1
+                dynamic_threshold = champion_recall + improvement_margin
 
-                    print(
-                        f"[DEPLOYMENT] Model promoted to Production | "
-                        f"version={model_version}"
-                    )
+                print(f"\n[GATE] Champion Recall@{k}: {champion_recall:.4f}")
+                print(f"[GATE] Target for Promotion: {dynamic_threshold:.4f}")
+
+                # Log the model artifact
+                model_info = mlflow.pytorch.log_model(
+                    self.model, "model", registered_model_name=self.model_name
+                )
+
+                # The Promotion Decision
+                if best_recall >= dynamic_threshold:
+                    promoter.transition_to_production(model_info.registered_model_version)
+                    mlflow.set_tag("deployment_status", "promoted_to_production")
+                    print(f" SUCCESS: Challenger ({best_recall:.4f}) beat Champion. Promoted.")
+                    return True # Signal to the Orchestrator that Retriever is ready
                 else:
-                    print(
-                        f"[DEPLOYMENT] Model NOT promoted | "
-                        f"best_recall={best_recall:.4f} "
-                        f"< threshold={min_recall_threshold}"
-                    )
+                    print(f" FAIL: Challenger ({best_recall:.4f}) did not meet margin.")
+                    return False
                     
         except RecommendationsystemDataServie as e:
             logging.error(f"Training process halted due to schema validation error: {e}")

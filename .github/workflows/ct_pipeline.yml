@@ -1,0 +1,95 @@
+name: Continuous Training (CT) Pipeline
+
+on:
+  repository_dispatch:
+    # This matches the 'event_type' sent by your sentinel.py
+    types: [retrain_models]
+
+jobs:
+  train-and-promote:
+    runs-on: ubuntu-latest
+    
+    # Setting environment variables at the job level for consistency
+    env:
+      MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_URI }}
+      FEAST_OFFLINE_STORE_URI: ${{ secrets.FEAST_OFFLINE_STORE_URI }}
+      CHECKPOINT_DIR: "model_checkpoints"
+      RANKER_OUTPUT: "models/ranking_model.json"
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip' # Speeds up subsequent runs
+
+      - name: Install Dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r model-training-service/requirements.txt
+
+      - name: Execute Model Training (Two-Stage)
+        run: |
+          # 1. Navigate to the service directory
+          cd model-training-service
+          
+          # 2. Prepare artifact directories
+          mkdir -p $CHECKPOINT_DIR
+          mkdir -p models
+
+          # 3. Stage 1: Train Two-Tower Models (Candidate Generation)
+          echo " Starting Phase A: Two-Tower Training..."
+          python src/train.py \
+            --config "two_tower_config/config.yaml" \
+            --feature-store-uri "$FEAST_OFFLINE_STORE_URI" \
+            --checkpoint-path "$CHECKPOINT_DIR"
+
+          # 4. Stage 2: Train XGBoost Ranker
+          echo " Starting Phase B: Ranking Model Training..."
+          python src/train_ranker.py \
+            --config "config/ranking_config.yaml" \
+            --feature-store-uri "$FEAST_OFFLINE_STORE_URI" \
+            --model-output-path "$RANKER_OUTPUT"
+
+      - name: Upload Model Artifacts
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: recommendation-models-bundle
+          path: |
+            model-training-service/model_checkpoints/
+            model-training-service/models/
+          retention-days: 7
+
+      - name: Pipeline Summary
+        run: echo "✔ CT Pipeline completed. Models trained and logged to MLflow."
+        
+      - name: Execute Model Training & Promotion
+        id: training_step
+        run: |
+            cd model-training-service
+            mkdir -p $CHECKPOINT_DIR
+            mkdir -p models
+
+            # 1. Train & Promote Two-Tower
+            # We capture the exit code or a flag to see if it passed the gate
+            echo "Starting Phase A: Two-Tower Training & Promotion Gate..."
+            python src/train.py \
+            --config "two_tower_config/config.yaml" \
+            --improvement-margin 0.01
+            
+            # 2. Train & Promote XGBoost
+            # Only runs if the script logic allows (Gate Check)
+            echo "Starting Phase B: Ranking Model Training & Promotion Gate..."
+            python src/train_ranker.py \
+            --config "config/ranking_config.yaml" \
+            --improvement-margin 0.005
+
+      - name: Notify on Promotion Failure
+        if: steps.training_step.outputs.promoted == 'false'
+        run: |
+            echo " Training finished but models were NOT promoted to Production."
+            echo "Reason: Challenger did not beat the current Champion metrics."

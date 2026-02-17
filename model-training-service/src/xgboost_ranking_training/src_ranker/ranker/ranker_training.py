@@ -6,7 +6,7 @@ import os
 import json
 from src.xgboost_ranking_training.src_ranker.ranker.data_loader import prepare_ranking_data
 from src.xgboost_ranking_training.src_ranker.ranker.metric import compute_metrics
-
+from src.eval.evaluator import ModelPromoter
 
 def train_ranker(
     train_data_path: str, 
@@ -67,6 +67,26 @@ def train_ranker(
         # Log the model to the MLflow registry
         mlflow.xgboost.log_model(bst, artifact_path="model")
         
+        
+        
+        #  Initialize the Promoter
+        promoter = ModelPromoter(model_name="XGBoost_Ranking_Model")
+        
+        #  Run the Comparison
+        # We use 'ndcg@5' as the primary decision metric
+        is_better = promoter.evaluate_and_promote(
+            challenger_metrics=metrics, 
+            metric_key="ndcg@5",
+            min_improvement=0.005 
+        )
+
+        if is_better:
+            model_info = mlflow.xgboost.log_model(bst, artifact_path="model", registered_model_name="XGBoost_Ranking_Model")
+            promoter.transition_to_production(model_info.registered_model_version)
+            print(" XGBoost promoted to Production!")
+        else:
+            mlflow.xgboost.log_model(bst, artifact_path="model")
+            print(" XGBoost kept in 'Staging' (did not improve)")
         print(f" Run complete. Model saved to {model_output_path} and logged to MLflow.")
         
         return metrics
