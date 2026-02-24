@@ -1,18 +1,16 @@
-# --- Stage 1: The Builder ---
 FROM python:3.11-slim AS builder
 
 WORKDIR /build
 
-# Added: libpq-dev (Postgres), default-libmysqlclient-dev (MySQL)
-# These are often needed to compile database drivers
+# Install build tools for deep learning libraries
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     gcc \
-    libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
 
+# Install FastAPI, Uvicorn, and your DL Framework (PyTorch/TF)
 RUN pip install --no-cache-dir --upgrade pip && \
     pip wheel --no-cache-dir --no-deps --wheel-dir /build/wheels -r requirements.txt
 
@@ -20,9 +18,9 @@ RUN pip install --no-cache-dir --upgrade pip && \
 # --- Stage 2: The Final Runtime ---
 FROM python:3.11-slim
 
-# Install ONLY the runtime library for the DB (no compilers needed here)
+# libgomp1 is vital for OpenMP (used by PyTorch/XGBoost for speed)
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    libpq5 \
+    libgomp1 \
     && rm -rf /var/lib/apt/lists/*
 
 RUN groupadd -r appgroup && useradd -r -g appgroup appuser
@@ -31,17 +29,22 @@ WORKDIR /app
 COPY --from=builder /build/wheels /wheels
 RUN pip install --no-cache-dir /wheels/*
 
-# This is where your code lives
+# Copy source code
 COPY ./src ./src
 
-# Create a 'data' directory for your local testing (SQLite/Parquet)
-RUN mkdir -p /app/data && chown -R appuser:appgroup /app/data
+# Create a directory for the User-Tower model weights
+RUN mkdir -p /app/models/user_tower && \
+    chown -R appuser:appgroup /app
 
-RUN chown -R appuser:appgroup /app
 USER appuser
 
-ENV PYTHONUNBUFFERED=1
-# A hint to your code: "Where is the DB?"
-ENV DATABASE_URL="sqlite:////app/data/local_test.db" 
+# Expose the port FastAPI will run on
+EXPOSE 8000
 
-CMD ["python", "src/airflow/dags/run_data_service_dag.py"]
+# Environment variables
+ENV MODEL_PATH="/app/models/user_tower"
+ENV PYTHONUNBUFFERED=1
+
+# Start FastAPI using Uvicorn
+# --host 0.0.0.0 is mandatory for Docker to route traffic properly
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
