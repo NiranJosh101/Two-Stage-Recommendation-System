@@ -2,94 +2,48 @@ name: Continuous Training (CT) Pipeline
 
 on:
   repository_dispatch:
-    # This matches the 'event_type' sent by your sentinel.py
     types: [retrain_models]
 
 jobs:
-  train-and-promote:
+  trigger-k8s-training:
     runs-on: ubuntu-latest
-    
-    # Setting environment variables at the job level for consistency
-    env:
-      MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_URI }}
-      FEAST_OFFLINE_STORE_URI: ${{ secrets.FEAST_OFFLINE_STORE_URI }}
-      CHECKPOINT_DIR: "model_checkpoints"
-      RANKER_OUTPUT: "models/ranking_model.json"
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Authenticate to K8s
+        uses: azure/k8s-set-context@v3
         with:
-          python-version: '3.10'
-          cache: 'pip' # Speeds up subsequent runs
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBECONFIG }}
 
-      - name: Install Dependencies
+      - name: Deploy Training Job to Cluster
+        id: deploy
         run: |
-          pip install --upgrade pip
-          pip install -r model-training-service/requirements.txt
-
-      - name: Execute Model Training (Two-Stage)
-        run: |
-          # 1. Navigate to the service directory
-          cd model-training-service
+          # Create a unique ID for this specific run
+          export JOB_ID=$(date +%s)
+          echo "job_id=$JOB_ID" >> $GITHUB_OUTPUT
           
-          # 2. Prepare artifact directories
-          mkdir -p $CHECKPOINT_DIR
-          mkdir -p models
+          # Inject the ID into the template and apply
+          envsubst < k8s/training-job.yaml | kubectl apply -f -
+          
+          echo "Job model-training-$JOB_ID submitted to K8s."
 
-          # 3. Stage 1: Train Two-Tower Models (Candidate Generation)
-          echo " Starting Phase A: Two-Tower Training..."
-          python src/train.py \
-            --config "two_tower_config/config.yaml" \
-            --feature-store-uri "$FEAST_OFFLINE_STORE_URI" \
-            --checkpoint-path "$CHECKPOINT_DIR"
-
-          # 4. Stage 2: Train XGBoost Ranker
-          echo " Starting Phase B: Ranking Model Training..."
-          python src/train_ranker.py \
-            --config "config/ranking_config.yaml" \
-            --feature-store-uri "$FEAST_OFFLINE_STORE_URI" \
-            --model-output-path "$RANKER_OUTPUT"
-
-      - name: Upload Model Artifacts
-        if: success()
-        uses: actions/upload-artifact@v4
-        with:
-          name: recommendation-models-bundle
-          path: |
-            model-training-service/model_checkpoints/
-            model-training-service/models/
-          retention-days: 7
-
-      - name: Pipeline Summary
-        run: echo "✔ CT Pipeline completed. Models trained and logged to MLflow."
-        
-      - name: Execute Model Training & Promotion
-        id: training_step
+      - name: Stream Training Logs
         run: |
-            cd model-training-service
-            mkdir -p $CHECKPOINT_DIR
-            mkdir -p models
+          # This lets you see your Python output in the GHA console
+          JOB_NAME="model-training-${{ steps.deploy.outputs.job_id }}"
+          echo "Waiting for pod to initialize..."
+          sleep 10
+          kubectl logs -f job/$JOB_NAME -n ml-system --all-containers=true
 
-            # 1. Train & Promote Two-Tower
-            # We capture the exit code or a flag to see if it passed the gate
-            echo "Starting Phase A: Two-Tower Training & Promotion Gate..."
-            python src/train.py \
-            --config "two_tower_config/config.yaml" \
-            --improvement-margin 0.01
-            
-            # 2. Train & Promote XGBoost
-            # Only runs if the script logic allows (Gate Check)
-            echo "Starting Phase B: Ranking Model Training & Promotion Gate..."
-            python src/train_ranker.py \
-            --config "config/ranking_config.yaml" \
-            --improvement-margin 0.005
-
-      - name: Notify on Promotion Failure
-        if: steps.training_step.outputs.promoted == 'false'
+      - name: Verify Job Completion
         run: |
-            echo " Training finished but models were NOT promoted to Production."
-            echo "Reason: Challenger did not beat the current Champion metrics."
+          JOB_NAME="model-training-${{ steps.deploy.outputs.job_id }}"
+          status=$(kubectl get job $JOB_NAME -n ml-system -o jsonpath='{.status.conditions[?(@.type=="Complete")].status}')
+          
+          if [ "$status" != "True" ]; then
+            echo "❌ Job failed or did not promote models. Check MLflow for details."
+            exit 1
+          fi
+          echo "✔ CT Pipeline successful. Job cleaned up."

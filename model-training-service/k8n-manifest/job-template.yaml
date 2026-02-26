@@ -1,0 +1,44 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: model-training-${JOB_ID}
+  namespace: recsyss
+  labels:
+    app: model-trainer
+    component: training-pipeline
+spec:
+  backoffLimit: 1
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: trainer
+        image: your-registry/recsys-trainer:latest # The image we skipped the Dockerfile for
+        imagePullPolicy: Always
+        # I use a bash wrapper to execute your multi-stage logic
+        command: ["/bin/bash", "-c"]
+        args:
+          - |
+            echo "Starting Phase A: Two-Tower Training..."
+            python src/train.py --config "two_tower_config/config.yaml" --improvement-margin 0.01 && \
+            echo "Starting Phase B: Ranking Model Training..."
+            python src/train_ranker.py --config "config/ranking_config.yaml" --improvement-margin 0.005
+        env:
+        - name: FEAST_HOST
+          value: "feast"  # This matches the 'metadata.name' of your Feast Service
+        - name: FEAST_PORT
+          value: "6566"   # The port your Feast Service is listening on
+        - name: FEAST_OFFLINE_STORE_URI
+          valueFrom:
+            secretKeyRef:
+              name: ml-system-secrets
+              key: FEAST_OFFLINE_STORE_URI
+        - name: MLFLOW_TRACKING_URI
+          value: "http://mlflow:5000"
+        resources:
+          requests:
+            cpu: "2"
+            memory: "4Gi"
+          limits:
+            cpu: "4"
+            memory: "8Gi"

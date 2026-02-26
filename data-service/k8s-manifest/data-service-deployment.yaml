@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: data-service
+  namespace: recsys
 spec:
   replicas: 1
   selector:
@@ -13,16 +14,36 @@ spec:
         service: data-api
     spec:
       containers:
-      - name: data-service
-        image: your-dockerhub-user/data-service:latest
-        envFrom:
-        - configMapRef:
-            name: data-service-config
-        env:
-        - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: data-service-secrets
-              key: DB_PASSWORD
-        ports:
-        - containerPort: 8000
+        - name: data-service
+          image: your-dockerhub-user/data-service:latest
+          ports:
+            - containerPort: 8000
+          env:
+            # ---------- Postgres ----------
+            - name: POSTGRES_HOST
+              value: postgres-service
+            - name: POSTGRES_PORT
+              value: "5432"
+            - name: POSTGRES_DB
+              value: recsys_db
+            - name: POSTGRES_USER
+              value: recsys_user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: POSTGRES_PASSWORD
+
+            # ---------- Redis (Feast Online Store) ----------
+            - name: REDIS_HOST
+              value: redis-service
+            - name: REDIS_PORT
+              value: "6379"
+            - name: REDIS_DB
+              value: "0"
+
+            # ---------- Feast ----------
+            - name: FEAST_HOST
+              value: "feast"
+            - name: FEAST_PORT
+              value: "6566"

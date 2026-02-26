@@ -96,15 +96,22 @@ class ConfigurationManager:
     
     def get_redis_config(self) -> RedisConfig:
         """
-        Extracts Redis connection details from the config file.
+        Extracts Redis connection details from the config file,
+        with environment variable overrides for production.
         """
         config = self.config.redis
 
-        redis_config = RedisConfig(
-            host=config.host,
-            port=config.port,
-            db=config.db,
-            decode_responses=config.decode_responses
-        )
+        host = os.getenv("REDIS_HOST", config.host)
+        port = int(os.getenv("REDIS_PORT", config.port))
+        db = int(os.getenv("REDIS_DB", config.db))
+        decode_responses = os.getenv(
+            "REDIS_DECODE_RESPONSES",
+            str(config.decode_responses)
+        ).lower() == "true"
 
-        return redis_config
+        return RedisConfig(
+            host=host,
+            port=port,
+            db=db,
+            decode_responses=decode_responses
+        )

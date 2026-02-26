@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: job-embedding-sync
+  namespace: recsys
+spec:
+  schedule: "0 * * * *" # Runs every hour
+  concurrencyPolicy: Forbid # Don't start a new one if the old one is still running
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: embedder
+            image: your-registry/job-embedder:latest
+            env:
+            - name: FEAST_HOST
+              value: "feast"
+            - name: MLFLOW_TRACKING_URI
+              value: "http://mlflow:5000"
+            - name: PINECONE_INDEX_NAME
+              value: "job-embeddings"
+            - name: PINECONE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: pinecone-secrets
+                  key: PINECONE_API_KEY
+            command: ["python", "sync_embeddings.py"]
+          restartPolicy: OnFailure
