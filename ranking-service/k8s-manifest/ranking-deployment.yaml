@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ranking-service
+  namespace: recsyss
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ranking
+  template:
+    metadata:
+      labels:
+        app: ranking
+    spec:
+      containers:
+      - name: ranker
+        image: your-registry/ranking-service:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: MLFLOW_TRACKING_URI
+          value: "http://mlflow:5000"
+        - name: RANKER_MODEL_NAME
+          value: "xgboost-ranker"
+        - name: FEAST_HOST
+          value: "feast"
+        resources:
+          requests:
+            cpu: "1"
+            memory: "2Gi"
+          limits:
+            cpu: "2"
+            memory: "4Gi"
+        
+        # READINESS PROBE: Checks if the model is loaded & ready for traffic
+        readinessProbe:
+          httpGet:
+            path: /health/ready 
+            port: 8000
+          initialDelaySeconds: 20 # Give MLflow enough time to download a heavy XGBoost model
+          periodSeconds: 10
+          failureThreshold: 3
+
+        # LIVENESS PROBE: Restarts the pod if the service becomes unresponsive
+        livenessProbe:
+          httpGet:
+            path: /health/live
+            port: 8000
+          initialDelaySeconds: 60 # Start checking after the app has definitely started
+          periodSeconds: 20

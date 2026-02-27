@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: recsys-ingress
+  namespace: recsys
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: api.recsys-platform.com # Your domain
+    http:
+      paths:
+      - path: /recommend
+        pathType: Prefix
+        backend:
+          service:
+            name: gateway-service
+            port:
+              number: 80

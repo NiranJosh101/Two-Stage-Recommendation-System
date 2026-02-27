@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway-service
+  namespace: recsys
+spec:
+  replicas: 3 # High availability for the entry point
+  selector:
+    matchLabels:
+      app: gateway
+  template:
+    metadata:
+      labels:
+        app: gateway
+    spec:
+      containers:
+      - name: gateway
+        image: your-registry/gateway-service:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: FEAST_HOST
+          value: "feast"
+        - name: RETRIEVAL_SERVICE_URL
+          value: "http://retrieval-service"
+        - name: RANKING_SERVICE_URL
+          value: "http://ranking-service"
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "512Mi"
+          limits:
+            cpu: "1"
+            memory: "1Gi"
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 5
+
+        livenessProbe:
+          httpGet:
+            path: /health/live
+            port: 8000
+          initialDelaySeconds: 60 # Start checking after the app has definitely started
+          periodSeconds: 20
+        

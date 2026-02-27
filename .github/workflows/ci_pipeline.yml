@@ -8,50 +8,40 @@ on:
     branches: [ main ]
 
 jobs:
-  
+  # --- Phase 1: Test (Stays the same) ---
   service-tests:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        service: [
-          "data-service", 
-          "embedding-service", 
-          "retrieval-service", 
-          "ranking-service", 
-          "gateway-service",
-          "model-training-service" # Added this one back!
-        ]
-    
+        service: ["data-service", "embedding-service", "retrieval-service", "ranking-service", "gateway-service", "model-training-service"]
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup~-python@v5
         with:
-          python-version: '3.11' # Matches our Dockerfiles
+          python-version: '3.11'
           cache: 'pip'
-
       - name: Install Dependencies
         run: |
           cd ${{ matrix.service }}
           pip install -r requirements.txt
           pip install pytest pytest-asyncio pytest-cov
-
       - name: Run Pytest
         run: |
           cd ${{ matrix.service }}
           pytest tests/ --cov=src --cov-report=xml
 
-  # --- Phase 2: Build & Push (The "Warehouse" Step) ---
+  # --- Phase 2: Build & Push (Updated with Output) ---
   build-and-push:
-    needs: service-tests # Only build if tests pass!
-    if: github.event_name == 'push' # Don't push images on Pull Requests
+    needs: service-tests
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.prep.outputs.tag }} # We need this for the next job!
     strategy:
       matrix:
         service: ["data-service", "embedding-service", "retrieval-service", "ranking-service", "gateway-service", "model-training-service"]
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -59,7 +49,6 @@ jobs:
       - name: Generate Tag
         id: prep
         run: |
-          # Creates a tag like: v1.0.2 or main-a1b2c3d
           TAG_NAME=$(echo ${GITHUB_REF##*/} | sed 's/\//-/g')-$(git rev-parse --short HEAD)
           echo "tag=$TAG_NAME" >> $GITHUB_OUTPUT
 
@@ -77,3 +66,34 @@ jobs:
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.service }}:${{ steps.prep.outputs.tag }}
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.service }}:latest
+
+  # --- Phase 3: GitOps Sync (The New "Bridge" Step) ---
+  sync-gitops:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Manifest Repository
+        uses: actions/checkout@v4
+        with:
+          # This is your second repo: recsys-gitops
+          repository: ${{ github.repository_owner }}/recsys-gitops
+          token: ${{ secrets.GITOPS_PAT }} # Personal Access Token with repo scope
+
+      - name: Update Service Manifests
+        run: |
+          # The tag we created in Phase 2
+          NEW_TAG=${{ needs.build-and-push.outputs.tag }}
+          
+          # Iterate through each service and update its deployment.yaml image tag
+          # This assumes your GitOps repo has a structure like: k8s/service-name-deployment.yaml
+          for service in data-service embedding-service retrieval-service ranking-service gateway-service model-training-service; do
+            sed -i "s|image: ${{ secrets.DOCKERHUB_USERNAME }}/$service:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/$service:$NEW_TAG|g" k8s/$service-deployment.yaml
+          done
+
+      - name: Commit and Push to GitOps Repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "chore: update images to $NEW_TAG [skip ci]"
+          git push

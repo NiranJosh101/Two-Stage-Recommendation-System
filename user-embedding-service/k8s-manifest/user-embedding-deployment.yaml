@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-embedding-service
+  namespace: recsys
+spec:
+  replicas: 3 # High Availability
+  selector:
+    matchLabels:
+      app: user-embedding
+  template:
+    metadata:
+      labels:
+        app: user-embedding
+    spec:
+      containers:
+      - name: user-embedder
+        image: your-registry/user-embedder:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: MLFLOW_TRACKING_URI
+          value: "http://mlflow:5000"
+        - name: MODEL_NAME
+          value: "two-tower-user-model"
+        - name: MODEL_STAGE
+          value: "Production"
+        # CRITICAL: Don't send traffic until the model is loaded in RAM
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 20
+          periodSeconds: 5
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+          limits:
+            cpu: "1"
+            memory: "2Gi"
+
+        # LIVENESS PROBE: Restarts the pod if the service becomes unresponsive
+        livenessProbe:
+          httpGet:
+            path: /health/live
+            port: 8000
+          initialDelaySeconds: 60 # Start checking after the app has definitely started
+          periodSeconds: 20

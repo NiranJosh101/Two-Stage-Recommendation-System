@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway-service
+  namespace: recsys
+spec:
+  selector:
+    app: gateway  # This must match the labels in your Gateway Deployment
+  ports:
+    - protocol: TCP
+      port: 80      # The port the Ingress looks for
+      targetPort: 8000 # The port your FastAPI/Python app is listening on
+  type: ClusterIP
