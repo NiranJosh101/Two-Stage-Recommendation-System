@@ -1,0 +1,29 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: ml-pipeline-monitor
+  namespace: monitoring
+  labels:
+    # This label MUST match the 'serviceMonitorSelector' in your 
+    # kube-prometheus-stack helm values (usually the release name)
+    release: monitoring 
+spec:
+  # This tells Prometheus which Services to look for
+  selector:
+    matchExpressions:
+      - key: app
+        operator: In
+        values: 
+          - data-service
+          - user-embedding-service
+          - retrieval-service
+          - ranking-service
+          - gateway-service
+  # Look for these services in any namespace
+  namespaceSelector:
+    any: true
+  endpoints:
+  - port: metrics       
+    interval: 15s        
+    path: /metrics       
+    honorLabels: true    

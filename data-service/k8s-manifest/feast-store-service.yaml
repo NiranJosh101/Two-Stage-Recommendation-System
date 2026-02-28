@@ -7,5 +7,7 @@ spec:
   selector:
     app: feast
   ports:
+    - name: metrics
+      protocol: TCP
     - port: 6566
       targetPort: 6566

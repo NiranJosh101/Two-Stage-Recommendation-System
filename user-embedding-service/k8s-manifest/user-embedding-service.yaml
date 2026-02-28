@@ -6,7 +6,9 @@ metadata:
 spec:
   selector:
     app: user-embedding
+    
   ports:
-    - protocol: TCP
-      port: 80      # Retrieval service calls http://user-embedding-service
-      targetPort: 8000
+      - name: metrics       # <--- THIS NAME MUST MATCH THE SERVICEMONITOR
+        protocol: TCP
+        port: 80            # The port exposed by the service
+        targetPort: 8000
