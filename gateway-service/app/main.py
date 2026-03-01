@@ -2,6 +2,12 @@ import httpx
 from fastapi import FastAPI, HTTPException, Depends
 from contextlib import asynccontextmanager
 
+# --- ADDED OTEL IMPORTS ---
+from opentelemetry import trace
+from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
+from opentelemetry.instrumentation.requests import RequestsInstrumentor
+# --------------------------
+
 from app.schemas.recommendation import RecommendRequest, RecommendationResponse
 from app.api_logic.logic import recommend_jobs_logic
 from app.service_db.user_service import RedisManager
@@ -45,6 +51,11 @@ app = FastAPI(
     title=cfg.app.title,
     lifespan=lifespan
 )
+
+FastAPIInstrumentor.instrument_app(app)
+
+
+RequestsInstrumentor().instrument()
 
 @app.post("/recommend", response_model=RecommendationResponse)
 async def get_recommendations(request: RecommendRequest):

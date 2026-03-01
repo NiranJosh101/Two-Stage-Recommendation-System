@@ -3,6 +3,12 @@ import httpx
 from fastapi import FastAPI, Request
 from contextlib import asynccontextmanager
 
+# --- ADDED OTEL IMPORTS ---
+from opentelemetry import trace
+from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
+from opentelemetry.instrumentation.requests import RequestsInstrumentor
+# --------------------------
+
 
 from utils.exception import RecommendationsystemDataServie
 from utils.logging import logging
@@ -46,6 +52,12 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
+
+
+FastAPIInstrumentor.instrument_app(app)
+
+
+RequestsInstrumentor().instrument()
 
 @app.post("/retrieve")
 async def retrieve(request: Request):

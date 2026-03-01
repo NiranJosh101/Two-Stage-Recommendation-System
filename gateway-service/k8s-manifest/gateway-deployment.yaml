@@ -25,6 +25,10 @@ spec:
           value: "http://retrieval-service"
         - name: RANKING_SERVICE_URL
           value: "http://ranking-service"
+        - name: OTEL_EXPORTER_OTLP_ENDPOINT
+          value: "http://jaeger-collector.monitoring.svc.cluster.local:4317"
+        - name: OTEL_SERVICE_NAME
+          value: "gateway-service"
         resources:
           requests:
             cpu: "500m"

@@ -25,6 +25,11 @@ spec:
           value: "two-tower-user-model"
         - name: MODEL_STAGE
           value: "Production"
+        - name: OTEL_EXPORTER_OTLP_ENDPOINT
+          value: "http://jaeger-collector.monitoring.svc.cluster.local:4317"
+        - name: OTEL_SERVICE_NAME
+          value: "user-embedding-service" 
+
         # CRITICAL: Don't send traffic until the model is loaded in RAM
         readinessProbe:
           httpGet:

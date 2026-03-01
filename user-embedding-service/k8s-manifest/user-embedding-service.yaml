@@ -6,9 +6,9 @@ metadata:
 spec:
   selector:
     app: user-embedding
-    
+
   ports:
-      - name: metrics       # <--- THIS NAME MUST MATCH THE SERVICEMONITOR
+      - name: metrics      
         protocol: TCP
-        port: 80            # The port exposed by the service
+        port: 80            
         targetPort: 8000

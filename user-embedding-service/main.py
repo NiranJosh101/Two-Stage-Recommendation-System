@@ -5,18 +5,19 @@ from fastapi import FastAPI, HTTPException, status
 import mlflow
 from pydantic import BaseModel
 
+# --- ADDED OTEL IMPORTS ---
+from opentelemetry import trace
+from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
+from opentelemetry.instrumentation.requests import RequestsInstrumentor
+# --------------------------
+
 from config.config_manager import ConfigurationManager
 from utils.exception import RecommendationsystemDataServie
 from src.processor import UserProcessor
 from src.model_loader import UserModelLoader
 from src.embedder import UserEmbedder
 
-
-
 class UserEmbeddingRequest(BaseModel):
-    """
-    Aligned Schema: Always expects the full feature set.
-    """
     user_id: str
     primary_roles: list[str]
     skills: list[str]
@@ -31,6 +32,14 @@ class EmbeddingResponse(BaseModel):
 
 app = FastAPI(title="User Embedding Service - Pure Inference")
 
+# --- AUTO-INSTRUMENTATION ---
+# This automatically traces every incoming request to this service
+FastAPIInstrumentor.instrument_app(app)
+
+# This traces any outgoing HTTP calls your service might make (to MLflow, etc.)
+RequestsInstrumentor().instrument()
+
+
 services = {}
 
 @app.on_event("startup")
@@ -42,7 +51,6 @@ async def startup_event():
 
         mlflow.set_tracking_uri(ml_cfg.tracking_uri)
         
-        # We only need Processor and Embedder now
         services["processor"] = UserProcessor()
         
         loader = UserModelLoader(
@@ -59,14 +67,11 @@ async def startup_event():
 
 @app.post("/embed/user", response_model=EmbeddingResponse)
 async def get_user_embedding(request: UserEmbeddingRequest):
-    """
-    Stateless Endpoint: Receives features from Retrieval, returns vector.
-    """
     try:
-        # Convert Pydantic model to dict for the processor
+        # OTEL TRACE CONTEXT: 
+        # The trace started at the Gateway will be picked up here automatically.
         user_data = request.model_dump()
         
-        # Process and Embed
         processed_features = services["processor"].preprocess(user_data)
         vector = services["embedder"].compute(processed_features)
 

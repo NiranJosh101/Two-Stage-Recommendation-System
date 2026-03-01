@@ -2,6 +2,14 @@ from typing import List, Optional, Dict, Any
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
+
+# --- ADDED OTEL IMPORTS ---
+from opentelemetry import trace
+from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
+from opentelemetry.instrumentation.requests import RequestsInstrumentor
+# --------------------------
+
+
 from src.feature_hydration.hydrator import FeatureHydrator
 from src.cross_feature_engineering.processors import FeatureProcessor
 from src.inference.model_server import ModelServer
@@ -16,6 +24,11 @@ config_manager = ConfigManager()
 cfg = config_manager.get_ranking_config()
 
 app = FastAPI(title="Job Ranking Service")
+
+FastAPIInstrumentor.instrument_app(app)
+
+
+RequestsInstrumentor().instrument()
 
 
 model_loader = ModelLoader(
