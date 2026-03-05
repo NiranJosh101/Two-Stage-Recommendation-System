@@ -10,10 +10,29 @@ This repository contains a full-stack, production-ready  2-stage recommendation 
 
 ### Key Highlights:
 
-* **Two-Stage Retrieval:** Candidate generation (Two-Tower) followed by precise ranking (XGBoost).
-* **Infrastructure-as-Code:** Fully containerized with Kubernetes (Deployments, Jobs, CronJobs).
-* **Automated MLOps:** A "Sentinel" service triggers retraining based on data drift/volume.
-* **Production Observability:** Integrated monitoring with Prometheus, Grafana, and Jaeger.
+* **Airflow-Orchestrated Data Pipeline:** A robust ETL engine managing ingestion from fragmented APIs, feature engineering, automated feature supervision, and strict data validation to ensure pipeline integrity s(Read more about the data layer here).
+* **Kubeflow ML Training Pipelines:** End-to-end orchestration of model training for both Retrieval and Ranking layers, facilitating scalable hyperparameter tuning and model evaluation.
+* **Two-Stage Retrieval:** Candidate generation via a high-dimensional **Two-Tower model** followed by precise ranking using **XGBoost**(Read more about the implementation here).
+* **Full CI/CD/CT Lifecycle:** * **CI:** Path-based Docker builds for microservice efficiency.
+* **CD:** Automated deployment and rolling updates on Kubernetes.
+* **CT:** Continuous Training triggered by a custom **Sentinel Service** based on real-time data volume and drift.
+
+
+* **Infrastructure-as-Code:** Fully containerized environment managed on **Kubernetes** using `Deployments`, `Jobs`, `CronJobs`, and `StatefulSets`(Read more about the implementation here).
+* **Production Observability:** Full-stack visibility into system health and performance using **Prometheus**, **Grafana**, and distributed request tracing with **Jaeger**.
+
+
+* **Two-Stage Retrieval:** Candidate generation via a high-dimensional **Two-Tower model** followed by precise ranking using **XGBoost**.
+* **Airflow-Orchestrated Data Pipeline:** A robust ETL engine managing ingestion from fragmented APIs, feature engineering, automated feature supervision, and strict data validation to ensure pipeline integrity.
+* **Kubeflow ML Training Pipelines:** End-to-end orchestration of model training for both Retrieval and Ranking layers, facilitating scalable hyperparameter tuning and model evaluation.
+* **Full CI/CD/CT Lifecycle:** * **CI:** Path-based Docker builds for microservice efficiency.
+* **CD:** Automated deployment and rolling updates on Kubernetes.
+* **CT:** Continuous Training triggered by a custom **Sentinel Service** based on real-time data volume and drift.
+
+
+* **Infrastructure-as-Code:** Fully containerized environment managed on **Kubernetes** using `Deployments`, `Jobs`, `CronJobs`, and `StatefulSets`.
+* **Production Observability:** Full-stack visibility into system health and performance using **Prometheus**, **Grafana**, and distributed request tracing with **Jaeger**.
+
 
 
 ## System Architecture
@@ -47,12 +66,12 @@ Ephemeral services that manage the lifecycle of data and models.
 | Category | Tools |
 | --- | --- |
 | **Orchestration** | Kubernetes (EKS/GKE), Helm |
-| **ML Frameworks** | PyTorch (Two-Tower), XGBoost (Ranking), Optuna |
+| **ML Frameworks** | PyTorch (Two-Tower), XGBoost (Ranking), kubeflow |
 | **Data & Features** | Feast (Feature Store), PostgreSQL, Pinecone (Vector DB) |
 | **MLOps** | MLflow (Model Registry), GitHub Actions (CI/CD/CT) |
 | **Observability** | Prometheus, Grafana, Jaeger (Tracing) |
 
----
+
 
 ## The MLOps Loop (CI/CT/CD)
 
@@ -62,7 +81,7 @@ This project implements a "Closed-Loop" automation strategy:
 2. **CT:** The **Sentinel Service** monitors Postgres; once a ~1k row threshold is met, it triggers a K8s Training Job.
 3. **CD:** Automated "Production" tagging in MLflow and rolling updates in K8s ensure zero-downtime model swaps.
 
----
+
 
 ## Getting Started
 
@@ -75,7 +94,7 @@ This project implements a "Closed-Loop" automation strategy:
 
 1. **Clone the Repo:**
 ```bash
-git clone https://github.com/your-username/recommender-system.git
+git clone https://github.com/NiranJosh101/Two-Stage-Recommendation-System.git
 
 ```
 
@@ -92,8 +111,6 @@ helm install ml-infra ./charts/infrastructure
 kubectl apply -f ./k8s/manifests/
 
 ```
-
-
 
 
 ## Monitoring & Tracing
