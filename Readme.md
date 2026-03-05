@@ -26,8 +26,8 @@ This repository contains a full-stack, production-ready  2-stage recommendation 
 * **Airflow-Orchestrated Data Pipeline:** A robust ETL engine managing ingestion from fragmented APIs, feature engineering, automated feature supervision, and strict data validation to ensure pipeline integrity.
 * **Kubeflow ML Training Pipelines:** End-to-end orchestration of model training for both Retrieval and Ranking layers, facilitating scalable hyperparameter tuning and model evaluation.
 * **Full CI/CD/CT Lifecycle:** * **CI:** Path-based Docker builds for microservice efficiency.
-* **CD:** Automated deployment and rolling updates on Kubernetes.
-* **CT:** Continuous Training triggered by a custom **Sentinel Service** based on real-time data volume and drift.
+    * **CD:** Automated deployment and rolling updates on Kubernetes.
+    * **CT:** Continuous Training triggered by a custom **Sentinel Service** based on real-time data volume and drift.
 
 
 * **Infrastructure-as-Code:** Fully containerized environment managed on **Kubernetes** using `Deployments`, `Jobs`, `CronJobs`, and `StatefulSets`.
