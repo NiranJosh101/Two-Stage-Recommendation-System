@@ -109,10 +109,5 @@ Access the dashboards to view system health:
 * **Jaeger:** `http://localhost:16686` (Distributed Tracing across the 7 services)
 
 
-## Lessons Learned
-
-* **Environment Portability:** Shifted from hardcoded `localhost` to runtime injection via **ConfigMaps** and **Secrets**.
-* **Cold Start Mitigation:** Implemented **Readiness Probes** to ensure models are fully loaded from MLflow before pods accept traffic.
-* **Decoupling:** Using a Feature Store (Feast) allowed the Training and Inference services to share a "Single Source of Truth."
 
 
