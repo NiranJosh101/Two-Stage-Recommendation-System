@@ -10,7 +10,7 @@ This repository contains a full-stack, production-ready  2-stage recommendation 
 
 ### Key Highlights:
 
-* **Airflow-Orchestrated Data Pipeline:** A robust ETL engine managing ingestion from fragmented APIs, feature engineering, automated feature supervision, and strict data validation to ensure pipeline integrity (Read more about the data layer here).
+* **Airflow-Orchestrated Data Pipeline:** A robust ETL engine managing ingestion from fragmented APIs, feature engineering, automated feature supervision, and strict data validation to ensure pipeline integrity [Read the deep dive on Medium](https://medium.com/@niranjosh011/the-model-is-just-a-consumer-why-ml-success-starts-at-the-data-layer-8c4b071d06f6).
 * **Kubeflow ML Training Pipelines:** End-to-end orchestration of model training for both Retrieval and Ranking layers, facilitating scalable hyperparameter tuning and model evaluation.
 * **Two-Stage Retrieval:** Candidate generation via a high-dimensional **Two-Tower model** followed by precise ranking using **XGBoost** (Read more about the implementation here).
 * **Full CI/CD/CT Lifecycle:** * **CI:** Path-based Docker builds for microservice efficiency.
