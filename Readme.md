@@ -55,7 +55,7 @@ Ephemeral services that manage the lifecycle of data and models.
 | --- | --- |
 | **Orchestration** | Kubernetes (EKS/GKE), Helm |
 | **ML Frameworks** | PyTorch (Two-Tower), XGBoost (Ranking), kubeflow |
-| **Data & Features** | Feast (Feature Store), PostgreSQL, Pinecone (Vector DB) |
+| **Data & Features** | Airflow, Feast (Feature Store), PostgreSQL, Pinecone (Vector DB) |
 | **MLOps** | MLflow (Model Registry), GitHub Actions (CI/CD/CT) |
 | **Observability** | Prometheus, Grafana, Jaeger (Tracing) |
 
