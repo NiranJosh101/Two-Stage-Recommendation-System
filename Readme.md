@@ -10,15 +10,15 @@ This repository contains a full-stack, production-ready  2-stage recommendation 
 
 ### Key Highlights:
 
-* **Airflow-Orchestrated Data Pipeline:** A robust ETL engine managing ingestion from fragmented APIs, feature engineering, automated feature supervision, and strict data validation to ensure pipeline integrity s(Read more about the data layer here).
+* **Airflow-Orchestrated Data Pipeline:** A robust ETL engine managing ingestion from fragmented APIs, feature engineering, automated feature supervision, and strict data validation to ensure pipeline integrity (Read more about the data layer here).
 * **Kubeflow ML Training Pipelines:** End-to-end orchestration of model training for both Retrieval and Ranking layers, facilitating scalable hyperparameter tuning and model evaluation.
-* **Two-Stage Retrieval:** Candidate generation via a high-dimensional **Two-Tower model** followed by precise ranking using **XGBoost**(Read more about the implementation here).
+* **Two-Stage Retrieval:** Candidate generation via a high-dimensional **Two-Tower model** followed by precise ranking using **XGBoost** (Read more about the implementation here).
 * **Full CI/CD/CT Lifecycle:** * **CI:** Path-based Docker builds for microservice efficiency.
-* **CD:** Automated deployment and rolling updates on Kubernetes.
-* **CT:** Continuous Training triggered by a custom **Sentinel Service** based on real-time data volume and drift.
+    * **CD:** Automated deployment and rolling updates on Kubernetes.
+    * **CT:** Continuous Training triggered by a custom **Sentinel Service** based on real-time data volume and drift.
 
 
-* **Infrastructure-as-Code:** Fully containerized environment managed on **Kubernetes** using `Deployments`, `Jobs`, `CronJobs`, and `StatefulSets`(Read more about the implementation here).
+* **Infrastructure-as-Code:** Fully containerized environment managed on **Kubernetes** using `Deployments`, `Jobs`, `CronJobs`, and `StatefulSets` (Read more about the implementation here).
 * **Production Observability:** Full-stack visibility into system health and performance using **Prometheus**, **Grafana**, and distributed request tracing with **Jaeger**.
 
 
