@@ -6,7 +6,7 @@
 
 ## Overview
 
-This repository contains a full-stack, production-ready  2-stage recommendation engine. Moving beyond simple notebooks, this project implements a **7-service microservice architecture** that handles everything from real-time inference to automated continuous training (CT).
+This repository contains a full-stack, production-ready  2-stage recommendation engine. This project implements a **7-service microservice architecture** that handles everything from real-time inference to automated continuous training (CT).
 
 ### Key Highlights:
 
