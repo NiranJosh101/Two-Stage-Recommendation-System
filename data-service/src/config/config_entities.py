@@ -4,6 +4,7 @@ from typing import Optional
 
 
 
+
 @dataclass
 class JobIngestionConfig:
     base_url: str
