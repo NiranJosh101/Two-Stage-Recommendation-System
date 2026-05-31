@@ -9,6 +9,8 @@ default_args = {
     "retry_delay": timedelta(minutes=5),
 }
 
+
+# full airflow DAG orchestrating the entire data pipeline from raw ingestion to feature store publication for the recommendation system. Each step is a BashOperator that runs a specific Python module responsible for that part of the pipeline. The DAG is designed to run once (schedule_interval=None) and has a start date in the future to prevent it from running immediately upon deployment.
 with DAG(
     dag_id="recommendation_system_data_service_v1",
     description="Full orchestration from Raw Ingestion to Feast Feature Store",
@@ -93,7 +95,6 @@ with DAG(
         bash_command="python -m src.feature_store.run_fs_write",
     )
 
-   
 
    
     [ingest_jobs, ingest_users, ingest_interactions] >> validate_raw

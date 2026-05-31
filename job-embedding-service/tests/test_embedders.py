@@ -21,3 +21,4 @@ def test_user_embedder_returns_normalized_vector():
     magnitude = np.linalg.norm(vector)
     assert np.isclose(magnitude, 1.0), "The embedder failed to normalize the output vector!"
     assert vector.ndim == 1 # compute() uses .flatten()
+    
