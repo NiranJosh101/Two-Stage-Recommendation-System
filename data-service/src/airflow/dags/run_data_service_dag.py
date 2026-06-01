@@ -35,7 +35,7 @@ with DAG(
         bash_command="python -m src.ingestion.user_interactions.run_user_interaction",
     )
 
-    
+    # validation step to ensure the integrity and quality of the raw ingested data before it moves on to the cleaning phase. This task runs a Python module that likely checks for missing values, data types, and other quality metrics to ensure that the data is suitable for further processing.
     validate_raw = BashOperator(
         task_id="validate_raw_data",
         bash_command="python -m src.validation.run_validation",
@@ -55,7 +55,7 @@ with DAG(
         bash_command="python -m src.cleaning.interactions.run_interactions_cleaner",
     )
 
-    
+    # feature transformation step that takes the cleaned job and user data and applies necessary transformations to prepare it for labeling and model training. This could include encoding categorical variables, normalizing numerical features, or creating new features based on existing ones.
     feature_transform = BashOperator(
         task_id="feature_transform",
         bash_command="python -m src.cleaning.feature_transform.run_transform",
