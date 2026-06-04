@@ -46,7 +46,7 @@ def run_negative_sampling(
 
 
 
-
+# This script is the entry point for generating negative samples for the recommendation system. It reads in the labeled positive interactions and the list of all jobs, then uses the `run_negative_sampling` function to create negative samples based on the specified ratio. The final dataset, which includes both positives and negatives, is written out as a pretty-printed JSON file for use in model training.
 if __name__ == "__main__":
     config = ConfigurationManager()
     interaction_config = config.get_interaction_ingestion_config()

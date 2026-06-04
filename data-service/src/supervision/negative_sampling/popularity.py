@@ -27,5 +27,7 @@ def sample_weighted_jobs(job_ids: List[str], weights: List[float], k: int, seed:
     total_weight = sum(weights)
     normalized_weights = [w / total_weight for w in weights]
 
+
+    # Sample jobs based on the normalized weights
     sampled_jobs = random.choices(job_ids, weights=normalized_weights, k=k)
     return sampled_jobs
