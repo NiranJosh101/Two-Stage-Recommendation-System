@@ -57,6 +57,7 @@ class TwoTowerTrainer:
 
     def _prepare_batch(self, batch: Dict[str, torch.Tensor]):
         try:
+            """Prepare a batch of data for training. This includes moving the data to the appropriate device and validating it against the defined schemas."""
             user_batch = batch["user_embedding"].to(self.device)
             job_batch = batch["job_embedding"].to(self.device)
 
