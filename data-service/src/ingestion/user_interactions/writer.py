@@ -33,6 +33,7 @@ class InteractionWriter:
         else:
             raise ValueError(f"Unsupported writer mode: {mode}")
 
+
     def write(self, interactions: List[Dict], filename: str) -> None:
         try:
             if self.mode == "local":
@@ -42,6 +43,7 @@ class InteractionWriter:
         except Exception as e:
             raise RecommendationsystemDataServie(e, sys)
 
+
     def _write_local(self, interactions: List[Dict], filename: str) -> None:
         try:
             file_path = self.base_path / filename
@@ -50,6 +52,7 @@ class InteractionWriter:
                 logging.info(f"Interactions written to {file_path}")
         except Exception as e:
             raise RecommendationsystemDataServie(e, sys)
+       
         
     def _write_gcs(self, interactions: List[Dict], filename: str) -> None:
         try:
