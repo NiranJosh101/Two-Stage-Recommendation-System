@@ -50,7 +50,8 @@ class UserWriter:
                 self._write_gcs(users, filename)
         except Exception as e:
             raise RecommendationsystemDataServie(e, sys)
-        
+
+
 
     def _write_local(self, users: List[Dict], filename: str) -> None:
         try:
@@ -60,6 +61,7 @@ class UserWriter:
         except Exception as e:
             raise RecommendationsystemDataServie(e, sys)
         
+
 
     def _write_gcs(self, users: List[Dict], filename: str) -> None:
         try:
