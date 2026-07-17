@@ -40,6 +40,7 @@ class JobWriter:
         except Exception as e:
             raise RecommendationsystemDataServie(e, sys)
 
+
     def write(self, jobs: List[Dict], filename: str) -> None:
         try:
             if self.mode == "local":
@@ -51,6 +52,7 @@ class JobWriter:
         except Exception as e:
             raise RecommendationsystemDataServie(e, sys)
 
+
     def _write_local(self, jobs: List[Dict], filename: str) -> None:
         try:
             file_path = self.base_path / filename
@@ -58,6 +60,7 @@ class JobWriter:
                 json.dump(jobs, f, ensure_ascii=False, indent=2)
         except Exception as e:
             raise RecommendationsystemDataServie(e, sys)
+
 
     def _write_gcs(self, jobs: List[Dict], filename: str) -> None:
         try:
