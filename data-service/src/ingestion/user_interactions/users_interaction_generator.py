@@ -8,7 +8,7 @@ from src.utils.logging import logging
 
 class InteractionGenerator:
     """
-    Generates synthetic user-job interactions.
+    Generates synthetic user-job interactions. (Exploring a CDC pipeline for user interactions ingestion)
 
     """
 
