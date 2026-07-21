@@ -103,7 +103,9 @@ model_training:
   job_embedding_dim: 1159
   allowed_labels: [0, 1]
   feast_repo_path: "C:\\Users\\USER\\Desktop\\Two_stage_recommendation_system\\rs_feature_repo\\feature_repo"
-  fs_writer_version: "v1"    
+  fs_writer_version: "v1"
+  feature_store_name: "two_stage_recommendation_system"
+  dataset_name: "user_job_interaction_dataset"    
 
 
 
